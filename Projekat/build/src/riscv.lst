@@ -1,0 +1,148 @@
+GAS LISTING /tmp/cco2lbMk.s 			page 1
+
+
+   1              		.file	"riscv.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_ZN5Riscv10popSppSpieEv
+   9              	_ZN5Riscv10popSppSpieEv:
+  10              	.LFB16:
+  11              		.file 1 "src/riscv.cpp"
+   1:src/riscv.cpp **** //
+   2:src/riscv.cpp **** // Created by marko on 20.4.22..
+   3:src/riscv.cpp **** //
+   4:src/riscv.cpp **** 
+   5:src/riscv.cpp **** #include "../h/riscv.h"
+   6:src/riscv.cpp **** 
+   7:src/riscv.cpp **** void Riscv::popSppSpie()
+   8:src/riscv.cpp **** {
+  12              		.loc 1 8 1
+  13              		.cfi_startproc
+  14 0000 130101FF 		addi	sp,sp,-16
+  15              		.cfi_def_cfa_offset 16
+  16 0004 23348100 		sd	s0,8(sp)
+  17              		.cfi_offset 8, -8
+  18 0008 13040101 		addi	s0,sp,16
+  19              		.cfi_def_cfa 8, 0
+   9:src/riscv.cpp ****     __asm__ volatile ("csrw sepc, ra");
+  20              		.loc 1 9 5
+  21              		.loc 1 9 39 is_stmt 0
+  22              	#APP
+  23              	# 9 "src/riscv.cpp" 1
+  10              	    __asm__ volatile ("sret");
+  24              		csrw sepc, ra
+  25              	# 0 "" 2
+  26              		.loc 1 10 5 is_stmt 1
+  27              		.loc 1 10 30 is_stmt 0
+  28              	# 10 "src/riscv.cpp" 1
+  11              	}...
+  29              		sret
+  30              	# 0 "" 2
+  31              		.loc 1 11 1
+  32              	#NO_APP
+  33 0014 03348100 		ld	s0,8(sp)
+  34              		.cfi_restore 8
+  35              		.cfi_def_cfa 2, 16
+  36 0018 13010101 		addi	sp,sp,16
+  37              		.cfi_def_cfa_offset 0
+  38 001c 67800000 		jr	ra
+  39              		.cfi_endproc
+  40              	.LFE16:
+  42              	.Letext0:
+  43              		.file 2 "src/../h/../lib/hw.h"
+  44              		.file 3 "src/../h/riscv.h"
+GAS LISTING /tmp/cco2lbMk.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 riscv.cpp
+     /tmp/cco2lbMk.s:9      .text:0000000000000000 _ZN5Riscv10popSppSpieEv
+     /tmp/cco2lbMk.s:13     .text:0000000000000000 .L0 
+     /tmp/cco2lbMk.s:14     .text:0000000000000000 .L0 
+     /tmp/cco2lbMk.s:15     .text:0000000000000004 .L0 
+     /tmp/cco2lbMk.s:17     .text:0000000000000008 .L0 
+     /tmp/cco2lbMk.s:19     .text:000000000000000c .L0 
+     /tmp/cco2lbMk.s:21     .text:000000000000000c .L0 
+       src/riscv.cpp:9      .text:000000000000000c .L0 
+     /tmp/cco2lbMk.s:27     .text:0000000000000010 .L0 
+       src/riscv.cpp:10     .text:0000000000000010 .L0 
+     /tmp/cco2lbMk.s:33     .text:0000000000000014 .L0 
+     /tmp/cco2lbMk.s:34     .text:0000000000000018 .L0 
+     /tmp/cco2lbMk.s:35     .text:0000000000000018 .L0 
+     /tmp/cco2lbMk.s:37     .text:000000000000001c .L0 
+     /tmp/cco2lbMk.s:39     .text:0000000000000020 .L0 
+     /tmp/cco2lbMk.s:45     .text:0000000000000020 .L0 
+     /tmp/cco2lbMk.s:364    .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/cco2lbMk.s:659    .debug_str:00000000000000c3 .LASF53
+     /tmp/cco2lbMk.s:709    .debug_str:00000000000002bd .LASF54
+     /tmp/cco2lbMk.s:717    .debug_str:00000000000002f9 .LASF55
+     /tmp/cco2lbMk.s:5      .text:0000000000000000 .Ltext0
+     /tmp/cco2lbMk.s:42     .text:0000000000000020 .Letext0
+     /tmp/cco2lbMk.s:631    .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/cco2lbMk.s:705    .debug_str:00000000000002a8 .LASF0
+     /tmp/cco2lbMk.s:685    .debug_str:000000000000020e .LASF1
+     /tmp/cco2lbMk.s:675    .debug_str:00000000000001cb .LASF2
+     /tmp/cco2lbMk.s:651    .debug_str:0000000000000081 .LASF4
+     /tmp/cco2lbMk.s:681    .debug_str:00000000000001f4 .LASF3
+     /tmp/cco2lbMk.s:637    .debug_str:0000000000000026 .LASF5
+     /tmp/cco2lbMk.s:635    .debug_str:0000000000000013 .LASF6
+     /tmp/cco2lbMk.s:669    .debug_str:0000000000000196 .LASF7
+     /tmp/cco2lbMk.s:643    .debug_str:0000000000000049 .LASF8
+     /tmp/cco2lbMk.s:649    .debug_str:0000000000000073 .LASF9
+     /tmp/cco2lbMk.s:749    .debug_str:0000000000000406 .LASF10
+     /tmp/cco2lbMk.s:673    .debug_str:00000000000001bc .LASF11
+     /tmp/cco2lbMk.s:743    .debug_str:00000000000003db .LASF12
+     /tmp/cco2lbMk.s:725    .debug_str:0000000000000351 .LASF13
+     /tmp/cco2lbMk.s:687    .debug_str:0000000000000221 .LASF14
+     /tmp/cco2lbMk.s:663    .debug_str:000000000000016c .LASF15
+     /tmp/cco2lbMk.s:721    .debug_str:0000000000000325 .LASF16
+     /tmp/cco2lbMk.s:665    .debug_str:0000000000000182 .LASF56
+     /tmp/cco2lbMk.s:693    .debug_str:000000000000025f .LASF17
+     /tmp/cco2lbMk.s:735    .debug_str:00000000000003a3 .LASF19
+     /tmp/cco2lbMk.s:667    .debug_str:0000000000000188 .LASF18
+     /tmp/cco2lbMk.s:655    .debug_str:000000000000009d .LASF20
+     /tmp/cco2lbMk.s:727    .debug_str:0000000000000361 .LASF21
+     /tmp/cco2lbMk.s:689    .debug_str:000000000000022d .LASF22
+     /tmp/cco2lbMk.s:697    .debug_str:0000000000000274 .LASF23
+     /tmp/cco2lbMk.s:639    .debug_str:000000000000002d .LASF25
+     /tmp/cco2lbMk.s:699    .debug_str:000000000000027d .LASF27
+     /tmp/cco2lbMk.s:653    .debug_str:0000000000000088 .LASF29
+     /tmp/cco2lbMk.s:711    .debug_str:00000000000002cb .LASF24
+     /tmp/cco2lbMk.s:679    .debug_str:00000000000001e1 .LASF26
+     /tmp/cco2lbMk.s:661    .debug_str:0000000000000165 .LASF28
+     /tmp/cco2lbMk.s:671    .debug_str:00000000000001a9 .LASF30
+GAS LISTING /tmp/cco2lbMk.s 			page 3
+
+
+     /tmp/cco2lbMk.s:707    .debug_str:00000000000002b5 .LASF31
+     /tmp/cco2lbMk.s:731    .debug_str:0000000000000384 .LASF32
+     /tmp/cco2lbMk.s:683    .debug_str:0000000000000206 .LASF33
+     /tmp/cco2lbMk.s:715    .debug_str:00000000000002e5 .LASF34
+     /tmp/cco2lbMk.s:737    .debug_str:00000000000003bb .LASF35
+     /tmp/cco2lbMk.s:645    .debug_str:0000000000000059 .LASF36
+     /tmp/cco2lbMk.s:677    .debug_str:00000000000001d9 .LASF37
+     /tmp/cco2lbMk.s:745    .debug_str:00000000000003eb .LASF38
+     /tmp/cco2lbMk.s:747    .debug_str:00000000000003ff .LASF39
+     /tmp/cco2lbMk.s:633    .debug_str:0000000000000000 .LASF40
+     /tmp/cco2lbMk.s:641    .debug_str:0000000000000042 .LASF41
+     /tmp/cco2lbMk.s:713    .debug_str:00000000000002d2 .LASF42
+     /tmp/cco2lbMk.s:741    .debug_str:00000000000003d5 .LASF43
+     /tmp/cco2lbMk.s:719    .debug_str:0000000000000313 .LASF44
+     /tmp/cco2lbMk.s:647    .debug_str:000000000000006d .LASF45
+     /tmp/cco2lbMk.s:739    .debug_str:00000000000003c3 .LASF46
+     /tmp/cco2lbMk.s:733    .debug_str:0000000000000398 .LASF47
+     /tmp/cco2lbMk.s:703    .debug_str:0000000000000290 .LASF48
+     /tmp/cco2lbMk.s:657    .debug_str:00000000000000b8 .LASF49
+     /tmp/cco2lbMk.s:691    .debug_str:0000000000000247 .LASF50
+     /tmp/cco2lbMk.s:701    .debug_str:0000000000000286 .LASF51
+     /tmp/cco2lbMk.s:723    .debug_str:000000000000033b .LASF52
+     /tmp/cco2lbMk.s:695    .debug_str:000000000000026a .LASF57
+     /tmp/cco2lbMk.s:729    .debug_str:000000000000036e .LASF58
+     /tmp/cco2lbMk.s:10     .text:0000000000000000 .LFB16
+     /tmp/cco2lbMk.s:40     .text:0000000000000020 .LFE16
+     /tmp/cco2lbMk.s:46     .debug_info:0000000000000000 .Ldebug_info0
+
+NO UNDEFINED SYMBOLS

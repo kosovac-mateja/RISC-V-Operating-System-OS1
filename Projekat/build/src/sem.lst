@@ -1,0 +1,1112 @@
+GAS LISTING /tmp/ccqertMU.s 			page 1
+
+
+   1              		.file	"sem.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_ZN3Sem5blockEv
+   9              	_ZN3Sem5blockEv:
+  10              	.LFB31:
+  11              		.file 1 "src/sem.cpp"
+   1:src/sem.cpp   **** #include "../h/sem.h"
+   2:src/sem.cpp   **** 
+   3:src/sem.cpp   **** //Queue<PCB*> Sem::blocked;
+   4:src/sem.cpp   **** 
+   5:src/sem.cpp   **** void Sem::block() {
+  12              		.loc 1 5 19
+  13              		.cfi_startproc
+  14              	.LVL0:
+  15 0000 130101FF 		addi	sp,sp,-16
+  16              		.cfi_def_cfa_offset 16
+  17 0004 23341100 		sd	ra,8(sp)
+  18 0008 23308100 		sd	s0,0(sp)
+  19              		.cfi_offset 1, -8
+  20              		.cfi_offset 8, -16
+  21 000c 13040101 		addi	s0,sp,16
+  22              		.cfi_def_cfa 8, 0
+   6:src/sem.cpp   ****     if(!PCB::running->isBlocked()) blocked.put(PCB::running);
+  23              		.loc 1 6 5
+  24              		.loc 1 6 32 is_stmt 0
+  25 0010 97070000 		la	a5,_ZN3PCB7runningE
+  25      83B70700 
+  26 0018 03B70700 		ld	a4,0(a5)
+  27              	.LVL1:
+  28              	.LBB44:
+  29              	.LBB45:
+  30              		.file 2 "src/../h/pcb.h"
+   1:src/../h/pcb.h **** #ifndef PROJEKAT_PCB_H
+   2:src/../h/pcb.h **** #define PROJEKAT_PCB_H
+   3:src/../h/pcb.h **** 
+   4:src/../h/pcb.h **** #include "../lib/hw.h"
+   5:src/../h/pcb.h **** #include "scheduler.h"
+   6:src/../h/pcb.h **** #include "syscall_c.h"
+   7:src/../h/pcb.h **** 
+   8:src/../h/pcb.h **** class PCB
+   9:src/../h/pcb.h **** {
+  10:src/../h/pcb.h **** public:
+  11:src/../h/pcb.h ****     ~PCB() { delete[] stack; }
+  12:src/../h/pcb.h **** 
+  13:src/../h/pcb.h ****     bool isFinished() const { return finished; }
+  14:src/../h/pcb.h **** 
+  15:src/../h/pcb.h ****     void setFinished(bool value) { finished = value; }
+  16:src/../h/pcb.h **** 
+  17:src/../h/pcb.h ****     bool isBlocked() const { return blocked; }
+  31              		.loc 2 17 30 is_stmt 1
+  32              		.loc 2 17 37 is_stmt 0
+  33 001c 83479702 		lbu	a5,41(a4)
+  34              	.LVL2:
+GAS LISTING /tmp/ccqertMU.s 			page 2
+
+
+  35              	.LBE45:
+  36              	.LBE44:
+  37              		.loc 1 6 5
+  38 0020 639E0702 		bnez	a5,.L2
+  39              		.loc 1 6 36 is_stmt 1 discriminator 1
+  40              	.LVL3:
+  41              	.LBB46:
+  42              	.LBB47:
+  43              	.LBB48:
+  44              	.LBB49:
+  45              		.file 3 "src/../h/queue.h"
+   1:src/../h/queue.h **** #ifndef PROJEKAT_QUEUE_H
+   2:src/../h/queue.h **** #define PROJEKAT_QUEUE_H
+   3:src/../h/queue.h **** 
+   4:src/../h/queue.h **** #include "../lib/hw.h"
+   5:src/../h/queue.h **** 
+   6:src/../h/queue.h **** template<typename T>
+   7:src/../h/queue.h **** class Queue {
+   8:src/../h/queue.h ****     uint64 front, rear;
+   9:src/../h/queue.h ****     size_t size, capacity;
+  10:src/../h/queue.h ****     T* array;
+  11:src/../h/queue.h **** 
+  12:src/../h/queue.h **** public:
+  13:src/../h/queue.h ****     Queue() {
+  14:src/../h/queue.h ****         this->capacity = 1000;
+  15:src/../h/queue.h ****         front = size = 0;
+  16:src/../h/queue.h ****         rear = capacity - 1;
+  17:src/../h/queue.h ****         array = new T[capacity];
+  18:src/../h/queue.h ****     }
+  19:src/../h/queue.h **** 
+  20:src/../h/queue.h ****     bool isFull() { return size == capacity; }
+  46              		.loc 3 20 28 is_stmt 0 discriminator 1
+  47 0024 83378501 		ld	a5,24(a0)
+  48              		.loc 3 20 36 discriminator 1
+  49 0028 83360502 		ld	a3,32(a0)
+  50              	.LVL4:
+  51              	.LBE49:
+  52              	.LBE48:
+  21:src/../h/queue.h **** 
+  22:src/../h/queue.h ****     bool isEmpty() { return size == 0; }
+  23:src/../h/queue.h **** 
+  24:src/../h/queue.h ****     size_t Qsize() { return size; }
+  25:src/../h/queue.h **** 
+  26:src/../h/queue.h ****     void put(T data) {
+  27:src/../h/queue.h ****         if(isFull()) return;
+  53              		.loc 3 27 9 discriminator 1
+  54 002c 6388D702 		beq	a5,a3,.L2
+  28:src/../h/queue.h ****         rear = (rear + 1) % capacity;
+  55              		.loc 3 28 17
+  56 0030 83370501 		ld	a5,16(a0)
+  57              		.loc 3 28 22
+  58 0034 93871700 		addi	a5,a5,1
+  59              		.loc 3 28 27
+  60 0038 B3F7D702 		remu	a5,a5,a3
+  61              		.loc 3 28 9
+  62 003c 2338F500 		sd	a5,16(a0)
+  29:src/../h/queue.h ****         array[rear] = data;
+GAS LISTING /tmp/ccqertMU.s 			page 3
+
+
+  63              		.loc 3 29 9
+  64 0040 83368502 		ld	a3,40(a0)
+  65              		.loc 3 29 14
+  66 0044 93973700 		slli	a5,a5,3
+  67 0048 B387F600 		add	a5,a3,a5
+  68              		.loc 3 29 9
+  69 004c 23B0E700 		sd	a4,0(a5)
+  30:src/../h/queue.h ****         size++;
+  70              		.loc 3 30 9
+  71 0050 83378501 		ld	a5,24(a0)
+  72 0054 93871700 		addi	a5,a5,1
+  73 0058 233CF500 		sd	a5,24(a0)
+  74              	.LVL5:
+  75              	.L2:
+  76              	.LBE47:
+  77              	.LBE46:
+   7:src/sem.cpp   ****     PCB::running->setBlocked(true);
+  78              		.loc 1 7 5 is_stmt 1
+  79              		.loc 1 7 29 is_stmt 0
+  80 005c 97070000 		la	a5,_ZN3PCB7runningE
+  80      83B70700 
+  81 0064 83B70700 		ld	a5,0(a5)
+  82              	.LVL6:
+  83              	.LBB50:
+  84              	.LBB51:
+  18:src/../h/pcb.h **** 
+  19:src/../h/pcb.h ****     void setBlocked(bool value) { blocked = value; }
+  85              		.loc 2 19 35 is_stmt 1
+  86              		.loc 2 19 43 is_stmt 0
+  87 0068 13071000 		li	a4,1
+  88 006c A384E702 		sb	a4,41(a5)
+  89              	.LVL7:
+  90              	.LBE51:
+  91              	.LBE50:
+   8:src/sem.cpp   ****     thread_dispatch();
+  92              		.loc 1 8 5 is_stmt 1
+  93              		.loc 1 8 20 is_stmt 0
+  94 0070 97000000 		call	_Z15thread_dispatchv@plt
+  94      E7800000 
+  95              	.LVL8:
+   9:src/sem.cpp   **** }
+  96              		.loc 1 9 1
+  97 0078 83308100 		ld	ra,8(sp)
+  98              		.cfi_restore 1
+  99 007c 03340100 		ld	s0,0(sp)
+ 100              		.cfi_restore 8
+ 101              		.cfi_def_cfa 2, 16
+ 102 0080 13010101 		addi	sp,sp,16
+ 103              		.cfi_def_cfa_offset 0
+ 104 0084 67800000 		jr	ra
+ 105              		.cfi_endproc
+ 106              	.LFE31:
+ 108              		.align	2
+ 109              		.globl	_ZN3Sem7unblockEv
+ 111              	_ZN3Sem7unblockEv:
+ 112              	.LFB32:
+  10:src/sem.cpp   **** 
+GAS LISTING /tmp/ccqertMU.s 			page 4
+
+
+  11:src/sem.cpp   **** void Sem::unblock() {
+ 113              		.loc 1 11 21 is_stmt 1
+ 114              		.cfi_startproc
+ 115              	.LVL9:
+ 116 0088 130101FF 		addi	sp,sp,-16
+ 117              		.cfi_def_cfa_offset 16
+ 118 008c 23341100 		sd	ra,8(sp)
+ 119 0090 23308100 		sd	s0,0(sp)
+ 120              		.cfi_offset 1, -8
+ 121              		.cfi_offset 8, -16
+ 122 0094 13040101 		addi	s0,sp,16
+ 123              		.cfi_def_cfa 8, 0
+  12:src/sem.cpp   ****     PCB* p = blocked.get();
+ 124              		.loc 1 12 5
+ 125              	.LVL10:
+ 126              	.LBB52:
+ 127              	.LBB53:
+ 128              	.LBB54:
+ 129              	.LBB55:
+  22:src/../h/queue.h **** 
+ 130              		.loc 3 22 29 is_stmt 0
+ 131 0098 83368501 		ld	a3,24(a0)
+ 132              	.LVL11:
+ 133              	.LBE55:
+ 134              	.LBE54:
+  31:src/../h/queue.h ****     }
+  32:src/../h/queue.h **** 
+  33:src/../h/queue.h ****     T get() {
+  34:src/../h/queue.h ****         if(isEmpty()) return 0;
+ 135              		.loc 3 34 9
+ 136 009c 63880604 		beqz	a3,.L6
+ 137 00a0 93070500 		mv	a5,a0
+  35:src/../h/queue.h ****         T data = array[front];
+ 138              		.loc 3 35 18
+ 139 00a4 03368502 		ld	a2,40(a0)
+ 140              		.loc 3 35 24
+ 141 00a8 03378500 		ld	a4,8(a0)
+ 142              		.loc 3 35 23
+ 143 00ac 93153700 		slli	a1,a4,3
+ 144 00b0 3306B600 		add	a2,a2,a1
+ 145              		.loc 3 35 11
+ 146 00b4 03350600 		ld	a0,0(a2)
+ 147              	.LVL12:
+  36:src/../h/queue.h ****         front = (front + 1) % capacity;
+ 148              		.loc 3 36 24
+ 149 00b8 13071700 		addi	a4,a4,1
+ 150              		.loc 3 36 31
+ 151 00bc 03B60702 		ld	a2,32(a5)
+ 152              		.loc 3 36 29
+ 153 00c0 3377C702 		remu	a4,a4,a2
+ 154              		.loc 3 36 9
+ 155 00c4 23B4E700 		sd	a4,8(a5)
+  37:src/../h/queue.h ****         size--;
+ 156              		.loc 3 37 9
+ 157 00c8 9386F6FF 		addi	a3,a3,-1
+ 158 00cc 23BCD700 		sd	a3,24(a5)
+ 159              	.LVL13:
+GAS LISTING /tmp/ccqertMU.s 			page 5
+
+
+ 160              	.L5:
+ 161              	.LBE53:
+ 162              	.LBE52:
+  13:src/sem.cpp   ****     p->setBlocked(false);
+ 163              		.loc 1 13 5 is_stmt 1
+ 164              	.LBB57:
+ 165              	.LBB58:
+ 166              		.loc 2 19 35
+ 167              		.loc 2 19 43 is_stmt 0
+ 168 00d0 A3040502 		sb	zero,41(a0)
+ 169              	.LVL14:
+ 170              	.LBE58:
+ 171              	.LBE57:
+  14:src/sem.cpp   ****     Scheduler::put(p);
+ 172              		.loc 1 14 5 is_stmt 1
+ 173              		.loc 1 14 19 is_stmt 0
+ 174 00d4 97000000 		call	_ZN9Scheduler3putEP3PCB@plt
+ 174      E7800000 
+ 175              	.LVL15:
+  15:src/sem.cpp   **** }
+ 176              		.loc 1 15 1
+ 177 00dc 83308100 		ld	ra,8(sp)
+ 178              		.cfi_remember_state
+ 179              		.cfi_restore 1
+ 180 00e0 03340100 		ld	s0,0(sp)
+ 181              		.cfi_restore 8
+ 182              		.cfi_def_cfa 2, 16
+ 183 00e4 13010101 		addi	sp,sp,16
+ 184              		.cfi_def_cfa_offset 0
+ 185 00e8 67800000 		jr	ra
+ 186              	.LVL16:
+ 187              	.L6:
+ 188              		.cfi_restore_state
+ 189              	.LBB59:
+ 190              	.LBB56:
+  34:src/../h/queue.h ****         T data = array[front];
+ 191              		.loc 3 34 30
+ 192 00ec 13050000 		li	a0,0
+ 193              	.LVL17:
+ 194 00f0 6FF01FFE 		j	.L5
+ 195              	.LBE56:
+ 196              	.LBE59:
+ 197              		.cfi_endproc
+ 198              	.LFE32:
+ 200              		.align	2
+ 201              		.globl	_ZN3Sem15createSemaphoreEj
+ 203              	_ZN3Sem15createSemaphoreEj:
+ 204              	.LFB33:
+  16:src/sem.cpp   **** 
+  17:src/sem.cpp   **** Sem *Sem::createSemaphore(uint32 init) {
+ 205              		.loc 1 17 40 is_stmt 1
+ 206              		.cfi_startproc
+ 207              		.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
+ 208              		.cfi_lsda 0x1b,.LLSDA33
+ 209              	.LVL18:
+ 210 00f4 130101FE 		addi	sp,sp,-32
+ 211              		.cfi_def_cfa_offset 32
+GAS LISTING /tmp/ccqertMU.s 			page 6
+
+
+ 212 00f8 233C1100 		sd	ra,24(sp)
+ 213 00fc 23388100 		sd	s0,16(sp)
+ 214 0100 23349100 		sd	s1,8(sp)
+ 215 0104 23302101 		sd	s2,0(sp)
+ 216              		.cfi_offset 1, -8
+ 217              		.cfi_offset 8, -16
+ 218              		.cfi_offset 9, -24
+ 219              		.cfi_offset 18, -32
+ 220 0108 13040102 		addi	s0,sp,32
+ 221              		.cfi_def_cfa 8, 0
+ 222 010c 13090500 		mv	s2,a0
+  18:src/sem.cpp   ****     return new Sem(init);
+ 223              		.loc 1 18 5
+ 224              		.loc 1 18 24 is_stmt 0
+ 225 0110 13050003 		li	a0,48
+ 226              	.LVL19:
+ 227              	.LEHB0:
+ 228 0114 97000000 		call	_Znwm@plt
+ 228      E7800000 
+ 229              	.LVL20:
+ 230              	.LEHE0:
+ 231 011c 93040500 		mv	s1,a0
+ 232              	.LVL21:
+ 233              	.LBB60:
+ 234              	.LBB61:
+ 235              		.file 4 "src/../h/sem.h"
+   1:src/../h/sem.h **** #ifndef PROJEKAT_SEM_H
+   2:src/../h/sem.h **** #define PROJEKAT_SEM_H
+   3:src/../h/sem.h **** 
+   4:src/../h/sem.h **** #include "../lib/hw.h"
+   5:src/../h/sem.h **** #include "pcb.h"
+   6:src/../h/sem.h **** #include "queue.h"
+   7:src/../h/sem.h **** #include "../h/syscall_c.h"
+   8:src/../h/sem.h **** 
+   9:src/../h/sem.h **** 
+  10:src/../h/sem.h **** class Sem {
+  11:src/../h/sem.h **** private:
+  12:src/../h/sem.h ****     int val;
+  13:src/../h/sem.h ****     bool active;
+  14:src/../h/sem.h ****     Queue<PCB*> blocked;
+  15:src/../h/sem.h **** 
+  16:src/../h/sem.h ****     Sem(uint32 init = 1) : val(init), active(true) {}
+ 236              		.loc 4 16 50
+ 237 0120 23202501 		sw	s2,0(a0)
+ 238 0124 93071000 		li	a5,1
+ 239 0128 2302F500 		sb	a5,4(a0)
+ 240              	.LVL22:
+ 241              	.LBB62:
+ 242              	.LBB63:
+  14:src/../h/queue.h ****         front = size = 0;
+ 243              		.loc 3 14 9
+ 244 012c 9307803E 		li	a5,1000
+ 245 0130 2330F502 		sd	a5,32(a0)
+  15:src/../h/queue.h ****         rear = capacity - 1;
+ 246              		.loc 3 15 9
+ 247 0134 233C0500 		sd	zero,24(a0)
+ 248 0138 23340500 		sd	zero,8(a0)
+GAS LISTING /tmp/ccqertMU.s 			page 7
+
+
+  16:src/../h/queue.h ****         array = new T[capacity];
+ 249              		.loc 3 16 9
+ 250 013c 9307703E 		li	a5,999
+ 251 0140 2338F500 		sd	a5,16(a0)
+  17:src/../h/queue.h ****     }
+ 252              		.loc 3 17 17
+ 253 0144 37250000 		li	a0,8192
+ 254 0148 130505F4 		addi	a0,a0,-192
+ 255              	.LEHB1:
+ 256 014c 97000000 		call	_Znam@plt
+ 256      E7800000 
+ 257              	.LVL23:
+ 258              	.LEHE1:
+ 259 0154 6F000002 		j	.L14
+ 260              	.L10:
+ 261 0158 13090500 		mv	s2,a0
+ 262              	.LVL24:
+ 263              	.LBE63:
+ 264              	.LBE62:
+ 265              	.LBE61:
+ 266              	.LBE60:
+ 267              		.loc 1 18 24
+ 268 015c 13850400 		mv	a0,s1
+ 269 0160 97000000 		call	_ZdlPv@plt
+ 269      E7800000 
+ 270              	.LVL25:
+ 271 0168 13050900 		mv	a0,s2
+ 272              	.LEHB2:
+ 273 016c 97000000 		call	_Unwind_Resume@plt
+ 273      E7800000 
+ 274              	.LVL26:
+ 275              	.LEHE2:
+ 276              	.L14:
+ 277              	.LBB67:
+ 278              	.LBB66:
+ 279              	.LBB65:
+ 280              	.LBB64:
+  17:src/../h/queue.h ****     }
+ 281              		.loc 3 17 9
+ 282 0174 23B4A402 		sd	a0,40(s1)
+ 283              	.LVL27:
+ 284              	.LBE64:
+ 285              	.LBE65:
+ 286              	.LBE66:
+ 287              	.LBE67:
+  19:src/sem.cpp   **** }
+ 288              		.loc 1 19 1
+ 289 0178 13850400 		mv	a0,s1
+ 290 017c 83308101 		ld	ra,24(sp)
+ 291              		.cfi_restore 1
+ 292 0180 03340101 		ld	s0,16(sp)
+ 293              		.cfi_restore 8
+ 294              		.cfi_def_cfa 2, 32
+ 295 0184 83348100 		ld	s1,8(sp)
+ 296              		.cfi_restore 9
+ 297 0188 03390100 		ld	s2,0(sp)
+ 298              		.cfi_restore 18
+GAS LISTING /tmp/ccqertMU.s 			page 8
+
+
+ 299 018c 13010102 		addi	sp,sp,32
+ 300              		.cfi_def_cfa_offset 0
+ 301 0190 67800000 		jr	ra
+ 302              		.cfi_endproc
+ 303              	.LFE33:
+ 304              		.globl	__gxx_personality_v0
+ 305              		.section	.gcc_except_table,"a",@progbits
+ 306              	.LLSDA33:
+ 307 0000 FF       		.byte	0xff
+ 308 0001 FF       		.byte	0xff
+ 309 0002 03       		.byte	0x3
+ 310 0003 27       		.byte	0x27
+ 311 0004 00000000 		.4byte	.LEHB0-.LFB33
+ 312 0008 00000000 		.4byte	.LEHE0-.LEHB0
+ 313 000c 00000000 		.4byte	0
+ 314 0010 00       		.byte	0
+ 315 0011 00000000 		.4byte	.LEHB1-.LFB33
+ 316 0015 00000000 		.4byte	.LEHE1-.LEHB1
+ 317 0019 00000000 		.4byte	.L10-.LFB33
+ 318 001d 00       		.byte	0
+ 319 001e 00000000 		.4byte	.LEHB2-.LFB33
+ 320 0022 00000000 		.4byte	.LEHE2-.LEHB2
+ 321 0026 00000000 		.4byte	0
+ 322 002a 00       		.byte	0
+ 323              		.text
+ 325              		.align	2
+ 326              		.globl	_ZN3Sem15deleteSemaphoreEPS_
+ 328              	_ZN3Sem15deleteSemaphoreEPS_:
+ 329              	.LFB34:
+  20:src/sem.cpp   **** 
+  21:src/sem.cpp   **** void Sem::deleteSemaphore(sem_t handle) {
+ 330              		.loc 1 21 41 is_stmt 1
+ 331              		.cfi_startproc
+ 332              	.LVL28:
+ 333 0194 130101FD 		addi	sp,sp,-48
+ 334              		.cfi_def_cfa_offset 48
+ 335 0198 23341102 		sd	ra,40(sp)
+ 336 019c 23308102 		sd	s0,32(sp)
+ 337 01a0 233C9100 		sd	s1,24(sp)
+ 338 01a4 23382101 		sd	s2,16(sp)
+ 339 01a8 23343101 		sd	s3,8(sp)
+ 340              		.cfi_offset 1, -8
+ 341              		.cfi_offset 8, -16
+ 342              		.cfi_offset 9, -24
+ 343              		.cfi_offset 18, -32
+ 344              		.cfi_offset 19, -40
+ 345 01ac 13040103 		addi	s0,sp,48
+ 346              		.cfi_def_cfa 8, 0
+ 347 01b0 93040500 		mv	s1,a0
+  22:src/sem.cpp   ****     handle->setActive(false);
+ 348              		.loc 1 22 5
+ 349              	.LVL29:
+ 350              	.LBB68:
+ 351              	.LBB69:
+  17:src/../h/sem.h **** 
+  18:src/../h/sem.h **** protected:
+  19:src/../h/sem.h ****     void block();
+GAS LISTING /tmp/ccqertMU.s 			page 9
+
+
+  20:src/../h/sem.h **** 
+  21:src/../h/sem.h ****     void unblock();
+  22:src/../h/sem.h **** 
+  23:src/../h/sem.h ****     void setActive(bool val) { active = val; }
+ 352              		.loc 4 23 32
+ 353              		.loc 4 23 39 is_stmt 0
+ 354 01b4 23020500 		sb	zero,4(a0)
+ 355              	.LVL30:
+ 356              	.LBE69:
+ 357              	.LBE68:
+  23:src/sem.cpp   **** 
+  24:src/sem.cpp   ****     uint64 queueSize = handle->blocked.Qsize();
+ 358              		.loc 1 24 5 is_stmt 1
+ 359              	.LBB70:
+ 360              	.LBB71:
+  24:src/../h/queue.h **** 
+ 361              		.loc 3 24 29 is_stmt 0
+ 362 01b8 83398501 		ld	s3,24(a0)
+ 363              	.LVL31:
+ 364              	.LBE71:
+ 365              	.LBE70:
+  25:src/sem.cpp   **** 
+  26:src/sem.cpp   ****     for(uint64 i = 0; i < queueSize; i++) {
+ 366              		.loc 1 26 5 is_stmt 1
+ 367              	.LBB72:
+ 368              		.loc 1 26 16 is_stmt 0
+ 369 01bc 13090000 		li	s2,0
+ 370 01c0 6F008001 		j	.L18
+ 371              	.LVL32:
+ 372              	.L19:
+ 373              	.LBB73:
+ 374              	.LBB74:
+ 375              	.LBB75:
+  34:src/../h/queue.h ****         T data = array[front];
+ 376              		.loc 3 34 30
+ 377 01c4 13050000 		li	a0,0
+ 378              	.L17:
+ 379              	.LVL33:
+ 380              	.LBE75:
+ 381              	.LBE74:
+  27:src/sem.cpp   ****         thread_t th = handle->blocked.get();
+  28:src/sem.cpp   ****         th->setBlocked(false);
+ 382              		.loc 1 28 9 is_stmt 1
+ 383              	.LBB79:
+ 384              	.LBB80:
+ 385              		.loc 2 19 35
+ 386              		.loc 2 19 43 is_stmt 0
+ 387 01c8 A3040502 		sb	zero,41(a0)
+ 388              	.LVL34:
+ 389              	.LBE80:
+ 390              	.LBE79:
+  29:src/sem.cpp   ****         Scheduler::put(th);
+ 391              		.loc 1 29 9 is_stmt 1
+ 392              		.loc 1 29 23 is_stmt 0
+ 393 01cc 97000000 		call	_ZN9Scheduler3putEP3PCB@plt
+ 393      E7800000 
+ 394              	.LVL35:
+GAS LISTING /tmp/ccqertMU.s 			page 10
+
+
+ 395              	.LBE73:
+  26:src/sem.cpp   ****         thread_t th = handle->blocked.get();
+ 396              		.loc 1 26 5 is_stmt 1
+ 397 01d4 13091900 		addi	s2,s2,1
+ 398              	.LVL36:
+ 399              	.L18:
+  26:src/sem.cpp   ****         thread_t th = handle->blocked.get();
+ 400              		.loc 1 26 25 discriminator 3
+ 401 01d8 637E3903 		bgeu	s2,s3,.L16
+ 402              	.LBB82:
+  27:src/sem.cpp   ****         thread_t th = handle->blocked.get();
+ 403              		.loc 1 27 9 discriminator 2
+ 404              	.LVL37:
+ 405              	.LBB81:
+ 406              	.LBB78:
+ 407              	.LBB76:
+ 408              	.LBB77:
+  22:src/../h/queue.h **** 
+ 409              		.loc 3 22 29 is_stmt 0 discriminator 2
+ 410 01dc 03B78401 		ld	a4,24(s1)
+ 411              	.LVL38:
+ 412              	.LBE77:
+ 413              	.LBE76:
+  34:src/../h/queue.h ****         T data = array[front];
+ 414              		.loc 3 34 9 discriminator 2
+ 415 01e0 E30207FE 		beqz	a4,.L19
+  35:src/../h/queue.h ****         front = (front + 1) % capacity;
+ 416              		.loc 3 35 18
+ 417 01e4 83B68402 		ld	a3,40(s1)
+  35:src/../h/queue.h ****         front = (front + 1) % capacity;
+ 418              		.loc 3 35 24
+ 419 01e8 83B78400 		ld	a5,8(s1)
+  35:src/../h/queue.h ****         front = (front + 1) % capacity;
+ 420              		.loc 3 35 23
+ 421 01ec 13963700 		slli	a2,a5,3
+ 422 01f0 B386C600 		add	a3,a3,a2
+  35:src/../h/queue.h ****         front = (front + 1) % capacity;
+ 423              		.loc 3 35 11
+ 424 01f4 03B50600 		ld	a0,0(a3)
+ 425              	.LVL39:
+  36:src/../h/queue.h ****         size--;
+ 426              		.loc 3 36 24
+ 427 01f8 93871700 		addi	a5,a5,1
+  36:src/../h/queue.h ****         size--;
+ 428              		.loc 3 36 31
+ 429 01fc 83B60402 		ld	a3,32(s1)
+  36:src/../h/queue.h ****         size--;
+ 430              		.loc 3 36 29
+ 431 0200 B3F7D702 		remu	a5,a5,a3
+  36:src/../h/queue.h ****         size--;
+ 432              		.loc 3 36 9
+ 433 0204 23B4F400 		sd	a5,8(s1)
+ 434              		.loc 3 37 9
+ 435 0208 1307F7FF 		addi	a4,a4,-1
+ 436 020c 23BCE400 		sd	a4,24(s1)
+  38:src/../h/queue.h ****         return data;
+ 437              		.loc 3 38 16
+GAS LISTING /tmp/ccqertMU.s 			page 11
+
+
+ 438 0210 6FF09FFB 		j	.L17
+ 439              	.LVL40:
+ 440              	.L16:
+ 441              	.LBE78:
+ 442              	.LBE81:
+ 443              	.LBE82:
+ 444              	.LBE72:
+  30:src/sem.cpp   ****     }
+  31:src/sem.cpp   **** 
+  32:src/sem.cpp   ****     handle->setActive(false);
+ 445              		.loc 1 32 5 is_stmt 1
+ 446              	.LBB83:
+ 447              	.LBB84:
+ 448              		.loc 4 23 32
+ 449              		.loc 4 23 39 is_stmt 0
+ 450 0214 23820400 		sb	zero,4(s1)
+ 451              	.LVL41:
+ 452              	.LBE84:
+ 453              	.LBE83:
+  33:src/sem.cpp   ****     /* MEMORY LEAK */
+  34:src/sem.cpp   **** }
+ 454              		.loc 1 34 1
+ 455 0218 83308102 		ld	ra,40(sp)
+ 456              		.cfi_restore 1
+ 457 021c 03340102 		ld	s0,32(sp)
+ 458              		.cfi_restore 8
+ 459              		.cfi_def_cfa 2, 48
+ 460 0220 83348101 		ld	s1,24(sp)
+ 461              		.cfi_restore 9
+ 462              	.LVL42:
+ 463 0224 03390101 		ld	s2,16(sp)
+ 464              		.cfi_restore 18
+ 465              	.LVL43:
+ 466 0228 83398100 		ld	s3,8(sp)
+ 467              		.cfi_restore 19
+ 468              	.LVL44:
+ 469 022c 13010103 		addi	sp,sp,48
+ 470              		.cfi_def_cfa_offset 0
+ 471 0230 67800000 		jr	ra
+ 472              		.cfi_endproc
+ 473              	.LFE34:
+ 475              	.Letext0:
+ 476              		.file 5 "src/../h/../lib/hw.h"
+ 477              		.file 6 "src/../h/syscall_c.h"
+ 478              		.file 7 "src/../h/scheduler.h"
+ 3487              		.align	3
+ 3490              	DW.ref.__gxx_personality_v0:
+ 3491 0000 00000000 		.dword	__gxx_personality_v0
+ 3491      00000000 
+ 3492              		.ident	"GCC: (Ubuntu 9.4.0-1ubuntu1~20.04) 9.4.0"
+ 3493              		.section	.note.GNU-stack,"",@progbits
+GAS LISTING /tmp/ccqertMU.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 sem.cpp
+     /tmp/ccqertMU.s:9      .text:0000000000000000 _ZN3Sem5blockEv
+     /tmp/ccqertMU.s:13     .text:0000000000000000 .L0 
+     /tmp/ccqertMU.s:15     .text:0000000000000000 .L0 
+     /tmp/ccqertMU.s:16     .text:0000000000000004 .L0 
+     /tmp/ccqertMU.s:19     .text:000000000000000c .L0 
+     /tmp/ccqertMU.s:20     .text:000000000000000c .L0 
+     /tmp/ccqertMU.s:22     .text:0000000000000010 .L0 
+     /tmp/ccqertMU.s:24     .text:0000000000000010 .L0 
+     /tmp/ccqertMU.s:25     .text:0000000000000010 .L0 
+     /tmp/ccqertMU.s:32     .text:000000000000001c .L0 
+     /tmp/ccqertMU.s:33     .text:000000000000001c .L0 
+     /tmp/ccqertMU.s:38     .text:0000000000000020 .L0 
+     /tmp/ccqertMU.s:46     .text:0000000000000024 .L0 
+     /tmp/ccqertMU.s:47     .text:0000000000000024 .L0 
+     /tmp/ccqertMU.s:49     .text:0000000000000028 .L0 
+     /tmp/ccqertMU.s:54     .text:000000000000002c .L0 
+     /tmp/ccqertMU.s:56     .text:0000000000000030 .L0 
+     /tmp/ccqertMU.s:58     .text:0000000000000034 .L0 
+     /tmp/ccqertMU.s:60     .text:0000000000000038 .L0 
+     /tmp/ccqertMU.s:62     .text:000000000000003c .L0 
+     /tmp/ccqertMU.s:64     .text:0000000000000040 .L0 
+     /tmp/ccqertMU.s:66     .text:0000000000000044 .L0 
+     /tmp/ccqertMU.s:69     .text:000000000000004c .L0 
+     /tmp/ccqertMU.s:71     .text:0000000000000050 .L0 
+     /tmp/ccqertMU.s:79     .text:000000000000005c .L0 
+     /tmp/ccqertMU.s:80     .text:000000000000005c .L0 
+     /tmp/ccqertMU.s:86     .text:0000000000000068 .L0 
+     /tmp/ccqertMU.s:87     .text:0000000000000068 .L0 
+     /tmp/ccqertMU.s:93     .text:0000000000000070 .L0 
+     /tmp/ccqertMU.s:94     .text:0000000000000070 .L0 
+     /tmp/ccqertMU.s:97     .text:0000000000000078 .L0 
+     /tmp/ccqertMU.s:98     .text:000000000000007c .L0 
+     /tmp/ccqertMU.s:100    .text:0000000000000080 .L0 
+     /tmp/ccqertMU.s:101    .text:0000000000000080 .L0 
+     /tmp/ccqertMU.s:103    .text:0000000000000084 .L0 
+     /tmp/ccqertMU.s:105    .text:0000000000000088 .L0 
+     /tmp/ccqertMU.s:111    .text:0000000000000088 _ZN3Sem7unblockEv
+     /tmp/ccqertMU.s:114    .text:0000000000000088 .L0 
+     /tmp/ccqertMU.s:116    .text:0000000000000088 .L0 
+     /tmp/ccqertMU.s:117    .text:000000000000008c .L0 
+     /tmp/ccqertMU.s:120    .text:0000000000000094 .L0 
+     /tmp/ccqertMU.s:121    .text:0000000000000094 .L0 
+     /tmp/ccqertMU.s:123    .text:0000000000000098 .L0 
+     /tmp/ccqertMU.s:130    .text:0000000000000098 .L0 
+     /tmp/ccqertMU.s:131    .text:0000000000000098 .L0 
+     /tmp/ccqertMU.s:136    .text:000000000000009c .L0 
+     /tmp/ccqertMU.s:139    .text:00000000000000a4 .L0 
+     /tmp/ccqertMU.s:141    .text:00000000000000a8 .L0 
+     /tmp/ccqertMU.s:143    .text:00000000000000ac .L0 
+     /tmp/ccqertMU.s:146    .text:00000000000000b4 .L0 
+     /tmp/ccqertMU.s:149    .text:00000000000000b8 .L0 
+     /tmp/ccqertMU.s:151    .text:00000000000000bc .L0 
+     /tmp/ccqertMU.s:153    .text:00000000000000c0 .L0 
+     /tmp/ccqertMU.s:155    .text:00000000000000c4 .L0 
+     /tmp/ccqertMU.s:157    .text:00000000000000c8 .L0 
+GAS LISTING /tmp/ccqertMU.s 			page 13
+
+
+     /tmp/ccqertMU.s:166    .text:00000000000000d0 .L0 
+     /tmp/ccqertMU.s:167    .text:00000000000000d0 .L0 
+     /tmp/ccqertMU.s:168    .text:00000000000000d0 .L0 
+     /tmp/ccqertMU.s:173    .text:00000000000000d4 .L0 
+     /tmp/ccqertMU.s:174    .text:00000000000000d4 .L0 
+     /tmp/ccqertMU.s:177    .text:00000000000000dc .L0 
+     /tmp/ccqertMU.s:178    .text:00000000000000e0 .L0 
+     /tmp/ccqertMU.s:179    .text:00000000000000e0 .L0 
+     /tmp/ccqertMU.s:181    .text:00000000000000e4 .L0 
+     /tmp/ccqertMU.s:182    .text:00000000000000e4 .L0 
+     /tmp/ccqertMU.s:184    .text:00000000000000e8 .L0 
+     /tmp/ccqertMU.s:188    .text:00000000000000ec .L0 
+     /tmp/ccqertMU.s:192    .text:00000000000000ec .L0 
+     /tmp/ccqertMU.s:197    .text:00000000000000f4 .L0 
+     /tmp/ccqertMU.s:203    .text:00000000000000f4 _ZN3Sem15createSemaphoreEj
+     /tmp/ccqertMU.s:206    .text:00000000000000f4 .L0 
+     /tmp/ccqertMU.s:3490   .data.rel.local.DW.ref.__gxx_personality_v0:0000000000000000 DW.ref.__gxx_personality_v0
+     /tmp/ccqertMU.s:210    .text:00000000000000f4 .L0 
+     /tmp/ccqertMU.s:211    .text:00000000000000f8 .L0 
+     /tmp/ccqertMU.s:216    .text:0000000000000108 .L0 
+     /tmp/ccqertMU.s:217    .text:0000000000000108 .L0 
+     /tmp/ccqertMU.s:218    .text:0000000000000108 .L0 
+     /tmp/ccqertMU.s:219    .text:0000000000000108 .L0 
+     /tmp/ccqertMU.s:221    .text:000000000000010c .L0 
+     /tmp/ccqertMU.s:224    .text:0000000000000110 .L0 
+     /tmp/ccqertMU.s:225    .text:0000000000000110 .L0 
+     /tmp/ccqertMU.s:237    .text:0000000000000120 .L0 
+     /tmp/ccqertMU.s:244    .text:000000000000012c .L0 
+     /tmp/ccqertMU.s:247    .text:0000000000000134 .L0 
+     /tmp/ccqertMU.s:250    .text:000000000000013c .L0 
+     /tmp/ccqertMU.s:253    .text:0000000000000144 .L0 
+     /tmp/ccqertMU.s:268    .text:000000000000015c .L0 
+     /tmp/ccqertMU.s:282    .text:0000000000000174 .L0 
+     /tmp/ccqertMU.s:289    .text:0000000000000178 .L0 
+     /tmp/ccqertMU.s:291    .text:0000000000000180 .L0 
+     /tmp/ccqertMU.s:293    .text:0000000000000184 .L0 
+     /tmp/ccqertMU.s:294    .text:0000000000000184 .L0 
+     /tmp/ccqertMU.s:296    .text:0000000000000188 .L0 
+     /tmp/ccqertMU.s:298    .text:000000000000018c .L0 
+     /tmp/ccqertMU.s:300    .text:0000000000000190 .L0 
+     /tmp/ccqertMU.s:302    .text:0000000000000194 .L0 
+     /tmp/ccqertMU.s:328    .text:0000000000000194 _ZN3Sem15deleteSemaphoreEPS_
+     /tmp/ccqertMU.s:331    .text:0000000000000194 .L0 
+     /tmp/ccqertMU.s:333    .text:0000000000000194 .L0 
+     /tmp/ccqertMU.s:334    .text:0000000000000198 .L0 
+     /tmp/ccqertMU.s:340    .text:00000000000001ac .L0 
+     /tmp/ccqertMU.s:341    .text:00000000000001ac .L0 
+     /tmp/ccqertMU.s:342    .text:00000000000001ac .L0 
+     /tmp/ccqertMU.s:343    .text:00000000000001ac .L0 
+     /tmp/ccqertMU.s:344    .text:00000000000001ac .L0 
+     /tmp/ccqertMU.s:346    .text:00000000000001b0 .L0 
+     /tmp/ccqertMU.s:352    .text:00000000000001b4 .L0 
+     /tmp/ccqertMU.s:353    .text:00000000000001b4 .L0 
+     /tmp/ccqertMU.s:354    .text:00000000000001b4 .L0 
+     /tmp/ccqertMU.s:361    .text:00000000000001b8 .L0 
+     /tmp/ccqertMU.s:362    .text:00000000000001b8 .L0 
+     /tmp/ccqertMU.s:368    .text:00000000000001bc .L0 
+GAS LISTING /tmp/ccqertMU.s 			page 14
+
+
+     /tmp/ccqertMU.s:369    .text:00000000000001bc .L0 
+     /tmp/ccqertMU.s:377    .text:00000000000001c4 .L0 
+     /tmp/ccqertMU.s:385    .text:00000000000001c8 .L0 
+     /tmp/ccqertMU.s:386    .text:00000000000001c8 .L0 
+     /tmp/ccqertMU.s:387    .text:00000000000001c8 .L0 
+     /tmp/ccqertMU.s:392    .text:00000000000001cc .L0 
+     /tmp/ccqertMU.s:393    .text:00000000000001cc .L0 
+     /tmp/ccqertMU.s:397    .text:00000000000001d4 .L0 
+     /tmp/ccqertMU.s:401    .text:00000000000001d8 .L0 
+     /tmp/ccqertMU.s:409    .text:00000000000001dc .L0 
+     /tmp/ccqertMU.s:410    .text:00000000000001dc .L0 
+     /tmp/ccqertMU.s:415    .text:00000000000001e0 .L0 
+     /tmp/ccqertMU.s:417    .text:00000000000001e4 .L0 
+     /tmp/ccqertMU.s:419    .text:00000000000001e8 .L0 
+     /tmp/ccqertMU.s:421    .text:00000000000001ec .L0 
+     /tmp/ccqertMU.s:424    .text:00000000000001f4 .L0 
+     /tmp/ccqertMU.s:427    .text:00000000000001f8 .L0 
+     /tmp/ccqertMU.s:429    .text:00000000000001fc .L0 
+     /tmp/ccqertMU.s:431    .text:0000000000000200 .L0 
+     /tmp/ccqertMU.s:433    .text:0000000000000204 .L0 
+     /tmp/ccqertMU.s:435    .text:0000000000000208 .L0 
+     /tmp/ccqertMU.s:438    .text:0000000000000210 .L0 
+     /tmp/ccqertMU.s:448    .text:0000000000000214 .L0 
+     /tmp/ccqertMU.s:449    .text:0000000000000214 .L0 
+     /tmp/ccqertMU.s:450    .text:0000000000000214 .L0 
+     /tmp/ccqertMU.s:455    .text:0000000000000218 .L0 
+     /tmp/ccqertMU.s:456    .text:000000000000021c .L0 
+     /tmp/ccqertMU.s:458    .text:0000000000000220 .L0 
+     /tmp/ccqertMU.s:459    .text:0000000000000220 .L0 
+     /tmp/ccqertMU.s:461    .text:0000000000000224 .L0 
+     /tmp/ccqertMU.s:464    .text:0000000000000228 .L0 
+     /tmp/ccqertMU.s:467    .text:000000000000022c .L0 
+     /tmp/ccqertMU.s:470    .text:0000000000000230 .L0 
+     /tmp/ccqertMU.s:472    .text:0000000000000234 .L0 
+     /tmp/ccqertMU.s:479    .text:0000000000000234 .L0 
+     /tmp/ccqertMU.s:25     .text:0000000000000010 .L0 
+     /tmp/ccqertMU.s:80     .text:000000000000005c .L0 
+     /tmp/ccqertMU.s:75     .text:000000000000005c .L2
+     /tmp/ccqertMU.s:187    .text:00000000000000ec .L6
+     /tmp/ccqertMU.s:160    .text:00000000000000d0 .L5
+     /tmp/ccqertMU.s:276    .text:0000000000000174 .L14
+     /tmp/ccqertMU.s:399    .text:00000000000001d8 .L18
+     /tmp/ccqertMU.s:440    .text:0000000000000214 .L16
+     /tmp/ccqertMU.s:372    .text:00000000000001c4 .L19
+     /tmp/ccqertMU.s:378    .text:00000000000001c8 .L17
+     /tmp/ccqertMU.s:227    .text:0000000000000114 .LEHB0
+     /tmp/ccqertMU.s:204    .text:00000000000000f4 .LFB33
+     /tmp/ccqertMU.s:230    .text:000000000000011c .LEHE0
+     /tmp/ccqertMU.s:255    .text:000000000000014c .LEHB1
+     /tmp/ccqertMU.s:258    .text:0000000000000154 .LEHE1
+     /tmp/ccqertMU.s:260    .text:0000000000000158 .L10
+     /tmp/ccqertMU.s:272    .text:000000000000016c .LEHB2
+     /tmp/ccqertMU.s:275    .text:0000000000000174 .LEHE2
+     /tmp/ccqertMU.s:1813   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccqertMU.s:3468   .debug_str:0000000000000621 .LASF104
+     /tmp/ccqertMU.s:3306   .debug_str:00000000000001f0 .LASF105
+     /tmp/ccqertMU.s:3386   .debug_str:00000000000003f3 .LASF106
+GAS LISTING /tmp/ccqertMU.s 			page 15
+
+
+     /tmp/ccqertMU.s:5      .text:0000000000000000 .Ltext0
+     /tmp/ccqertMU.s:475    .text:0000000000000234 .Letext0
+     /tmp/ccqertMU.s:3236   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccqertMU.s:3370   .debug_str:000000000000036e .LASF0
+     /tmp/ccqertMU.s:3384   .debug_str:00000000000003e0 .LASF1
+     /tmp/ccqertMU.s:3358   .debug_str:0000000000000326 .LASF2
+     /tmp/ccqertMU.s:3424   .debug_str:0000000000000512 .LASF3
+     /tmp/ccqertMU.s:3334   .debug_str:000000000000029d .LASF4
+     /tmp/ccqertMU.s:3428   .debug_str:0000000000000521 .LASF5
+     /tmp/ccqertMU.s:3268   .debug_str:0000000000000107 .LASF6
+     /tmp/ccqertMU.s:3388   .debug_str:000000000000040d .LASF7
+     /tmp/ccqertMU.s:3368   .debug_str:000000000000035b .LASF8
+     /tmp/ccqertMU.s:3458   .debug_str:00000000000005dc .LASF9
+     /tmp/ccqertMU.s:3322   .debug_str:000000000000024d .LASF10
+     /tmp/ccqertMU.s:3404   .debug_str:000000000000048f .LASF11
+     /tmp/ccqertMU.s:3446   .debug_str:0000000000000583 .LASF12
+     /tmp/ccqertMU.s:3272   .debug_str:0000000000000116 .LASF13
+     /tmp/ccqertMU.s:3246   .debug_str:0000000000000039 .LASF14
+     /tmp/ccqertMU.s:3280   .debug_str:000000000000016d .LASF15
+     /tmp/ccqertMU.s:3420   .debug_str:00000000000004f6 .LASF16
+     /tmp/ccqertMU.s:3296   .debug_str:00000000000001c0 .LASF17
+     /tmp/ccqertMU.s:3400   .debug_str:0000000000000475 .LASF18
+     /tmp/ccqertMU.s:3464   .debug_str:0000000000000605 .LASF107
+     /tmp/ccqertMU.s:3330   .debug_str:0000000000000284 .LASF108
+     /tmp/ccqertMU.s:3350   .debug_str:00000000000002f7 .LASF109
+     /tmp/ccqertMU.s:3344   .debug_str:00000000000002d2 .LASF110
+     /tmp/ccqertMU.s:3252   .debug_str:000000000000005f .LASF111
+     /tmp/ccqertMU.s:3418   .debug_str:00000000000004f1 .LASF19
+     /tmp/ccqertMU.s:3276   .debug_str:0000000000000139 .LASF21
+     /tmp/ccqertMU.s:3392   .debug_str:0000000000000434 .LASF23
+     /tmp/ccqertMU.s:3396   .debug_str:0000000000000446 .LASF25
+     /tmp/ccqertMU.s:3360   .debug_str:0000000000000334 .LASF20
+     /tmp/ccqertMU.s:3256   .debug_str:0000000000000071 .LASF22
+     /tmp/ccqertMU.s:3250   .debug_str:0000000000000055 .LASF24
+     /tmp/ccqertMU.s:3342   .debug_str:00000000000002bd .LASF26
+     /tmp/ccqertMU.s:3336   .debug_str:00000000000002a4 .LASF27
+     /tmp/ccqertMU.s:3408   .debug_str:00000000000004aa .LASF28
+     /tmp/ccqertMU.s:3416   .debug_str:00000000000004e3 .LASF29
+     /tmp/ccqertMU.s:3258   .debug_str:0000000000000088 .LASF30
+     /tmp/ccqertMU.s:3414   .debug_str:00000000000004de .LASF112
+     /tmp/ccqertMU.s:3422   .debug_str:000000000000050c .LASF113
+     /tmp/ccqertMU.s:3462   .debug_str:00000000000005f5 .LASF114
+     /tmp/ccqertMU.s:3456   .debug_str:00000000000005d0 .LASF53
+     /tmp/ccqertMU.s:3398   .debug_str:000000000000045d .LASF67
+     /tmp/ccqertMU.s:3304   .debug_str:00000000000001e8 .LASF115
+     /tmp/ccqertMU.s:3378   .debug_str:00000000000003b3 .LASF86
+     /tmp/ccqertMU.s:3340   .debug_str:00000000000002b8 .LASF31
+     /tmp/ccqertMU.s:3284   .debug_str:000000000000017e .LASF32
+     /tmp/ccqertMU.s:3466   .debug_str:0000000000000619 .LASF33
+     /tmp/ccqertMU.s:3338   .debug_str:00000000000002af .LASF34
+     /tmp/ccqertMU.s:3240   .debug_str:0000000000000009 .LASF35
+     /tmp/ccqertMU.s:3290   .debug_str:000000000000019b .LASF36
+     /tmp/ccqertMU.s:3278   .debug_str:0000000000000145 .LASF116
+     /tmp/ccqertMU.s:3372   .debug_str:000000000000037b .LASF117
+     /tmp/ccqertMU.s:3328   .debug_str:0000000000000271 .LASF118
+     /tmp/ccqertMU.s:3248   .debug_str:0000000000000049 .LASF37
+     /tmp/ccqertMU.s:3312   .debug_str:0000000000000206 .LASF38
+GAS LISTING /tmp/ccqertMU.s 			page 16
+
+
+     /tmp/ccqertMU.s:3242   .debug_str:0000000000000011 .LASF39
+     /tmp/ccqertMU.s:3292   .debug_str:00000000000001a9 .LASF40
+     /tmp/ccqertMU.s:3476   .debug_str:00000000000006ec .LASF41
+     /tmp/ccqertMU.s:3406   .debug_str:000000000000049e .LASF42
+     /tmp/ccqertMU.s:3402   .debug_str:000000000000047f .LASF43
+     /tmp/ccqertMU.s:3430   .debug_str:0000000000000533 .LASF44
+     /tmp/ccqertMU.s:3474   .debug_str:00000000000006e0 .LASF45
+     /tmp/ccqertMU.s:3366   .debug_str:0000000000000350 .LASF46
+     /tmp/ccqertMU.s:3440   .debug_str:0000000000000566 .LASF47
+     /tmp/ccqertMU.s:3482   .debug_str:0000000000000724 .LASF48
+     /tmp/ccqertMU.s:3444   .debug_str:0000000000000578 .LASF49
+     /tmp/ccqertMU.s:3238   .debug_str:0000000000000000 .LASF50
+     /tmp/ccqertMU.s:3302   .debug_str:00000000000001e2 .LASF51
+     /tmp/ccqertMU.s:3288   .debug_str:0000000000000194 .LASF52
+     /tmp/ccqertMU.s:3294   .debug_str:00000000000001b4 .LASF119
+     /tmp/ccqertMU.s:3300   .debug_str:00000000000001dc .LASF54
+     /tmp/ccqertMU.s:3286   .debug_str:0000000000000184 .LASF55
+     /tmp/ccqertMU.s:3270   .debug_str:000000000000010e .LASF56
+     /tmp/ccqertMU.s:3260   .debug_str:00000000000000ac .LASF57
+     /tmp/ccqertMU.s:3354   .debug_str:0000000000000315 .LASF58
+     /tmp/ccqertMU.s:3390   .debug_str:0000000000000420 .LASF59
+     /tmp/ccqertMU.s:3308   .debug_str:00000000000001fc .LASF60
+     /tmp/ccqertMU.s:3480   .debug_str:0000000000000715 .LASF61
+     /tmp/ccqertMU.s:3394   .debug_str:000000000000043f .LASF62
+     /tmp/ccqertMU.s:3324   .debug_str:000000000000025b .LASF63
+     /tmp/ccqertMU.s:3472   .debug_str:00000000000006d0 .LASF64
+     /tmp/ccqertMU.s:3262   .debug_str:00000000000000be .LASF65
+     /tmp/ccqertMU.s:3380   .debug_str:00000000000003ca .LASF66
+     /tmp/ccqertMU.s:3448   .debug_str:0000000000000592 .LASF68
+     /tmp/ccqertMU.s:3460   .debug_str:00000000000005ec .LASF69
+     /tmp/ccqertMU.s:3274   .debug_str:0000000000000126 .LASF70
+     /tmp/ccqertMU.s:3310   .debug_str:0000000000000201 .LASF71
+     /tmp/ccqertMU.s:3434   .debug_str:000000000000054e .LASF72
+     /tmp/ccqertMU.s:3450   .debug_str:00000000000005af .LASF73
+     /tmp/ccqertMU.s:3332   .debug_str:0000000000000298 .LASF74
+     /tmp/ccqertMU.s:3442   .debug_str:0000000000000573 .LASF75
+     /tmp/ccqertMU.s:3364   .debug_str:0000000000000347 .LASF76
+     /tmp/ccqertMU.s:3438   .debug_str:0000000000000560 .LASF77
+     /tmp/ccqertMU.s:3452   .debug_str:00000000000005b5 .LASF78
+     /tmp/ccqertMU.s:3454   .debug_str:00000000000005bb .LASF79
+     /tmp/ccqertMU.s:3316   .debug_str:0000000000000226 .LASF80
+     /tmp/ccqertMU.s:3478   .debug_str:00000000000006fb .LASF81
+     /tmp/ccqertMU.s:3426   .debug_str:0000000000000519 .LASF82
+     /tmp/ccqertMU.s:3244   .debug_str:000000000000001e .LASF83
+     /tmp/ccqertMU.s:3382   .debug_str:00000000000003da .LASF84
+     /tmp/ccqertMU.s:3412   .debug_str:00000000000004c5 .LASF85
+     /tmp/ccqertMU.s:3266   .debug_str:00000000000000ee .LASF87
+     /tmp/ccqertMU.s:3374   .debug_str:0000000000000384 .LASF120
+     /tmp/ccqertMU.s:3410   .debug_str:00000000000004c0 .LASF88
+     /tmp/ccqertMU.s:3282   .debug_str:0000000000000179 .LASF92
+     /tmp/ccqertMU.s:3264   .debug_str:00000000000000d9 .LASF93
+     /tmp/ccqertMU.s:329    .text:0000000000000194 .LFB34
+     /tmp/ccqertMU.s:473    .text:0000000000000234 .LFE34
+     /tmp/ccqertMU.s:3362   .debug_str:0000000000000340 .LASF90
+     /tmp/ccqertMU.s:2863   .debug_loc:0000000000000000 .LLST18
+     /tmp/ccqertMU.s:3254   .debug_str:0000000000000067 .LASF89
+     /tmp/ccqertMU.s:2881   .debug_loc:000000000000004c .LLST19
+GAS LISTING /tmp/ccqertMU.s 			page 17
+
+
+     /tmp/ccqertMU.s:367    .text:00000000000001bc .LBB72
+     /tmp/ccqertMU.s:444    .text:0000000000000214 .LBE72
+     /tmp/ccqertMU.s:2888   .debug_loc:000000000000006f .LLST23
+     /tmp/ccqertMU.s:3204   .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/ccqertMU.s:2900   .debug_loc:00000000000000a6 .LLST24
+     /tmp/ccqertMU.s:374    .text:00000000000001c4 .LBB74
+     /tmp/ccqertMU.s:2907   .debug_loc:00000000000000c9 .LLST25
+     /tmp/ccqertMU.s:2922   .debug_loc:0000000000000103 .LLST26
+     /tmp/ccqertMU.s:407    .text:00000000000001dc .LBB76
+     /tmp/ccqertMU.s:413    .text:00000000000001e0 .LBE76
+     /tmp/ccqertMU.s:2929   .debug_loc:0000000000000126 .LLST27
+     /tmp/ccqertMU.s:383    .text:00000000000001c8 .LBB79
+     /tmp/ccqertMU.s:390    .text:00000000000001cc .LBE79
+     /tmp/ccqertMU.s:2938   .debug_loc:000000000000014b .LLST28
+     /tmp/ccqertMU.s:2946   .debug_loc:000000000000016f .LLST29
+     /tmp/ccqertMU.s:394    .text:00000000000001d4 .LVL35
+     /tmp/ccqertMU.s:350    .text:00000000000001b4 .LBB68
+     /tmp/ccqertMU.s:357    .text:00000000000001b8 .LBE68
+     /tmp/ccqertMU.s:2953   .debug_loc:0000000000000192 .LLST20
+     /tmp/ccqertMU.s:2961   .debug_loc:00000000000001b6 .LLST21
+     /tmp/ccqertMU.s:359    .text:00000000000001b8 .LBB70
+     /tmp/ccqertMU.s:365    .text:00000000000001bc .LBE70
+     /tmp/ccqertMU.s:2968   .debug_loc:00000000000001d9 .LLST22
+     /tmp/ccqertMU.s:446    .text:0000000000000214 .LBB83
+     /tmp/ccqertMU.s:453    .text:0000000000000218 .LBE83
+     /tmp/ccqertMU.s:2977   .debug_loc:00000000000001fe .LLST30
+     /tmp/ccqertMU.s:2985   .debug_loc:0000000000000222 .LLST31
+     /tmp/ccqertMU.s:303    .text:0000000000000194 .LFE33
+     /tmp/ccqertMU.s:3326   .debug_str:000000000000026c .LASF91
+     /tmp/ccqertMU.s:2992   .debug_loc:0000000000000245 .LLST14
+     /tmp/ccqertMU.s:233    .text:0000000000000120 .LBB60
+     /tmp/ccqertMU.s:3006   .debug_loc:000000000000027e .LLST15
+     /tmp/ccqertMU.s:3017   .debug_loc:00000000000002b4 .LLST16
+     /tmp/ccqertMU.s:241    .text:000000000000012c .LBB62
+     /tmp/ccqertMU.s:3024   .debug_loc:00000000000002d7 .LLST17
+     /tmp/ccqertMU.s:257    .text:0000000000000154 .LVL23
+     /tmp/ccqertMU.s:229    .text:000000000000011c .LVL20
+     /tmp/ccqertMU.s:270    .text:0000000000000168 .LVL25
+     /tmp/ccqertMU.s:274    .text:0000000000000174 .LVL26
+     /tmp/ccqertMU.s:112    .text:0000000000000088 .LFB32
+     /tmp/ccqertMU.s:198    .text:00000000000000f4 .LFE32
+     /tmp/ccqertMU.s:3033   .debug_loc:00000000000002fc .LLST7
+     /tmp/ccqertMU.s:3062   .debug_loc:0000000000000371 .LLST8
+     /tmp/ccqertMU.s:126    .text:0000000000000098 .LBB52
+     /tmp/ccqertMU.s:3069   .debug_loc:0000000000000394 .LLST9
+     /tmp/ccqertMU.s:3099   .debug_loc:00000000000003fb .LLST10
+     /tmp/ccqertMU.s:128    .text:0000000000000098 .LBB54
+     /tmp/ccqertMU.s:134    .text:000000000000009c .LBE54
+     /tmp/ccqertMU.s:3106   .debug_loc:000000000000041e .LLST11
+     /tmp/ccqertMU.s:164    .text:00000000000000d0 .LBB57
+     /tmp/ccqertMU.s:171    .text:00000000000000d4 .LBE57
+     /tmp/ccqertMU.s:3115   .debug_loc:0000000000000443 .LLST12
+     /tmp/ccqertMU.s:3123   .debug_loc:0000000000000467 .LLST13
+     /tmp/ccqertMU.s:175    .text:00000000000000dc .LVL15
+     /tmp/ccqertMU.s:10     .text:0000000000000000 .LFB31
+     /tmp/ccqertMU.s:106    .text:0000000000000088 .LFE31
+     /tmp/ccqertMU.s:3130   .debug_loc:000000000000048a .LLST0
+GAS LISTING /tmp/ccqertMU.s 			page 18
+
+
+     /tmp/ccqertMU.s:28     .text:000000000000001c .LBB44
+     /tmp/ccqertMU.s:36     .text:0000000000000020 .LBE44
+     /tmp/ccqertMU.s:3144   .debug_loc:00000000000004c3 .LLST1
+     /tmp/ccqertMU.s:41     .text:0000000000000024 .LBB46
+     /tmp/ccqertMU.s:77     .text:000000000000005c .LBE46
+     /tmp/ccqertMU.s:3151   .debug_loc:00000000000004e6 .LLST2
+     /tmp/ccqertMU.s:3158   .debug_loc:0000000000000509 .LLST3
+     /tmp/ccqertMU.s:43     .text:0000000000000024 .LBB48
+     /tmp/ccqertMU.s:52     .text:000000000000002c .LBE48
+     /tmp/ccqertMU.s:3167   .debug_loc:000000000000052e .LLST4
+     /tmp/ccqertMU.s:83     .text:0000000000000068 .LBB50
+     /tmp/ccqertMU.s:91     .text:0000000000000070 .LBE50
+     /tmp/ccqertMU.s:3176   .debug_loc:0000000000000553 .LLST5
+     /tmp/ccqertMU.s:3184   .debug_loc:0000000000000577 .LLST6
+     /tmp/ccqertMU.s:95     .text:0000000000000078 .LVL8
+     /tmp/ccqertMU.s:3348   .debug_str:00000000000002eb .LASF94
+     /tmp/ccqertMU.s:3298   .debug_str:00000000000001d6 .LASF95
+     /tmp/ccqertMU.s:3436   .debug_str:000000000000055a .LASF96
+     /tmp/ccqertMU.s:3320   .debug_str:000000000000023d .LASF98
+     /tmp/ccqertMU.s:3352   .debug_str:000000000000030f .LASF97
+     /tmp/ccqertMU.s:3470   .debug_str:00000000000006c3 .LASF99
+     /tmp/ccqertMU.s:3356   .debug_str:000000000000031f .LASF100
+     /tmp/ccqertMU.s:3432   .debug_str:000000000000053e .LASF101
+     /tmp/ccqertMU.s:3346   .debug_str:00000000000002dc .LASF102
+     /tmp/ccqertMU.s:3376   .debug_str:000000000000039b .LASF103
+     /tmp/ccqertMU.s:3314   .debug_str:0000000000000211 .LASF121
+     /tmp/ccqertMU.s:3318   .debug_str:000000000000022d .LASF122
+     /tmp/ccqertMU.s:332    .text:0000000000000194 .LVL28
+     /tmp/ccqertMU.s:371    .text:00000000000001c4 .LVL32
+     /tmp/ccqertMU.s:462    .text:0000000000000224 .LVL42
+     /tmp/ccqertMU.s:363    .text:00000000000001bc .LVL31
+     /tmp/ccqertMU.s:468    .text:000000000000022c .LVL44
+     /tmp/ccqertMU.s:465    .text:0000000000000228 .LVL43
+     /tmp/ccqertMU.s:379    .text:00000000000001c8 .LVL33
+     /tmp/ccqertMU.s:404    .text:00000000000001dc .LVL37
+     /tmp/ccqertMU.s:439    .text:0000000000000214 .LVL40
+     /tmp/ccqertMU.s:425    .text:00000000000001f8 .LVL39
+     /tmp/ccqertMU.s:411    .text:00000000000001e0 .LVL38
+     /tmp/ccqertMU.s:388    .text:00000000000001cc .LVL34
+     /tmp/ccqertMU.s:349    .text:00000000000001b4 .LVL29
+     /tmp/ccqertMU.s:355    .text:00000000000001b8 .LVL30
+     /tmp/ccqertMU.s:451    .text:0000000000000218 .LVL41
+     /tmp/ccqertMU.s:209    .text:00000000000000f4 .LVL18
+     /tmp/ccqertMU.s:226    .text:0000000000000114 .LVL19
+     /tmp/ccqertMU.s:232    .text:0000000000000120 .LVL21
+     /tmp/ccqertMU.s:262    .text:000000000000015c .LVL24
+     /tmp/ccqertMU.s:283    .text:0000000000000178 .LVL27
+     /tmp/ccqertMU.s:240    .text:000000000000012c .LVL22
+     /tmp/ccqertMU.s:115    .text:0000000000000088 .LVL9
+     /tmp/ccqertMU.s:147    .text:00000000000000b8 .LVL12
+     /tmp/ccqertMU.s:159    .text:00000000000000d0 .LVL13
+     /tmp/ccqertMU.s:186    .text:00000000000000ec .LVL16
+     /tmp/ccqertMU.s:193    .text:00000000000000f0 .LVL17
+     /tmp/ccqertMU.s:125    .text:0000000000000098 .LVL10
+     /tmp/ccqertMU.s:132    .text:000000000000009c .LVL11
+     /tmp/ccqertMU.s:169    .text:00000000000000d4 .LVL14
+     /tmp/ccqertMU.s:14     .text:0000000000000000 .LVL0
+GAS LISTING /tmp/ccqertMU.s 			page 19
+
+
+     /tmp/ccqertMU.s:27     .text:000000000000001c .LVL1
+     /tmp/ccqertMU.s:34     .text:0000000000000020 .LVL2
+     /tmp/ccqertMU.s:40     .text:0000000000000024 .LVL3
+     /tmp/ccqertMU.s:74     .text:000000000000005c .LVL5
+     /tmp/ccqertMU.s:50     .text:000000000000002c .LVL4
+     /tmp/ccqertMU.s:82     .text:0000000000000068 .LVL6
+     /tmp/ccqertMU.s:89     .text:0000000000000070 .LVL7
+     /tmp/ccqertMU.s:480    .debug_info:0000000000000000 .Ldebug_info0
+     /tmp/ccqertMU.s:162    .text:00000000000000d0 .LBE52
+     /tmp/ccqertMU.s:189    .text:00000000000000ec .LBB59
+     /tmp/ccqertMU.s:196    .text:00000000000000f4 .LBE59
+     /tmp/ccqertMU.s:266    .text:000000000000015c .LBE60
+     /tmp/ccqertMU.s:277    .text:0000000000000174 .LBB67
+     /tmp/ccqertMU.s:287    .text:0000000000000178 .LBE67
+     /tmp/ccqertMU.s:264    .text:000000000000015c .LBE62
+     /tmp/ccqertMU.s:279    .text:0000000000000174 .LBB65
+     /tmp/ccqertMU.s:285    .text:0000000000000178 .LBE65
+     /tmp/ccqertMU.s:373    .text:00000000000001c4 .LBB73
+     /tmp/ccqertMU.s:395    .text:00000000000001d4 .LBE73
+     /tmp/ccqertMU.s:402    .text:00000000000001dc .LBB82
+     /tmp/ccqertMU.s:443    .text:0000000000000214 .LBE82
+     /tmp/ccqertMU.s:381    .text:00000000000001c8 .LBE74
+     /tmp/ccqertMU.s:405    .text:00000000000001dc .LBB81
+     /tmp/ccqertMU.s:442    .text:0000000000000214 .LBE81
+     /tmp/ccqertMU.s:306    .gcc_except_table:0000000000000000 .LLSDA33
+
+UNDEFINED SYMBOLS
+_ZN3PCB7runningE
+_Z15thread_dispatchv
+_ZN9Scheduler3putEP3PCB
+_Znwm
+_Znam
+_ZdlPv
+_Unwind_Resume
+__gxx_personality_v0
