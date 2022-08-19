@@ -4,14 +4,8 @@ Thread::Thread(void (*body)(void *), void *arg) {
     thread_alloc(&myHandle, body, arg);
 }
 
-
-Thread::~Thread() {
-    thread_exit(); //nmp
-}
-
-
 int Thread::start() {
-    if(myHandle) thread_scheduler(myHandle);
+    thread_scheduler(myHandle); //stavlja nit u scheduler
     return 0;
 }
 
@@ -20,16 +14,20 @@ void Thread::dispatch() {
 }
 
 Thread::Thread() {
-    myHandle = nullptr;
+    thread_alloc(&myHandle, runWrapper, this); //samo alocira nit
+}
+
+void Thread::runWrapper(void *arg) {
+    ((Thread*)arg)->run();
 }
 
 Semaphore::Semaphore(unsigned int init) {
     sem_open(&myHandle, init);
 }
-
+/*
 Semaphore::~Semaphore() {
     sem_close(myHandle);
-}
+}*/
 
 int Semaphore::wait() {
     return sem_wait(myHandle);

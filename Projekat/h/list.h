@@ -1,6 +1,8 @@
 #ifndef PROJEKAT_LIST_H
 #define PROJEKAT_LIST_H
 
+#include "../lib/hw.h"
+
 template<typename T>
 
 class List
@@ -15,6 +17,8 @@ private:
 
     Elem *head, *tail;
 
+    uint64 cnt = 0;
+
 public:
     List() : head(0), tail(0) {}
 
@@ -22,10 +26,13 @@ public:
 
     List<T> &operator=(const List<T> &) = delete;
 
+    uint64 getCnt() { return cnt; }
+
     void addFirst(T *data) {
         Elem *elem = new Elem(data, head);
         head = elem;
         if (!tail) { tail = head; }
+        cnt++;
     }
 
     void addLast(T *data) {
@@ -36,6 +43,7 @@ public:
         } else {
             head = tail = elem;
         }
+        cnt++;
     }
 
     T *removeFirst() {
@@ -47,6 +55,7 @@ public:
 
         T *ret = elem->data;
         delete elem;
+        cnt--;
         return ret;
     }
 
@@ -69,6 +78,7 @@ public:
 
         T *ret = elem->data;
         delete elem;
+        cnt--;
         return ret;
     }
 

@@ -5,13 +5,13 @@
 #include "pcb.h"
 #include "queue.h"
 #include "../h/syscall_c.h"
-
+#include "../h/list.h"
 
 class Sem {
 private:
     int val;
     bool active;
-    Queue<PCB*> blocked;
+    List<PCB> blocked;
 
     Sem(uint32 init = 1) : val(init), active(true) {}
 

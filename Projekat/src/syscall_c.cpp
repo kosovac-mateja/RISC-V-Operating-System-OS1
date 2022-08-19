@@ -153,4 +153,6 @@ void thread_alloc(thread_t* handle, void(*start_routine)(void*), void* arg) {
 void thread_scheduler(thread_t handle) {
     __asm__ volatile("mv x11, %0" : : "r" (handle));
     __asm__ volatile("mv x10, %0" : : "r" (TSCHEDULER_CODE));
+
+    syscall();
 }
