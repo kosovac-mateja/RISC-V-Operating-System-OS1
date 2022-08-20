@@ -1,10 +1,12 @@
 #include "../h/sem.h"
 
+#include "../h/riscv.h"
+#include "../lib/console.h"
+
 void Sem::block() {
     blocked.addLast(PCB::running);
-    putc('c');
     PCB::running->setBlocked(true);
-    thread_dispatch();
+    PCB::yield();
 }
 
 void Sem::unblock() {

@@ -7,7 +7,6 @@
 
 #include "../h/syscall_c.h"
 #include "printing.hpp"
-#include "../lib/console.h"
 
 class Buffer {
 private:

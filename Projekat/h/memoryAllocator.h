@@ -26,6 +26,8 @@ class MemoryAllocator {
 
     static bool initialized;
 
+    MemoryAllocator() {}
+
 public:
     static void* mem_alloc(size_t);
 

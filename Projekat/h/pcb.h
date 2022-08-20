@@ -28,8 +28,15 @@ public:
 
     static PCB *running;
 
+    static uint64 timeSliceCnt;
+
+    uint64 timeSlice;
+
+    static void dispatch();
+
 private:
     explicit PCB(Body body, uint64* stck, void* ar, bool put) :
+            timeSlice(DEFAULT_TIME_SLICE),
             body(body),
             arg(ar),
             stack(body != nullptr && stck != nullptr ? stck - DEFAULT_STACK_SIZE * sizeof(uint64) + 1 : nullptr),
@@ -37,9 +44,11 @@ private:
                      stack != nullptr ? (uint64) stck : 0
                     }),
             finished(false),
-            blocked(false) {
-        if (body != nullptr && put) { Scheduler::put(this); }
+            blocked(false)
+            { if (body != nullptr && put) { Scheduler::put(this); }
     }
+
+    PCB() {}
 
     struct Context {
         uint64 ra;
@@ -54,8 +63,6 @@ private:
     bool blocked;
 
     static void contextSwitch(Context *oldContext, Context *runningContext);
-
-    static void dispatch();
 };
 
 #endif

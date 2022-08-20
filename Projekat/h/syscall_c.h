@@ -2,7 +2,6 @@
 #define PROJEKAT_SYSCALL_C_H
 
 #include "../lib/hw.h"
-#include "../lib/mem.h"
 
 static const uint64 MALLOC_CODE = 0x01;
 static const uint64 MFREE_CODE = 0x02;
@@ -29,7 +28,7 @@ typedef Sem* sem_t;
 
 const int EOF = -1;
 
-void syscall();
+void syscall(); //zajednicka funkcija za sve pzoive
 
 void* mem_alloc (size_t size);
 
@@ -55,8 +54,9 @@ void putc(char c);
 
 //dodatni sistemski pozivi
 
+// alociranje niti bez stavljanja u scheduler
 void thread_alloc(thread_t* handle, void(*start_routine)(void*), void* arg);
-
+//stavljanje niti u scheduler
 void thread_scheduler(thread_t handle);
 
 #endif

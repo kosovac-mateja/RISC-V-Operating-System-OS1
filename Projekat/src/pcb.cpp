@@ -2,6 +2,7 @@
 #include "../h/riscv.h"
 
 PCB *PCB::running = nullptr;
+uint64 PCB::timeSliceCnt = 0;
 
 PCB *PCB::createProcess(Body body, uint64* stack, void* arg, bool put) {
     return new PCB(body, stack, arg, put);

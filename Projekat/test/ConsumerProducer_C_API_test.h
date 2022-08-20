@@ -6,7 +6,6 @@
 #define XV6_CONSUMERPRODUCER_C_API_TEST_H
 
 #include "../h/syscall_c.h"
-#include "../lib/console.h"
 
 #include "buffer.hpp"
 
@@ -25,7 +24,7 @@ void producerKeyboard(void *arg) {
 
     int key;
     int i = 0;
-    while ((key = __getc()) != 0x1b) {
+    while ((key = getc()) != 0x1b) {
         data->buffer->put(key);
         i++;
 
@@ -71,7 +70,7 @@ void consumer(void *arg) {
         }
 
         if (i % 80 == 0) {
-            __putc('\n');
+            putc('\n');
         }
     }
 
@@ -84,23 +83,23 @@ void consumer(void *arg) {
 }
 
 void producerConsumer_C_API() {
-    //char input[30];
-    int n = 6, threadNum = 5;
+    char input[30];
+    int n, threadNum;
 
-    /*printString("Unesite broj proizvodjaca?\n");
+    printString("Unesite broj proizvodjaca?\n");
     getString(input, 30);
     threadNum = stringToInt(input);
 
     printString("Unesite velicinu bafera?\n");
     getString(input, 30);
     n = stringToInt(input);
-    */
+
     printString("Broj proizvodjaca "); printInt(threadNum);
     printString(" i velicina bafera "); printInt(n);
     printString(".\n");
 
     if(threadNum > n) {
-        printString("Broj proizvodjaca ne sme biti veci od velicine bafera!\n");
+        printString("Broj proizvodjaca ne sme biti manji od velicine bafera!\n");
         return;
     } else if (threadNum < 1) {
         printString("Broj proizvodjaca mora biti veci od nula!\n");

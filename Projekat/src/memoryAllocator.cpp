@@ -1,7 +1,7 @@
 #include "../h/memoryAllocator.h"
 
-FreeSegment* MemoryAllocator::freeSegmentHead = nullptr;
-UsedSegment* MemoryAllocator::usedSegmentHead = nullptr;
+FreeSegment* MemoryAllocator::freeSegmentHead;
+UsedSegment* MemoryAllocator::usedSegmentHead ;
 bool MemoryAllocator::initialized = false;
 
 void *MemoryAllocator::mem_alloc(size_t size) {
@@ -22,9 +22,13 @@ void *MemoryAllocator::mem_alloc(size_t size) {
 
     size_t remainingSize = curr->size - size;
     curr->size = size;
-    if(remainingSize < 2 * MEM_BLOCK_SIZE) //ako je preostali prostor manji od jednog bloka(drugi je za zaglavlja)
-        freeSegmentHead = nullptr;
-    else {
+    if(remainingSize < 2 * MEM_BLOCK_SIZE) { //ako je preostali prostor manji od jednog bloka(drugi je za zaglavlja)
+        if(freeSegmentHead == curr) freeSegmentHead = curr->next;
+
+        if(curr->next) curr->next->prev = curr->prev;
+
+        if(curr->prev) curr->prev->next = curr->next;
+    } else {
         //pravljenje novog segmenta
         size_t offset = MEM_BLOCK_SIZE + size;
         FreeSegment* newSegm = (FreeSegment*)((char*)curr + offset);
@@ -66,10 +70,11 @@ void *MemoryAllocator::mem_alloc(size_t size) {
 
 
 void MemoryAllocator::mem_init() {
-    freeSegmentHead = (FreeSegment*)HEAP_START_ADDR;
+    freeSegmentHead = (FreeSegment*)HEAP_START_ADDR; //pocetak heap-a
+
     freeSegmentHead->size = (((size_t)HEAP_END_ADDR - (size_t)HEAP_START_ADDR) / MEM_BLOCK_SIZE - 1) * MEM_BLOCK_SIZE;
-    freeSegmentHead->next = nullptr;
-    freeSegmentHead->prev = nullptr;
+
+    freeSegmentHead->next = nullptr; freeSegmentHead->prev = nullptr;
 
     usedSegmentHead = nullptr;
 }
@@ -112,6 +117,7 @@ int MemoryAllocator::mem_free(void *addr) {
 
 void MemoryAllocator::tryToJoin(FreeSegment *curr) {
     if (!curr) return;
+
     //da li je kraj jednog bloka jednak pocetku drugog
     if (curr->next && (char*)curr + curr->size == (char*)(curr->next) - MEM_BLOCK_SIZE) {
         curr->size += curr->next->size + MEM_BLOCK_SIZE;

@@ -5,8 +5,7 @@
 
 template<typename T>
 
-class List
-{
+class List {
 private:
     struct Elem {
         T *data;

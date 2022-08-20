@@ -1,11 +1,10 @@
 #ifndef PROJEKAT_SEM_H
 #define PROJEKAT_SEM_H
 
-#include "../lib/hw.h"
 #include "pcb.h"
 #include "queue.h"
-#include "../h/syscall_c.h"
-#include "../h/list.h"
+#include "syscall_c.h"
+#include "list.h"
 
 class Sem {
 private:

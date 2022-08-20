@@ -2,7 +2,7 @@
 #define _PRINTING_HPP_
 
 #include "../h/syscall_c.h"
-#include "../lib/console.h"
+#include "../lib/mem.h"
 
 typedef unsigned long uint64;
 

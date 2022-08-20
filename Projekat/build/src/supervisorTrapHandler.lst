@@ -1,4 +1,4 @@
-GAS LISTING /tmp/cc5gwuU0.s 			page 1
+GAS LISTING /tmp/cch8ARcO.s 			page 1
 
 
    1              		.file	"supervisorTrapHandler.cpp"
@@ -6,41 +6,61 @@ GAS LISTING /tmp/cc5gwuU0.s 			page 1
    3              		.option norelax
    4              		.text
    5              	.Ltext0:
-   6              		.align	2
-   7              		.globl	handleSupervisorTrap
-   9              	handleSupervisorTrap:
-  10              	.LFB48:
-  11              		.file 1 "src/supervisorTrapHandler.cpp"
+   6              		.section	.rodata.str1.8,"aMS",@progbits,1
+   7              		.align	3
+   8              	.LC0:
+   9 0000 53455043 		.string	"SEPC: "
+   9      3A2000
+  10 0007 00       		.align	3
+  11              	.LC1:
+  12 0008 53434155 		.string	"SCAUSE: "
+  12      53453A20 
+  12      00
+  13              		.text
+  14              		.align	2
+  15              		.globl	handleSupervisorTrap
+  17              	handleSupervisorTrap:
+  18              	.LFB54:
+  19              		.file 1 "src/supervisorTrapHandler.cpp"
    1:src/supervisorTrapHandler.cpp **** #include "../h/memoryAllocator.h"
    2:src/supervisorTrapHandler.cpp **** #include "../h/pcb.h"
    3:src/supervisorTrapHandler.cpp **** #include "../h/syscall_c.h"
    4:src/supervisorTrapHandler.cpp **** #include "../h/sem.h"
    5:src/supervisorTrapHandler.cpp **** #include "../lib/console.h"
    6:src/supervisorTrapHandler.cpp **** #include "../h/riscv.h"
-   7:src/supervisorTrapHandler.cpp **** 
-   8:src/supervisorTrapHandler.cpp **** extern "C" void handleSupervisorTrap() {
-  12              		.loc 1 8 40
-  13              		.cfi_startproc
-  14 0000 130101FD 		addi	sp,sp,-48
-  15              		.cfi_def_cfa_offset 48
-  16 0004 23341102 		sd	ra,40(sp)
-  17 0008 23308102 		sd	s0,32(sp)
-  18 000c 233C9100 		sd	s1,24(sp)
-  19              		.cfi_offset 1, -8
-  20              		.cfi_offset 8, -16
-  21              		.cfi_offset 9, -24
-  22 0010 13040103 		addi	s0,sp,48
-  23              		.cfi_def_cfa 8, 0
-   9:src/supervisorTrapHandler.cpp ****     uint64 scause = Riscv::r_scause();
-  24              		.loc 1 9 5
-  25              	.LBB29:
-  26              	.LBB30:
-  27              		.file 2 "src/../h/riscv.h"
+   7:src/supervisorTrapHandler.cpp **** #include "../test/printing.hpp"
+   8:src/supervisorTrapHandler.cpp **** 
+   9:src/supervisorTrapHandler.cpp **** extern "C" void handleSupervisorTrap() {
+  20              		.loc 1 9 40
+  21              		.cfi_startproc
+  22 0000 130101FB 		addi	sp,sp,-80
+  23              		.cfi_def_cfa_offset 80
+  24 0004 23341104 		sd	ra,72(sp)
+  25 0008 23308104 		sd	s0,64(sp)
+  26 000c 233C9102 		sd	s1,56(sp)
+  27 0010 23382103 		sd	s2,48(sp)
+  28 0014 23343103 		sd	s3,40(sp)
+  29              		.cfi_offset 1, -8
+  30              		.cfi_offset 8, -16
+  31              		.cfi_offset 9, -24
+  32              		.cfi_offset 18, -32
+  33              		.cfi_offset 19, -40
+  34 0018 13040105 		addi	s0,sp,80
+  35              		.cfi_def_cfa 8, 0
+  10:src/supervisorTrapHandler.cpp **** 
+  11:src/supervisorTrapHandler.cpp ****     uint64 scause = Riscv::r_scause();
+  36              		.loc 1 11 5
+  37              	.LBB41:
+  38              	.LBB42:
+  39              		.file 2 "src/../h/riscv.h"
    1:src/../h/riscv.h **** #ifndef PROJEKAT_RISCV_H
    2:src/../h/riscv.h **** #define PROJEKAT_RISCV_H
    3:src/../h/riscv.h **** 
    4:src/../h/riscv.h **** #include "../lib/hw.h"
    5:src/../h/riscv.h **** 
+GAS LISTING /tmp/cch8ARcO.s 			page 2
+
+
    6:src/../h/riscv.h **** class Riscv
    7:src/../h/riscv.h **** {
    8:src/../h/riscv.h **** public:
@@ -58,9 +78,6 @@ GAS LISTING /tmp/cc5gwuU0.s 			page 1
   20:src/../h/riscv.h ****     static uint64 r_scause();
   21:src/../h/riscv.h **** 
   22:src/../h/riscv.h ****     // write register scause
-GAS LISTING /tmp/cc5gwuU0.s 			page 2
-
-
   23:src/../h/riscv.h ****     static void w_scause(uint64 scause);
   24:src/../h/riscv.h **** 
   25:src/../h/riscv.h ****     // read register sepc
@@ -101,6 +118,9 @@ GAS LISTING /tmp/cc5gwuU0.s 			page 1
   60:src/../h/riscv.h ****     static void w_sip(uint64 sip);
   61:src/../h/riscv.h **** 
   62:src/../h/riscv.h ****     enum BitMaskSstatus
+GAS LISTING /tmp/cch8ARcO.s 			page 3
+
+
   63:src/../h/riscv.h ****     {
   64:src/../h/riscv.h ****         SSTATUS_SIE = (1 << 1),
   65:src/../h/riscv.h ****         SSTATUS_SPIE = (1 << 5),
@@ -118,9 +138,6 @@ GAS LISTING /tmp/cc5gwuU0.s 			page 1
   77:src/../h/riscv.h **** 
   78:src/../h/riscv.h ****     // write register sstatus
   79:src/../h/riscv.h ****     static void w_sstatus(uint64 sstatus);
-GAS LISTING /tmp/cc5gwuU0.s 			page 3
-
-
   80:src/../h/riscv.h **** 
   81:src/../h/riscv.h **** private:
   82:src/../h/riscv.h **** 
@@ -129,455 +146,682 @@ GAS LISTING /tmp/cc5gwuU0.s 			page 1
   85:src/../h/riscv.h **** inline uint64 Riscv::r_scause()
   86:src/../h/riscv.h **** {
   87:src/../h/riscv.h ****     uint64 volatile scause;
-  28              		.loc 2 87 5
+  40              		.loc 2 87 5
   88:src/../h/riscv.h ****     __asm__ volatile ("csrr %[scause], scause" : [scause] "=r"(scause));
-  29              		.loc 2 88 5
-  30              		.loc 2 88 72 is_stmt 0
-  31              	#APP
-  32              	# 88 "src/../h/riscv.h" 1
+  41              		.loc 2 88 5
+  42              		.loc 2 88 72 is_stmt 0
+  43              	#APP
+  44              	# 88 "src/../h/riscv.h" 1
   89              	    return scause;
-  33              		csrr a5, scause
-  34              	# 0 "" 2
-  35              	#NO_APP
-  36 0018 233CF4FC 		sd	a5,-40(s0)
-  37              		.loc 2 89 5 is_stmt 1
-  38              		.loc 2 89 12 is_stmt 0
-  39 001c 033784FD 		ld	a4,-40(s0)
-  40              	.LVL0:
-  41              	.LBE30:
-  42              	.LBE29:
-  10:src/supervisorTrapHandler.cpp **** 
-  11:src/supervisorTrapHandler.cpp ****     if(scause == 9) {
-  43              		.loc 1 11 5 is_stmt 1
-  44              	.LBB31:
-  45 0020 93079000 		li	a5,9
-  46 0024 6304F702 		beq	a4,a5,.L25
-  12:src/supervisorTrapHandler.cpp ****         uint64 code;
-  13:src/supervisorTrapHandler.cpp ****         __asm__ volatile("mv %0, x10" : "=r" (code));
-  14:src/supervisorTrapHandler.cpp ****         switch (code) {
-  15:src/supervisorTrapHandler.cpp ****             case MALLOC_CODE: { //mem_alloc
-  16:src/supervisorTrapHandler.cpp ****                 size_t size;
-  17:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (size));
-  18:src/supervisorTrapHandler.cpp ****                 MemoryAllocator::mem_alloc(size);
-  19:src/supervisorTrapHandler.cpp ****                 /* VRATI POKAZIVAC IDIOTE*/
-  20:src/supervisorTrapHandler.cpp ****             }break;
-  21:src/supervisorTrapHandler.cpp **** 
-  22:src/supervisorTrapHandler.cpp ****             case MFREE_CODE: { //mem_free
-  23:src/supervisorTrapHandler.cpp ****                 void *ptr;
-  24:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (ptr));
-  25:src/supervisorTrapHandler.cpp ****                 MemoryAllocator::mem_free(ptr);
+  45              		csrr a5, scause
+  46              	# 0 "" 2
+  47              	#NO_APP
+  48 0020 2334F4FC 		sd	a5,-56(s0)
+  49              		.loc 2 89 5 is_stmt 1
+  50              		.loc 2 89 12 is_stmt 0
+  51 0024 833484FC 		ld	s1,-56(s0)
+  52              	.LVL0:
+  53              	.LBE42:
+  54              	.LBE41:
+  12:src/supervisorTrapHandler.cpp ****     uint64 sepc = Riscv::r_sepc();
+  55              		.loc 1 12 5 is_stmt 1
+  56              	.LBB43:
+  57              	.LBB44:
+  90:src/../h/riscv.h **** }
+  91:src/../h/riscv.h **** 
+  92:src/../h/riscv.h **** inline void Riscv::w_scause(uint64 scause)
+  93:src/../h/riscv.h **** {
+  94:src/../h/riscv.h ****     __asm__ volatile ("csrw scause, %[scause]" : : [scause] "r"(scause));
+  95:src/../h/riscv.h **** }
+  96:src/../h/riscv.h **** 
+  97:src/../h/riscv.h **** inline uint64 Riscv::r_sepc()
+  98:src/../h/riscv.h **** {
+  99:src/../h/riscv.h ****     uint64 volatile sepc;
+  58              		.loc 2 99 5
+GAS LISTING /tmp/cch8ARcO.s 			page 4
+
+
+ 100:src/../h/riscv.h ****     __asm__ volatile ("csrr %[sepc], sepc" : [sepc] "=r"(sepc));
+  59              		.loc 2 100 5
+  60              		.loc 2 100 64 is_stmt 0
+  61              	#APP
+  62              	# 100 "src/../h/riscv.h" 1
+ 101              	    return sepc;
+  63              		csrr a5, sepc
+  64              	# 0 "" 2
+  65              	#NO_APP
+  66 002c 2330F4FC 		sd	a5,-64(s0)
+  67              		.loc 2 101 5 is_stmt 1
+  68              		.loc 2 101 12 is_stmt 0
+  69 0030 033904FC 		ld	s2,-64(s0)
+  70              	.LVL1:
+  71              	.LBE44:
+  72              	.LBE43:
+  13:src/supervisorTrapHandler.cpp **** 
+  14:src/supervisorTrapHandler.cpp ****     uint64 sstatus = Riscv::r_sstatus();
+  73              		.loc 1 14 5 is_stmt 1
+  74              	.LBB45:
+  75              	.LBB46:
+ 102:src/../h/riscv.h **** }
+ 103:src/../h/riscv.h **** 
+ 104:src/../h/riscv.h **** inline void Riscv::w_sepc(uint64 sepc)
+ 105:src/../h/riscv.h **** {
+ 106:src/../h/riscv.h ****     __asm__ volatile ("csrw sepc, %[sepc]" : : [sepc] "r"(sepc));
+ 107:src/../h/riscv.h **** }
+ 108:src/../h/riscv.h **** 
+ 109:src/../h/riscv.h **** inline uint64 Riscv::r_stvec()
+ 110:src/../h/riscv.h **** {
+ 111:src/../h/riscv.h ****     uint64 volatile stvec;
+ 112:src/../h/riscv.h ****     __asm__ volatile ("csrr %[stvec], stvec" : [stvec] "=r"(stvec));
+ 113:src/../h/riscv.h ****     return stvec;
+ 114:src/../h/riscv.h **** }
+ 115:src/../h/riscv.h **** 
+ 116:src/../h/riscv.h **** inline void Riscv::w_stvec(uint64 stvec)
+ 117:src/../h/riscv.h **** {
+ 118:src/../h/riscv.h ****     __asm__ volatile ("csrw stvec, %[stvec]" : : [stvec] "r"(stvec));
+ 119:src/../h/riscv.h **** }
+ 120:src/../h/riscv.h **** 
+ 121:src/../h/riscv.h **** inline uint64 Riscv::r_stval()
+ 122:src/../h/riscv.h **** {
+ 123:src/../h/riscv.h ****     uint64 volatile stval;
+ 124:src/../h/riscv.h ****     __asm__ volatile ("csrr %[stval], stval" : [stval] "=r"(stval));
+ 125:src/../h/riscv.h ****     return stval;
+ 126:src/../h/riscv.h **** }
+ 127:src/../h/riscv.h **** 
+ 128:src/../h/riscv.h **** inline void Riscv::w_stval(uint64 stval)
+ 129:src/../h/riscv.h **** {
+ 130:src/../h/riscv.h ****     __asm__ volatile ("csrw stval, %[stval]" : : [stval] "r"(stval));
+ 131:src/../h/riscv.h **** }
+ 132:src/../h/riscv.h **** 
+ 133:src/../h/riscv.h **** inline void Riscv::ms_sip(uint64 mask)
+ 134:src/../h/riscv.h **** {
+ 135:src/../h/riscv.h ****     __asm__ volatile ("csrs sip, %[mask]" : : [mask] "r"(mask));
+ 136:src/../h/riscv.h **** }
+ 137:src/../h/riscv.h **** 
+GAS LISTING /tmp/cch8ARcO.s 			page 5
+
+
+ 138:src/../h/riscv.h **** inline void Riscv::mc_sip(uint64 mask)
+ 139:src/../h/riscv.h **** {
+ 140:src/../h/riscv.h ****     __asm__ volatile ("csrc sip, %[mask]" : : [mask] "r"(mask));
+ 141:src/../h/riscv.h **** }
+ 142:src/../h/riscv.h **** 
+ 143:src/../h/riscv.h **** inline uint64 Riscv::r_sip()
+ 144:src/../h/riscv.h **** {
+ 145:src/../h/riscv.h ****     uint64 volatile sip;
+ 146:src/../h/riscv.h ****     __asm__ volatile ("csrr %[sip], sip" : [sip] "=r"(sip));
+ 147:src/../h/riscv.h ****     return sip;
+ 148:src/../h/riscv.h **** }
+ 149:src/../h/riscv.h **** 
+ 150:src/../h/riscv.h **** inline void Riscv::w_sip(uint64 sip)
+ 151:src/../h/riscv.h **** {
+ 152:src/../h/riscv.h ****     __asm__ volatile ("csrw sip, %[sip]" : : [sip] "r"(sip));
+ 153:src/../h/riscv.h **** }
+ 154:src/../h/riscv.h **** 
+ 155:src/../h/riscv.h **** inline void Riscv::ms_sstatus(uint64 mask)
+ 156:src/../h/riscv.h **** {
+ 157:src/../h/riscv.h ****     __asm__ volatile ("csrs sstatus, %[mask]" : : [mask] "r"(mask));
+ 158:src/../h/riscv.h **** }
+ 159:src/../h/riscv.h **** 
+ 160:src/../h/riscv.h **** inline void Riscv::mc_sstatus(uint64 mask)
+ 161:src/../h/riscv.h **** {
+ 162:src/../h/riscv.h ****     __asm__ volatile ("csrc sstatus, %[mask]" : : [mask] "r"(mask));
+ 163:src/../h/riscv.h **** }
+ 164:src/../h/riscv.h **** 
+ 165:src/../h/riscv.h **** inline uint64 Riscv::r_sstatus()
+ 166:src/../h/riscv.h **** {
+ 167:src/../h/riscv.h ****     uint64 volatile sstatus;
+  76              		.loc 2 167 5
+ 168:src/../h/riscv.h ****     __asm__ volatile ("csrr %[sstatus], sstatus" : [sstatus] "=r"(sstatus));
+  77              		.loc 2 168 5
+  78              		.loc 2 168 76 is_stmt 0
+  79              	#APP
+  80              	# 168 "src/../h/riscv.h" 1
+ 169              	    return sstatus;
+  81              		csrr a5, sstatus
+  82              	# 0 "" 2
+  83              	#NO_APP
+  84 0038 233CF4FA 		sd	a5,-72(s0)
+  85              		.loc 2 169 5 is_stmt 1
+  86              		.loc 2 169 12 is_stmt 0
+  87 003c 833984FB 		ld	s3,-72(s0)
+  88              	.LVL2:
+  89              	.LBE46:
+  90              	.LBE45:
+  15:src/supervisorTrapHandler.cpp **** 
+  16:src/supervisorTrapHandler.cpp ****     if(scause == 9 || scause == 8) {
+  91              		.loc 1 16 5 is_stmt 1
+  92              	.LBB47:
+  93              		.loc 1 16 20 is_stmt 0
+  94 0040 138784FF 		addi	a4,s1,-8
+  95              		.loc 1 16 5
+  96 0044 93071000 		li	a5,1
+  97 0048 63FCE704 		bleu	a4,a5,.L29
+  17:src/supervisorTrapHandler.cpp ****         uint64 code;
+GAS LISTING /tmp/cch8ARcO.s 			page 6
+
+
+  18:src/supervisorTrapHandler.cpp ****         __asm__ volatile("mv %0, a0" : "=r" (code));
+  19:src/supervisorTrapHandler.cpp **** 
+  20:src/supervisorTrapHandler.cpp ****         switch (code) {
+  21:src/supervisorTrapHandler.cpp ****             case MALLOC_CODE: { //mem_alloc
+  22:src/supervisorTrapHandler.cpp ****                 size_t size;
+  23:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (size));
+  24:src/supervisorTrapHandler.cpp **** 
+  25:src/supervisorTrapHandler.cpp ****                 MemoryAllocator::mem_alloc(size);
   26:src/supervisorTrapHandler.cpp ****             }break;
   27:src/supervisorTrapHandler.cpp **** 
-  28:src/supervisorTrapHandler.cpp ****             case TCREATE_CODE: { //thread_create
-  29:src/supervisorTrapHandler.cpp ****                 PCB** handle;
-  30:src/supervisorTrapHandler.cpp ****                 void (*start_routine)(void *);
-  31:src/supervisorTrapHandler.cpp ****                 void *arg;
-  32:src/supervisorTrapHandler.cpp ****                 uint64 *stack;
-  33:src/supervisorTrapHandler.cpp ****                 //int ret = -1;
+  28:src/supervisorTrapHandler.cpp ****             case MFREE_CODE: { //mem_free
+  29:src/supervisorTrapHandler.cpp ****                 void *ptr;
+  30:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (ptr));
+  31:src/supervisorTrapHandler.cpp **** 
+  32:src/supervisorTrapHandler.cpp ****                 MemoryAllocator::mem_free(ptr);
+  33:src/supervisorTrapHandler.cpp ****             }break;
   34:src/supervisorTrapHandler.cpp **** 
-  35:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (handle));
-  36:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x12" : "=r" (start_routine));
-  37:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x13" : "=r" (arg));
-GAS LISTING /tmp/cc5gwuU0.s 			page 4
-
-
-  38:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x17" : "=r" (stack));
-  39:src/supervisorTrapHandler.cpp **** 
-  40:src/supervisorTrapHandler.cpp ****                 *handle = PCB::createProcess(start_routine, stack, arg, true);
-  41:src/supervisorTrapHandler.cpp ****             }break;
-  42:src/supervisorTrapHandler.cpp **** 
-  43:src/supervisorTrapHandler.cpp ****             case TDISPATCH_CODE: { //thread_dispatch
-  44:src/supervisorTrapHandler.cpp ****                 PCB::yield(); //mozda treba dispatch
-  45:src/supervisorTrapHandler.cpp ****             }break;
-  46:src/supervisorTrapHandler.cpp **** 
-  47:src/supervisorTrapHandler.cpp ****             case TEXIT_CODE: { //thread_exit
-  48:src/supervisorTrapHandler.cpp ****                 PCB::running->setFinished(true);
-  49:src/supervisorTrapHandler.cpp ****                 PCB::yield();
-  50:src/supervisorTrapHandler.cpp **** 
-  51:src/supervisorTrapHandler.cpp ****             } break;
-  52:src/supervisorTrapHandler.cpp **** 
-  53:src/supervisorTrapHandler.cpp ****             case SOPEN_CODE: {
-  54:src/supervisorTrapHandler.cpp ****                 Sem** handle;
-  55:src/supervisorTrapHandler.cpp ****                 uint32 init;
-  56:src/supervisorTrapHandler.cpp **** 
-  57:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (handle));
-  58:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x12" : "=r" (init));
-  59:src/supervisorTrapHandler.cpp **** 
-  60:src/supervisorTrapHandler.cpp ****                 *handle = Sem::createSemaphore(init);
-  61:src/supervisorTrapHandler.cpp ****             } break;
-  62:src/supervisorTrapHandler.cpp **** 
-  63:src/supervisorTrapHandler.cpp ****             case SCLOSE_CODE: {
-  64:src/supervisorTrapHandler.cpp ****                 Sem* handle;
-  65:src/supervisorTrapHandler.cpp **** 
-  66:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (handle));
-  67:src/supervisorTrapHandler.cpp **** 
-  68:src/supervisorTrapHandler.cpp ****                 Sem::deleteSemaphore(handle);
-  69:src/supervisorTrapHandler.cpp ****             } break;
-  70:src/supervisorTrapHandler.cpp **** 
-  71:src/supervisorTrapHandler.cpp ****             case SWAIT_CODE: {
-  72:src/supervisorTrapHandler.cpp ****                 Sem* handle; int ret = -1;
-  73:src/supervisorTrapHandler.cpp **** 
-  74:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (handle));
-  75:src/supervisorTrapHandler.cpp **** 
-  76:src/supervisorTrapHandler.cpp ****                 if(handle->isActive()) {
-  77:src/supervisorTrapHandler.cpp ****                     handle->wait();
-  78:src/supervisorTrapHandler.cpp ****                     ret = 0;
-  79:src/supervisorTrapHandler.cpp ****                 }
-  80:src/supervisorTrapHandler.cpp **** 
-  81:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv x10, %0" : : "r" (ret));
-  82:src/supervisorTrapHandler.cpp ****             } break;
-  83:src/supervisorTrapHandler.cpp **** 
-  84:src/supervisorTrapHandler.cpp ****             case SSIGNAL_CODE: {
-  85:src/supervisorTrapHandler.cpp ****                 Sem* handle; int ret = -1;
-  86:src/supervisorTrapHandler.cpp **** 
-  87:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (handle));
-  88:src/supervisorTrapHandler.cpp **** 
-  89:src/supervisorTrapHandler.cpp ****                 if(handle->isActive()) {
-  90:src/supervisorTrapHandler.cpp ****                     handle->signal();
-  91:src/supervisorTrapHandler.cpp ****                     ret = 0;
-  92:src/supervisorTrapHandler.cpp ****                 }
-  93:src/supervisorTrapHandler.cpp **** 
-  94:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv x10, %0" : : "r" (ret));
-GAS LISTING /tmp/cc5gwuU0.s 			page 5
-
-
-  95:src/supervisorTrapHandler.cpp ****             }
-  96:src/supervisorTrapHandler.cpp **** 
-  97:src/supervisorTrapHandler.cpp ****             case CGETC_CODE: {
-  98:src/supervisorTrapHandler.cpp ****                 char c = __getc();
-  99:src/supervisorTrapHandler.cpp **** 
- 100:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv x10, %0" : : "r" (c));
- 101:src/supervisorTrapHandler.cpp ****             } break;
- 102:src/supervisorTrapHandler.cpp **** 
- 103:src/supervisorTrapHandler.cpp ****             case CPUTC_CODE: {
- 104:src/supervisorTrapHandler.cpp ****                 char c;
- 105:src/supervisorTrapHandler.cpp **** 
- 106:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (c));
- 107:src/supervisorTrapHandler.cpp **** 
- 108:src/supervisorTrapHandler.cpp ****                 __putc(c);
- 109:src/supervisorTrapHandler.cpp ****             } break;
- 110:src/supervisorTrapHandler.cpp **** 
- 111:src/supervisorTrapHandler.cpp ****             case TALLOC_CODE: {
- 112:src/supervisorTrapHandler.cpp ****                 PCB** handle;
- 113:src/supervisorTrapHandler.cpp ****                 void (*start_routine)(void *);
- 114:src/supervisorTrapHandler.cpp ****                 void *arg;
- 115:src/supervisorTrapHandler.cpp ****                 uint64 *stack;
- 116:src/supervisorTrapHandler.cpp ****                 //int ret = -1;
- 117:src/supervisorTrapHandler.cpp **** 
- 118:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (handle));
- 119:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x12" : "=r" (start_routine));
- 120:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x13" : "=r" (arg));
- 121:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x17" : "=r" (stack));
- 122:src/supervisorTrapHandler.cpp **** 
- 123:src/supervisorTrapHandler.cpp ****                 *handle = PCB::createProcess(start_routine, stack, arg, false);
- 124:src/supervisorTrapHandler.cpp ****             } break;
- 125:src/supervisorTrapHandler.cpp **** 
- 126:src/supervisorTrapHandler.cpp ****             case TSCHEDULER_CODE: {
- 127:src/supervisorTrapHandler.cpp ****                 thread_t handle;
- 128:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (handle));
- 129:src/supervisorTrapHandler.cpp ****                 Scheduler::put(handle); /* mozda treba proveriti da li je body null*/
- 130:src/supervisorTrapHandler.cpp ****             } break;
- 131:src/supervisorTrapHandler.cpp **** 
- 132:src/supervisorTrapHandler.cpp ****             default:
- 133:src/supervisorTrapHandler.cpp ****                 break;
- 134:src/supervisorTrapHandler.cpp ****         }
- 135:src/supervisorTrapHandler.cpp ****     }
- 136:src/supervisorTrapHandler.cpp **** 
- 137:src/supervisorTrapHandler.cpp ****     else if(scause == (1UL << 63 | 9)) { //spoljasnji hardverski prekid
-  47              		.loc 1 137 10
-  48 0028 9307F0FF 		li	a5,-1
-  49 002c 9397F703 		slli	a5,a5,63
-  50 0030 93879700 		addi	a5,a5,9
-  51 0034 630CF71A 		beq	a4,a5,.L26
-  52              	.LVL1:
-  53              	.L1:
-  54              	.LBE31:
- 138:src/supervisorTrapHandler.cpp ****         console_handler();
- 139:src/supervisorTrapHandler.cpp ****     }
- 140:src/supervisorTrapHandler.cpp **** }
-  55              		.loc 1 140 1 is_stmt 0
-  56 0038 83308102 		ld	ra,40(sp)
-  57              		.cfi_remember_state
-GAS LISTING /tmp/cc5gwuU0.s 			page 6
-
-
-  58              		.cfi_restore 1
-  59 003c 03340102 		ld	s0,32(sp)
-  60              		.cfi_restore 8
-  61              		.cfi_def_cfa 2, 48
-  62 0040 83348101 		ld	s1,24(sp)
-  63              		.cfi_restore 9
-  64 0044 13010103 		addi	sp,sp,48
-  65              		.cfi_def_cfa_offset 0
-  66 0048 67800000 		jr	ra
-  67              	.LVL2:
-  68              	.L25:
-  69              		.cfi_restore_state
-  70              	.LBB63:
-  71              	.LBB32:
-  12:src/supervisorTrapHandler.cpp ****         uint64 code;
-  72              		.loc 1 12 9 is_stmt 1
-  13:src/supervisorTrapHandler.cpp ****         switch (code) {
-  73              		.loc 1 13 9
-  13:src/supervisorTrapHandler.cpp ****         switch (code) {
-  74              		.loc 1 13 53 is_stmt 0
-  75              	#APP
-  76              	# 13 "src/supervisorTrapHandler.cpp" 1
-  77              		mv a5, x10
-  78              	# 0 "" 2
-  79              	.LVL3:
-  14:src/supervisorTrapHandler.cpp ****             case MALLOC_CODE: { //mem_alloc
-  80              		.loc 1 14 9 is_stmt 1
-  81              	#NO_APP
-  82 0050 13072004 		li	a4,66
-  83              	.LVL4:
-  84 0054 E362F7FE 		bgtu	a5,a4,.L1
-  85 0058 93972700 		slli	a5,a5,2
-  86              	.LVL5:
-  87 005c 17070000 		lla	a4,.L5
-  87      13070700 
-  88 0064 B387E700 		add	a5,a5,a4
-  89 0068 83A70700 		lw	a5,0(a5)
-  90 006c B387E700 		add	a5,a5,a4
-  91 0070 67800700 		jr	a5
-  92              		.section	.rodata
-  93              		.align	2
-  94              		.align	2
-  95              	.L5:
-  96 0000 00000000 		.word	.L1-.L5
-  97 0004 00000000 		.word	.L17-.L5
-  98 0008 00000000 		.word	.L16-.L5
-  99 000c 00000000 		.word	.L1-.L5
- 100 0010 00000000 		.word	.L1-.L5
- 101 0014 00000000 		.word	.L1-.L5
- 102 0018 00000000 		.word	.L1-.L5
- 103 001c 00000000 		.word	.L1-.L5
- 104 0020 00000000 		.word	.L1-.L5
- 105 0024 00000000 		.word	.L1-.L5
- 106 0028 00000000 		.word	.L1-.L5
- 107 002c 00000000 		.word	.L1-.L5
- 108 0030 00000000 		.word	.L1-.L5
- 109 0034 00000000 		.word	.L1-.L5
-GAS LISTING /tmp/cc5gwuU0.s 			page 7
-
-
- 110 0038 00000000 		.word	.L1-.L5
- 111 003c 00000000 		.word	.L1-.L5
- 112 0040 00000000 		.word	.L1-.L5
- 113 0044 00000000 		.word	.L15-.L5
- 114 0048 00000000 		.word	.L14-.L5
- 115 004c 00000000 		.word	.L13-.L5
- 116 0050 00000000 		.word	.L12-.L5
- 117 0054 00000000 		.word	.L11-.L5
- 118 0058 00000000 		.word	.L1-.L5
- 119 005c 00000000 		.word	.L1-.L5
- 120 0060 00000000 		.word	.L1-.L5
- 121 0064 00000000 		.word	.L1-.L5
- 122 0068 00000000 		.word	.L1-.L5
- 123 006c 00000000 		.word	.L1-.L5
- 124 0070 00000000 		.word	.L1-.L5
- 125 0074 00000000 		.word	.L1-.L5
- 126 0078 00000000 		.word	.L1-.L5
- 127 007c 00000000 		.word	.L1-.L5
- 128 0080 00000000 		.word	.L1-.L5
- 129 0084 00000000 		.word	.L10-.L5
- 130 0088 00000000 		.word	.L9-.L5
- 131 008c 00000000 		.word	.L8-.L5
- 132 0090 00000000 		.word	.L7-.L5
- 133 0094 00000000 		.word	.L1-.L5
- 134 0098 00000000 		.word	.L1-.L5
- 135 009c 00000000 		.word	.L1-.L5
- 136 00a0 00000000 		.word	.L1-.L5
- 137 00a4 00000000 		.word	.L1-.L5
- 138 00a8 00000000 		.word	.L1-.L5
- 139 00ac 00000000 		.word	.L1-.L5
- 140 00b0 00000000 		.word	.L1-.L5
- 141 00b4 00000000 		.word	.L1-.L5
- 142 00b8 00000000 		.word	.L1-.L5
- 143 00bc 00000000 		.word	.L1-.L5
- 144 00c0 00000000 		.word	.L1-.L5
- 145 00c4 00000000 		.word	.L1-.L5
- 146 00c8 00000000 		.word	.L1-.L5
- 147 00cc 00000000 		.word	.L1-.L5
- 148 00d0 00000000 		.word	.L1-.L5
- 149 00d4 00000000 		.word	.L1-.L5
- 150 00d8 00000000 		.word	.L1-.L5
- 151 00dc 00000000 		.word	.L1-.L5
- 152 00e0 00000000 		.word	.L1-.L5
- 153 00e4 00000000 		.word	.L1-.L5
- 154 00e8 00000000 		.word	.L1-.L5
- 155 00ec 00000000 		.word	.L1-.L5
- 156 00f0 00000000 		.word	.L1-.L5
- 157 00f4 00000000 		.word	.L1-.L5
- 158 00f8 00000000 		.word	.L1-.L5
- 159 00fc 00000000 		.word	.L1-.L5
- 160 0100 00000000 		.word	.L1-.L5
- 161 0104 00000000 		.word	.L6-.L5
- 162 0108 00000000 		.word	.L4-.L5
- 163              		.text
- 164              	.L17:
- 165              	.LBB33:
-  15:src/supervisorTrapHandler.cpp ****                 size_t size;
-GAS LISTING /tmp/cc5gwuU0.s 			page 8
-
-
- 166              		.loc 1 15 13
-  15:src/supervisorTrapHandler.cpp ****                 size_t size;
- 167              		.loc 1 15 31
- 168              	.LBB34:
-  16:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (size));
- 169              		.loc 1 16 17
-  17:src/supervisorTrapHandler.cpp ****                 MemoryAllocator::mem_alloc(size);
- 170              		.loc 1 17 17
-  17:src/supervisorTrapHandler.cpp ****                 MemoryAllocator::mem_alloc(size);
- 171              		.loc 1 17 61 is_stmt 0
- 172              	#APP
- 173              	# 17 "src/supervisorTrapHandler.cpp" 1
- 174              		mv a0, x11
- 175              	# 0 "" 2
- 176              	.LVL6:
-  18:src/supervisorTrapHandler.cpp ****                 /* VRATI POKAZIVAC IDIOTE*/
- 177              		.loc 1 18 17 is_stmt 1
-  18:src/supervisorTrapHandler.cpp ****                 /* VRATI POKAZIVAC IDIOTE*/
- 178              		.loc 1 18 43 is_stmt 0
- 179              	#NO_APP
- 180 0078 97000000 		call	_ZN15MemoryAllocator9mem_allocEm@plt
- 180      E7800000 
- 181              	.LVL7:
- 182              	.LBE34:
-  20:src/supervisorTrapHandler.cpp **** 
- 183              		.loc 1 20 14 is_stmt 1
- 184 0080 6FF09FFB 		j	.L1
- 185              	.L16:
-  22:src/supervisorTrapHandler.cpp ****                 void *ptr;
- 186              		.loc 1 22 13
-  22:src/supervisorTrapHandler.cpp ****                 void *ptr;
- 187              		.loc 1 22 30
- 188              	.LBB35:
-  23:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (ptr));
- 189              		.loc 1 23 17
-  24:src/supervisorTrapHandler.cpp ****                 MemoryAllocator::mem_free(ptr);
- 190              		.loc 1 24 17
-  24:src/supervisorTrapHandler.cpp ****                 MemoryAllocator::mem_free(ptr);
- 191              		.loc 1 24 60 is_stmt 0
- 192              	#APP
- 193              	# 24 "src/supervisorTrapHandler.cpp" 1
- 194              		mv a0, x11
- 195              	# 0 "" 2
- 196              	.LVL8:
-  25:src/supervisorTrapHandler.cpp ****             }break;
- 197              		.loc 1 25 17 is_stmt 1
-  25:src/supervisorTrapHandler.cpp ****             }break;
- 198              		.loc 1 25 42 is_stmt 0
- 199              	#NO_APP
- 200 0088 97000000 		call	_ZN15MemoryAllocator8mem_freeEPv@plt
- 200      E7800000 
- 201              	.LVL9:
- 202              	.LBE35:
-  26:src/supervisorTrapHandler.cpp **** 
- 203              		.loc 1 26 14 is_stmt 1
- 204 0090 6FF09FFA 		j	.L1
- 205              	.L15:
-GAS LISTING /tmp/cc5gwuU0.s 			page 9
-
-
-  28:src/supervisorTrapHandler.cpp ****                 PCB** handle;
- 206              		.loc 1 28 13
-  28:src/supervisorTrapHandler.cpp ****                 PCB** handle;
- 207              		.loc 1 28 32
- 208              	.LBB36:
-  29:src/supervisorTrapHandler.cpp ****                 void (*start_routine)(void *);
- 209              		.loc 1 29 17
-  30:src/supervisorTrapHandler.cpp ****                 void *arg;
- 210              		.loc 1 30 17
-  31:src/supervisorTrapHandler.cpp ****                 uint64 *stack;
- 211              		.loc 1 31 17
-  32:src/supervisorTrapHandler.cpp ****                 //int ret = -1;
- 212              		.loc 1 32 17
-  35:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x12" : "=r" (start_routine));
- 213              		.loc 1 35 17
-  35:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x12" : "=r" (start_routine));
- 214              		.loc 1 35 63 is_stmt 0
- 215              	#APP
- 216              	# 35 "src/supervisorTrapHandler.cpp" 1
- 217              		mv s1, x11
- 218              	# 0 "" 2
- 219              	.LVL10:
-  36:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x13" : "=r" (arg));
- 220              		.loc 1 36 17 is_stmt 1
-  36:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x13" : "=r" (arg));
- 221              		.loc 1 36 70 is_stmt 0
- 222              	# 36 "src/supervisorTrapHandler.cpp" 1
- 223              		mv a0, x12
- 224              	# 0 "" 2
- 225              	.LVL11:
-  37:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x17" : "=r" (stack));
- 226              		.loc 1 37 17 is_stmt 1
-  37:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x17" : "=r" (stack));
- 227              		.loc 1 37 60 is_stmt 0
- 228              	# 37 "src/supervisorTrapHandler.cpp" 1
- 229              		mv a2, x13
- 230              	# 0 "" 2
- 231              	.LVL12:
-  38:src/supervisorTrapHandler.cpp **** 
- 232              		.loc 1 38 17 is_stmt 1
-  38:src/supervisorTrapHandler.cpp **** 
- 233              		.loc 1 38 62 is_stmt 0
- 234              	# 38 "src/supervisorTrapHandler.cpp" 1
- 235              		mv a1, x17
- 236              	# 0 "" 2
- 237              	.LVL13:
-  40:src/supervisorTrapHandler.cpp ****             }break;
- 238              		.loc 1 40 17 is_stmt 1
-  40:src/supervisorTrapHandler.cpp ****             }break;
- 239              		.loc 1 40 45 is_stmt 0
- 240              	#NO_APP
- 241 00a4 93061000 		li	a3,1
- 242 00a8 97000000 		call	_ZN3PCB13createProcessEPFvPvEPmS0_b@plt
- 242      E7800000 
- 243              	.LVL14:
-  40:src/supervisorTrapHandler.cpp ****             }break;
- 244              		.loc 1 40 25
-GAS LISTING /tmp/cc5gwuU0.s 			page 10
-
-
- 245 00b0 23B0A400 		sd	a0,0(s1)
- 246              	.LBE36:
-  41:src/supervisorTrapHandler.cpp **** 
- 247              		.loc 1 41 14 is_stmt 1
- 248 00b4 6FF05FF8 		j	.L1
- 249              	.LVL15:
- 250              	.L13:
-  43:src/supervisorTrapHandler.cpp ****                 PCB::yield(); //mozda treba dispatch
- 251              		.loc 1 43 13
-  43:src/supervisorTrapHandler.cpp ****                 PCB::yield(); //mozda treba dispatch
- 252              		.loc 1 43 34
-  44:src/supervisorTrapHandler.cpp ****             }break;
- 253              		.loc 1 44 17
-  44:src/supervisorTrapHandler.cpp ****             }break;
- 254              		.loc 1 44 27 is_stmt 0
- 255 00b8 97000000 		call	_ZN3PCB5yieldEv@plt
- 255      E7800000 
- 256              	.LVL16:
+  35:src/supervisorTrapHandler.cpp ****             case TCREATE_CODE: { //thread_create
+  36:src/supervisorTrapHandler.cpp ****                 thread_t* handle;
+  37:src/supervisorTrapHandler.cpp ****                 void (*start_routine)(void *);
+  38:src/supervisorTrapHandler.cpp ****                 void *arg;
+  39:src/supervisorTrapHandler.cpp ****                 uint64 *stack;
+  40:src/supervisorTrapHandler.cpp **** 
+  41:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (handle));
+  42:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a2" : "=r" (start_routine));
+  43:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a3" : "=r" (arg));
+  44:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a7" : "=r" (stack));
   45:src/supervisorTrapHandler.cpp **** 
- 257              		.loc 1 45 14 is_stmt 1
- 258 00c0 6FF09FF7 		j	.L1
- 259              	.L14:
-  47:src/supervisorTrapHandler.cpp ****                 PCB::running->setFinished(true);
- 260              		.loc 1 47 13
-  47:src/supervisorTrapHandler.cpp ****                 PCB::running->setFinished(true);
- 261              		.loc 1 47 30
-  48:src/supervisorTrapHandler.cpp ****                 PCB::yield();
- 262              		.loc 1 48 17
-  48:src/supervisorTrapHandler.cpp ****                 PCB::yield();
- 263              		.loc 1 48 42 is_stmt 0
- 264 00c4 97070000 		la	a5,_ZN3PCB7runningE
- 264      83B70700 
- 265 00cc 83B70700 		ld	a5,0(a5)
- 266              	.LVL17:
- 267              	.LBB37:
- 268              	.LBB38:
- 269              		.file 3 "src/../h/pcb.h"
+  46:src/supervisorTrapHandler.cpp ****                 *handle = PCB::createProcess(start_routine, stack, arg, true);
+  47:src/supervisorTrapHandler.cpp ****             }break;
+  48:src/supervisorTrapHandler.cpp **** 
+  49:src/supervisorTrapHandler.cpp ****             case TDISPATCH_CODE: { //thread_dispatch
+  50:src/supervisorTrapHandler.cpp ****                 PCB::yield(); //mozda treba dispatch
+  51:src/supervisorTrapHandler.cpp ****             }break;
+  52:src/supervisorTrapHandler.cpp **** 
+  53:src/supervisorTrapHandler.cpp ****             case TEXIT_CODE: { //thread_exit
+  54:src/supervisorTrapHandler.cpp ****                 PCB::running->setFinished(true);
+  55:src/supervisorTrapHandler.cpp ****                 PCB::yield();
+  56:src/supervisorTrapHandler.cpp ****             } break;
+  57:src/supervisorTrapHandler.cpp **** 
+  58:src/supervisorTrapHandler.cpp ****             case SOPEN_CODE: { //sem_open
+  59:src/supervisorTrapHandler.cpp ****                 sem_t* handle;
+  60:src/supervisorTrapHandler.cpp ****                 uint32 init;
+  61:src/supervisorTrapHandler.cpp **** 
+  62:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (handle));
+  63:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a2" : "=r" (init));
+  64:src/supervisorTrapHandler.cpp **** 
+  65:src/supervisorTrapHandler.cpp ****                 *handle = Sem::createSemaphore(init);
+  66:src/supervisorTrapHandler.cpp ****             } break;
+  67:src/supervisorTrapHandler.cpp **** 
+  68:src/supervisorTrapHandler.cpp ****             case SCLOSE_CODE: { //sem_close
+  69:src/supervisorTrapHandler.cpp ****                 sem_t handle;
+  70:src/supervisorTrapHandler.cpp **** 
+  71:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (handle));
+  72:src/supervisorTrapHandler.cpp **** 
+  73:src/supervisorTrapHandler.cpp ****                 Sem::deleteSemaphore(handle);
+  74:src/supervisorTrapHandler.cpp ****             } break;
+GAS LISTING /tmp/cch8ARcO.s 			page 7
+
+
+  75:src/supervisorTrapHandler.cpp **** 
+  76:src/supervisorTrapHandler.cpp ****             case SWAIT_CODE: { //sem_wait
+  77:src/supervisorTrapHandler.cpp ****                 sem_t handle; int ret = -1;
+  78:src/supervisorTrapHandler.cpp **** 
+  79:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (handle));
+  80:src/supervisorTrapHandler.cpp **** 
+  81:src/supervisorTrapHandler.cpp ****                 if(handle->isActive()) {
+  82:src/supervisorTrapHandler.cpp ****                     handle->wait();
+  83:src/supervisorTrapHandler.cpp ****                     ret = 0;
+  84:src/supervisorTrapHandler.cpp ****                 }
+  85:src/supervisorTrapHandler.cpp **** 
+  86:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv a0, %0" : : "r" (ret));
+  87:src/supervisorTrapHandler.cpp ****             } break;
+  88:src/supervisorTrapHandler.cpp **** 
+  89:src/supervisorTrapHandler.cpp ****             case SSIGNAL_CODE: { //sem_signal
+  90:src/supervisorTrapHandler.cpp ****                 sem_t handle; int ret = -1;
+  91:src/supervisorTrapHandler.cpp **** 
+  92:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (handle));
+  93:src/supervisorTrapHandler.cpp **** 
+  94:src/supervisorTrapHandler.cpp ****                 if(handle->isActive()) {
+  95:src/supervisorTrapHandler.cpp ****                     handle->signal();
+  96:src/supervisorTrapHandler.cpp ****                     ret = 0;
+  97:src/supervisorTrapHandler.cpp ****                 }
+  98:src/supervisorTrapHandler.cpp **** 
+  99:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv a0, %0" : : "r" (ret));
+ 100:src/supervisorTrapHandler.cpp ****             } break;
+ 101:src/supervisorTrapHandler.cpp **** 
+ 102:src/supervisorTrapHandler.cpp ****             case CGETC_CODE: { //getc
+ 103:src/supervisorTrapHandler.cpp ****                 char c = __getc();
+ 104:src/supervisorTrapHandler.cpp **** 
+ 105:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv a0, %0" : : "r" (c));
+ 106:src/supervisorTrapHandler.cpp ****             } break;
+ 107:src/supervisorTrapHandler.cpp **** 
+ 108:src/supervisorTrapHandler.cpp ****             case CPUTC_CODE: { //putc
+ 109:src/supervisorTrapHandler.cpp ****                 char c;
+ 110:src/supervisorTrapHandler.cpp **** 
+ 111:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (c));
+ 112:src/supervisorTrapHandler.cpp **** 
+ 113:src/supervisorTrapHandler.cpp ****                 __putc(c);
+ 114:src/supervisorTrapHandler.cpp ****             } break;
+ 115:src/supervisorTrapHandler.cpp **** 
+ 116:src/supervisorTrapHandler.cpp ****             case TALLOC_CODE: { //thread_alloc
+ 117:src/supervisorTrapHandler.cpp ****                 thread_t* handle;
+ 118:src/supervisorTrapHandler.cpp ****                 void (*start_routine)(void *);
+ 119:src/supervisorTrapHandler.cpp ****                 void *arg;
+ 120:src/supervisorTrapHandler.cpp ****                 uint64 *stack;
+ 121:src/supervisorTrapHandler.cpp **** 
+ 122:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (handle));
+ 123:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a2" : "=r" (start_routine));
+ 124:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a3" : "=r" (arg));
+ 125:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a7" : "=r" (stack));
+ 126:src/supervisorTrapHandler.cpp **** 
+ 127:src/supervisorTrapHandler.cpp ****                 *handle = PCB::createProcess(start_routine, stack, arg, false);
+ 128:src/supervisorTrapHandler.cpp ****             } break;
+ 129:src/supervisorTrapHandler.cpp **** 
+ 130:src/supervisorTrapHandler.cpp ****             case TSCHEDULER_CODE: {
+ 131:src/supervisorTrapHandler.cpp ****                 thread_t handle;
+GAS LISTING /tmp/cch8ARcO.s 			page 8
+
+
+ 132:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (handle));
+ 133:src/supervisorTrapHandler.cpp **** 
+ 134:src/supervisorTrapHandler.cpp ****                 Scheduler::put(handle); /* mozda treba proveriti da li je body null*/
+ 135:src/supervisorTrapHandler.cpp ****             } break;
+ 136:src/supervisorTrapHandler.cpp **** 
+ 137:src/supervisorTrapHandler.cpp ****             default:
+ 138:src/supervisorTrapHandler.cpp ****                 break;
+ 139:src/supervisorTrapHandler.cpp ****         }
+ 140:src/supervisorTrapHandler.cpp **** 
+ 141:src/supervisorTrapHandler.cpp ****         Riscv::w_sepc(sepc+4);
+ 142:src/supervisorTrapHandler.cpp ****     }
+ 143:src/supervisorTrapHandler.cpp **** 
+ 144:src/supervisorTrapHandler.cpp ****     else if(scause == (1UL << 63 | 9)) { //spoljasnji hardverski prekid
+  98              		.loc 1 144 10 is_stmt 1
+  99 004c 9307F0FF 		li	a5,-1
+ 100 0050 9397F703 		slli	a5,a5,63
+ 101 0054 93879700 		addi	a5,a5,9
+ 102 0058 6386F420 		beq	s1,a5,.L30
+ 145:src/supervisorTrapHandler.cpp ****         console_handler();
+ 146:src/supervisorTrapHandler.cpp ****     }
+ 147:src/supervisorTrapHandler.cpp **** 
+ 148:src/supervisorTrapHandler.cpp ****     else if(scause == (1UL << 63 | 1)) { //prekid od tajmera
+ 103              		.loc 1 148 10
+ 104 005c 9307F0FF 		li	a5,-1
+ 105 0060 9397F703 		slli	a5,a5,63
+ 106 0064 93871700 		addi	a5,a5,1
+ 107 0068 6394F422 		bne	s1,a5,.L22
+ 149:src/supervisorTrapHandler.cpp ****         PCB::timeSliceCnt++;
+ 108              		.loc 1 149 9
+ 109              		.loc 1 149 26 is_stmt 0
+ 110 006c 17070000 		la	a4,_ZN3PCB12timeSliceCntE
+ 110      03370700 
+ 111 0074 83370700 		ld	a5,0(a4)
+ 112 0078 93871700 		addi	a5,a5,1
+ 113 007c 2330F700 		sd	a5,0(a4)
+ 150:src/supervisorTrapHandler.cpp **** 
+ 151:src/supervisorTrapHandler.cpp ****         if(PCB::timeSliceCnt >= PCB::running->timeSlice) {
+ 114              		.loc 1 151 9 is_stmt 1
+ 115              		.loc 1 151 47 is_stmt 0
+ 116 0080 17070000 		la	a4,_ZN3PCB7runningE
+ 116      03370700 
+ 117 0088 03370700 		ld	a4,0(a4)
+ 118 008c 03370700 		ld	a4,0(a4)
+ 119              		.loc 1 151 9
+ 120 0090 63F0E71E 		bgeu	a5,a4,.L31
+ 121              	.L23:
+ 152:src/supervisorTrapHandler.cpp ****             PCB::yield();
+ 153:src/supervisorTrapHandler.cpp ****             PCB::timeSliceCnt = 0;
+ 154:src/supervisorTrapHandler.cpp ****             Riscv::w_sepc(sepc);
+ 155:src/supervisorTrapHandler.cpp ****             Riscv::w_sstatus(sstatus);
+ 156:src/supervisorTrapHandler.cpp ****         }
+ 157:src/supervisorTrapHandler.cpp **** 
+ 158:src/supervisorTrapHandler.cpp ****         Riscv::mc_sip(Riscv::SIP_SSIE);
+ 122              		.loc 1 158 9 is_stmt 1
+ 123              	.LVL3:
+ 124              	.LBB48:
+ 125              	.LBB49:
+GAS LISTING /tmp/cch8ARcO.s 			page 9
+
+
+ 140:src/../h/riscv.h **** }
+ 126              		.loc 2 140 5
+ 140:src/../h/riscv.h **** }
+ 127              		.loc 2 140 64 is_stmt 0
+ 128 0094 93072000 		li	a5,2
+ 129              	#APP
+ 130              	# 140 "src/../h/riscv.h" 1
+ 141:src/../h/riscv.h **** 
+ 131              		csrc sip, a5
+ 132              	# 0 "" 2
+ 133              		.loc 2 141 1
+ 134              	#NO_APP
+ 135 009c 6F000004 		j	.L1
+ 136              	.LVL4:
+ 137              	.L29:
+ 138              	.LBE49:
+ 139              	.LBE48:
+ 140              	.LBB50:
+  17:src/supervisorTrapHandler.cpp ****         __asm__ volatile("mv %0, a0" : "=r" (code));
+ 141              		.loc 1 17 9 is_stmt 1
+  18:src/supervisorTrapHandler.cpp **** 
+ 142              		.loc 1 18 9
+  18:src/supervisorTrapHandler.cpp **** 
+ 143              		.loc 1 18 52 is_stmt 0
+ 144              	#APP
+ 145              	# 18 "src/supervisorTrapHandler.cpp" 1
+ 146              		mv a5, a0
+ 147              	# 0 "" 2
+ 148              	.LVL5:
+  20:src/supervisorTrapHandler.cpp ****             case MALLOC_CODE: { //mem_alloc
+ 149              		.loc 1 20 9 is_stmt 1
+ 150              	#NO_APP
+ 151 00a4 13072004 		li	a4,66
+ 152 00a8 6366F702 		bgtu	a5,a4,.L3
+ 153 00ac 93972700 		slli	a5,a5,2
+ 154              	.LVL6:
+ 155 00b0 17070000 		lla	a4,.L5
+ 155      13070700 
+ 156 00b8 B387E700 		add	a5,a5,a4
+ 157 00bc 83A70700 		lw	a5,0(a5)
+ 158 00c0 B387E700 		add	a5,a5,a4
+ 159 00c4 67800700 		jr	a5
+ 160              		.section	.rodata
+ 161              		.align	2
+ 162              		.align	2
+ 163              	.L5:
+ 164 0000 00000000 		.word	.L3-.L5
+ 165 0004 00000000 		.word	.L17-.L5
+ 166 0008 00000000 		.word	.L16-.L5
+ 167 000c 00000000 		.word	.L3-.L5
+ 168 0010 00000000 		.word	.L3-.L5
+ 169 0014 00000000 		.word	.L3-.L5
+ 170 0018 00000000 		.word	.L3-.L5
+ 171 001c 00000000 		.word	.L3-.L5
+ 172 0020 00000000 		.word	.L3-.L5
+ 173 0024 00000000 		.word	.L3-.L5
+ 174 0028 00000000 		.word	.L3-.L5
+GAS LISTING /tmp/cch8ARcO.s 			page 10
+
+
+ 175 002c 00000000 		.word	.L3-.L5
+ 176 0030 00000000 		.word	.L3-.L5
+ 177 0034 00000000 		.word	.L3-.L5
+ 178 0038 00000000 		.word	.L3-.L5
+ 179 003c 00000000 		.word	.L3-.L5
+ 180 0040 00000000 		.word	.L3-.L5
+ 181 0044 00000000 		.word	.L15-.L5
+ 182 0048 00000000 		.word	.L14-.L5
+ 183 004c 00000000 		.word	.L13-.L5
+ 184 0050 00000000 		.word	.L12-.L5
+ 185 0054 00000000 		.word	.L11-.L5
+ 186 0058 00000000 		.word	.L3-.L5
+ 187 005c 00000000 		.word	.L3-.L5
+ 188 0060 00000000 		.word	.L3-.L5
+ 189 0064 00000000 		.word	.L3-.L5
+ 190 0068 00000000 		.word	.L3-.L5
+ 191 006c 00000000 		.word	.L3-.L5
+ 192 0070 00000000 		.word	.L3-.L5
+ 193 0074 00000000 		.word	.L3-.L5
+ 194 0078 00000000 		.word	.L3-.L5
+ 195 007c 00000000 		.word	.L3-.L5
+ 196 0080 00000000 		.word	.L3-.L5
+ 197 0084 00000000 		.word	.L10-.L5
+ 198 0088 00000000 		.word	.L9-.L5
+ 199 008c 00000000 		.word	.L8-.L5
+ 200 0090 00000000 		.word	.L7-.L5
+ 201 0094 00000000 		.word	.L3-.L5
+ 202 0098 00000000 		.word	.L3-.L5
+ 203 009c 00000000 		.word	.L3-.L5
+ 204 00a0 00000000 		.word	.L3-.L5
+ 205 00a4 00000000 		.word	.L3-.L5
+ 206 00a8 00000000 		.word	.L3-.L5
+ 207 00ac 00000000 		.word	.L3-.L5
+ 208 00b0 00000000 		.word	.L3-.L5
+ 209 00b4 00000000 		.word	.L3-.L5
+ 210 00b8 00000000 		.word	.L3-.L5
+ 211 00bc 00000000 		.word	.L3-.L5
+ 212 00c0 00000000 		.word	.L3-.L5
+ 213 00c4 00000000 		.word	.L3-.L5
+ 214 00c8 00000000 		.word	.L3-.L5
+ 215 00cc 00000000 		.word	.L3-.L5
+ 216 00d0 00000000 		.word	.L3-.L5
+ 217 00d4 00000000 		.word	.L3-.L5
+ 218 00d8 00000000 		.word	.L3-.L5
+ 219 00dc 00000000 		.word	.L3-.L5
+ 220 00e0 00000000 		.word	.L3-.L5
+ 221 00e4 00000000 		.word	.L3-.L5
+ 222 00e8 00000000 		.word	.L3-.L5
+ 223 00ec 00000000 		.word	.L3-.L5
+ 224 00f0 00000000 		.word	.L3-.L5
+ 225 00f4 00000000 		.word	.L3-.L5
+ 226 00f8 00000000 		.word	.L3-.L5
+ 227 00fc 00000000 		.word	.L3-.L5
+ 228 0100 00000000 		.word	.L3-.L5
+ 229 0104 00000000 		.word	.L6-.L5
+ 230 0108 00000000 		.word	.L4-.L5
+ 231              		.text
+GAS LISTING /tmp/cch8ARcO.s 			page 11
+
+
+ 232              	.L17:
+ 233              	.LBB51:
+  21:src/supervisorTrapHandler.cpp ****                 size_t size;
+ 234              		.loc 1 21 13
+  21:src/supervisorTrapHandler.cpp ****                 size_t size;
+ 235              		.loc 1 21 31
+ 236              	.LBB52:
+  22:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (size));
+ 237              		.loc 1 22 17
+  23:src/supervisorTrapHandler.cpp **** 
+ 238              		.loc 1 23 17
+  23:src/supervisorTrapHandler.cpp **** 
+ 239              		.loc 1 23 60 is_stmt 0
+ 240              	#APP
+ 241              	# 23 "src/supervisorTrapHandler.cpp" 1
+ 242              		mv a0, a1
+ 243              	# 0 "" 2
+ 244              	.LVL7:
+  25:src/supervisorTrapHandler.cpp ****             }break;
+ 245              		.loc 1 25 17 is_stmt 1
+  25:src/supervisorTrapHandler.cpp ****             }break;
+ 246              		.loc 1 25 43 is_stmt 0
+ 247              	#NO_APP
+ 248 00cc 97000000 		call	_ZN15MemoryAllocator9mem_allocEm@plt
+ 248      E7800000 
+ 249              	.LVL8:
+ 250              	.LBE52:
+  26:src/supervisorTrapHandler.cpp **** 
+ 251              		.loc 1 26 14 is_stmt 1
+ 252              	.L3:
+ 253              	.LBE51:
+ 141:src/supervisorTrapHandler.cpp ****     }
+ 254              		.loc 1 141 9
+ 141:src/supervisorTrapHandler.cpp ****     }
+ 255              		.loc 1 141 22 is_stmt 0
+ 256 00d4 13094900 		addi	s2,s2,4
+ 257              	.LVL9:
+ 258              	.LBB81:
+ 259              	.LBB82:
+ 106:src/../h/riscv.h **** }
+ 260              		.loc 2 106 5 is_stmt 1
+ 106:src/../h/riscv.h **** }
+ 261              		.loc 2 106 65 is_stmt 0
+ 262              	#APP
+ 263              	# 106 "src/../h/riscv.h" 1
+ 264              		csrw sepc, s2
+ 265              	# 0 "" 2
+ 266              	.LVL10:
+ 267              	#NO_APP
+ 268              	.L1:
+ 269              	.LBE82:
+ 270              	.LBE81:
+ 271              	.LBE50:
+ 272              	.LBE47:
+ 159:src/supervisorTrapHandler.cpp ****         //__putc('t');
+ 160:src/supervisorTrapHandler.cpp ****     }
+ 161:src/supervisorTrapHandler.cpp **** 
+GAS LISTING /tmp/cch8ARcO.s 			page 12
+
+
+ 162:src/supervisorTrapHandler.cpp ****     else {
+ 163:src/supervisorTrapHandler.cpp ****         __putc('\n');
+ 164:src/supervisorTrapHandler.cpp ****         printString("SEPC: ");
+ 165:src/supervisorTrapHandler.cpp ****         printInt(sepc);
+ 166:src/supervisorTrapHandler.cpp ****         __putc('\n');
+ 167:src/supervisorTrapHandler.cpp ****         printString("SCAUSE: ");
+ 168:src/supervisorTrapHandler.cpp ****         printInt(scause);
+ 169:src/supervisorTrapHandler.cpp ****     }
+ 170:src/supervisorTrapHandler.cpp **** }
+ 273              		.loc 1 170 1
+ 274 00dc 83308104 		ld	ra,72(sp)
+ 275              		.cfi_remember_state
+ 276              		.cfi_restore 1
+ 277 00e0 03340104 		ld	s0,64(sp)
+ 278              		.cfi_restore 8
+ 279              		.cfi_def_cfa 2, 80
+ 280 00e4 83348103 		ld	s1,56(sp)
+ 281              		.cfi_restore 9
+ 282 00e8 03390103 		ld	s2,48(sp)
+ 283              		.cfi_restore 18
+ 284 00ec 83398102 		ld	s3,40(sp)
+ 285              		.cfi_restore 19
+ 286              	.LVL11:
+ 287 00f0 13010105 		addi	sp,sp,80
+ 288              		.cfi_def_cfa_offset 0
+ 289 00f4 67800000 		jr	ra
+ 290              	.LVL12:
+ 291              	.L16:
+ 292              		.cfi_restore_state
+ 293              	.LBB89:
+ 294              	.LBB84:
+ 295              	.LBB83:
+  28:src/supervisorTrapHandler.cpp ****                 void *ptr;
+ 296              		.loc 1 28 13 is_stmt 1
+  28:src/supervisorTrapHandler.cpp ****                 void *ptr;
+ 297              		.loc 1 28 30
+ 298              	.LBB53:
+  29:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (ptr));
+ 299              		.loc 1 29 17
+  30:src/supervisorTrapHandler.cpp **** 
+ 300              		.loc 1 30 17
+  30:src/supervisorTrapHandler.cpp **** 
+ 301              		.loc 1 30 59 is_stmt 0
+ 302              	#APP
+ 303              	# 30 "src/supervisorTrapHandler.cpp" 1
+ 304              		mv a0, a1
+ 305              	# 0 "" 2
+ 306              	.LVL13:
+  32:src/supervisorTrapHandler.cpp ****             }break;
+ 307              		.loc 1 32 17 is_stmt 1
+  32:src/supervisorTrapHandler.cpp ****             }break;
+ 308              		.loc 1 32 42 is_stmt 0
+ 309              	#NO_APP
+ 310 00fc 97000000 		call	_ZN15MemoryAllocator8mem_freeEPv@plt
+ 310      E7800000 
+ 311              	.LVL14:
+ 312              	.LBE53:
+GAS LISTING /tmp/cch8ARcO.s 			page 13
+
+
+  33:src/supervisorTrapHandler.cpp **** 
+ 313              		.loc 1 33 14 is_stmt 1
+ 314 0104 6FF01FFD 		j	.L3
+ 315              	.L15:
+  35:src/supervisorTrapHandler.cpp ****                 thread_t* handle;
+ 316              		.loc 1 35 13
+  35:src/supervisorTrapHandler.cpp ****                 thread_t* handle;
+ 317              		.loc 1 35 32
+ 318              	.LBB54:
+  36:src/supervisorTrapHandler.cpp ****                 void (*start_routine)(void *);
+ 319              		.loc 1 36 17
+  37:src/supervisorTrapHandler.cpp ****                 void *arg;
+ 320              		.loc 1 37 17
+  38:src/supervisorTrapHandler.cpp ****                 uint64 *stack;
+ 321              		.loc 1 38 17
+  39:src/supervisorTrapHandler.cpp **** 
+ 322              		.loc 1 39 17
+  41:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a2" : "=r" (start_routine));
+ 323              		.loc 1 41 17
+  41:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a2" : "=r" (start_routine));
+ 324              		.loc 1 41 62 is_stmt 0
+ 325              	#APP
+ 326              	# 41 "src/supervisorTrapHandler.cpp" 1
+ 327              		mv s1, a1
+ 328              	# 0 "" 2
+ 329              	.LVL15:
+  42:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a3" : "=r" (arg));
+ 330              		.loc 1 42 17 is_stmt 1
+  42:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a3" : "=r" (arg));
+ 331              		.loc 1 42 69 is_stmt 0
+ 332              	# 42 "src/supervisorTrapHandler.cpp" 1
+ 333              		mv a0, a2
+ 334              	# 0 "" 2
+ 335              	.LVL16:
+  43:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a7" : "=r" (stack));
+ 336              		.loc 1 43 17 is_stmt 1
+  43:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a7" : "=r" (stack));
+ 337              		.loc 1 43 59 is_stmt 0
+ 338              	# 43 "src/supervisorTrapHandler.cpp" 1
+ 339              		mv a2, a3
+ 340              	# 0 "" 2
+ 341              	.LVL17:
+  44:src/supervisorTrapHandler.cpp **** 
+ 342              		.loc 1 44 17 is_stmt 1
+  44:src/supervisorTrapHandler.cpp **** 
+ 343              		.loc 1 44 61 is_stmt 0
+ 344              	# 44 "src/supervisorTrapHandler.cpp" 1
+ 345              		mv a1, a7
+ 346              	# 0 "" 2
+ 347              	.LVL18:
+  46:src/supervisorTrapHandler.cpp ****             }break;
+ 348              		.loc 1 46 17 is_stmt 1
+  46:src/supervisorTrapHandler.cpp ****             }break;
+ 349              		.loc 1 46 45 is_stmt 0
+ 350              	#NO_APP
+ 351 0118 93061000 		li	a3,1
+ 352 011c 97000000 		call	_ZN3PCB13createProcessEPFvPvEPmS0_b@plt
+GAS LISTING /tmp/cch8ARcO.s 			page 14
+
+
+ 352      E7800000 
+ 353              	.LVL19:
+  46:src/supervisorTrapHandler.cpp ****             }break;
+ 354              		.loc 1 46 25
+ 355 0124 23B0A400 		sd	a0,0(s1)
+ 356              	.LBE54:
+  47:src/supervisorTrapHandler.cpp **** 
+ 357              		.loc 1 47 14 is_stmt 1
+ 358 0128 6FF0DFFA 		j	.L3
+ 359              	.LVL20:
+ 360              	.L13:
+  49:src/supervisorTrapHandler.cpp ****                 PCB::yield(); //mozda treba dispatch
+ 361              		.loc 1 49 13
+  49:src/supervisorTrapHandler.cpp ****                 PCB::yield(); //mozda treba dispatch
+ 362              		.loc 1 49 34
+  50:src/supervisorTrapHandler.cpp ****             }break;
+ 363              		.loc 1 50 17
+  50:src/supervisorTrapHandler.cpp ****             }break;
+ 364              		.loc 1 50 27 is_stmt 0
+ 365 012c 97000000 		call	_ZN3PCB5yieldEv@plt
+ 365      E7800000 
+ 366              	.LVL21:
+  51:src/supervisorTrapHandler.cpp **** 
+ 367              		.loc 1 51 14 is_stmt 1
+ 368 0134 6FF01FFA 		j	.L3
+ 369              	.L14:
+  53:src/supervisorTrapHandler.cpp ****                 PCB::running->setFinished(true);
+ 370              		.loc 1 53 13
+  53:src/supervisorTrapHandler.cpp ****                 PCB::running->setFinished(true);
+ 371              		.loc 1 53 30
+  54:src/supervisorTrapHandler.cpp ****                 PCB::yield();
+ 372              		.loc 1 54 17
+  54:src/supervisorTrapHandler.cpp ****                 PCB::yield();
+ 373              		.loc 1 54 42 is_stmt 0
+ 374 0138 97070000 		la	a5,_ZN3PCB7runningE
+ 374      83B70700 
+ 375 0140 83B70700 		ld	a5,0(a5)
+ 376              	.LVL22:
+ 377              	.LBB55:
+ 378              	.LBB56:
+ 379              		.file 3 "src/../h/pcb.h"
    1:src/../h/pcb.h **** #ifndef PROJEKAT_PCB_H
    2:src/../h/pcb.h **** #define PROJEKAT_PCB_H
    3:src/../h/pcb.h **** 
@@ -593,1096 +837,1337 @@ GAS LISTING /tmp/cc5gwuU0.s 			page 1
   13:src/../h/pcb.h ****     bool isFinished() const { return finished; }
   14:src/../h/pcb.h **** 
   15:src/../h/pcb.h ****     void setFinished(bool value) { finished = value; }
- 270              		.loc 3 15 36 is_stmt 1
- 271              		.loc 3 15 45 is_stmt 0
- 272 00d0 13071000 		li	a4,1
- 273 00d4 2384E702 		sb	a4,40(a5)
- 274              	.LVL18:
-GAS LISTING /tmp/cc5gwuU0.s 			page 11
+ 380              		.loc 3 15 36 is_stmt 1
+GAS LISTING /tmp/cch8ARcO.s 			page 15
 
 
- 275              	.LBE38:
- 276              	.LBE37:
-  49:src/supervisorTrapHandler.cpp **** 
- 277              		.loc 1 49 17 is_stmt 1
-  49:src/supervisorTrapHandler.cpp **** 
- 278              		.loc 1 49 27 is_stmt 0
- 279 00d8 97000000 		call	_ZN3PCB5yieldEv@plt
- 279      E7800000 
- 280              	.LVL19:
-  51:src/supervisorTrapHandler.cpp **** 
- 281              		.loc 1 51 15 is_stmt 1
- 282 00e0 6FF09FF5 		j	.L1
- 283              	.L10:
-  53:src/supervisorTrapHandler.cpp ****                 Sem** handle;
- 284              		.loc 1 53 13
-  53:src/supervisorTrapHandler.cpp ****                 Sem** handle;
- 285              		.loc 1 53 30
- 286              	.LBB39:
-  54:src/supervisorTrapHandler.cpp ****                 uint32 init;
- 287              		.loc 1 54 17
-  55:src/supervisorTrapHandler.cpp **** 
- 288              		.loc 1 55 17
-  57:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x12" : "=r" (init));
- 289              		.loc 1 57 17
-  57:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x12" : "=r" (init));
- 290              		.loc 1 57 63 is_stmt 0
- 291              	#APP
- 292              	# 57 "src/supervisorTrapHandler.cpp" 1
- 293              		mv s1, x11
- 294              	# 0 "" 2
- 295              	.LVL20:
-  58:src/supervisorTrapHandler.cpp **** 
- 296              		.loc 1 58 17 is_stmt 1
-  58:src/supervisorTrapHandler.cpp **** 
- 297              		.loc 1 58 61 is_stmt 0
- 298              	# 58 "src/supervisorTrapHandler.cpp" 1
- 299              		mv a0, x12
- 300              	# 0 "" 2
- 301              	.LVL21:
-  60:src/supervisorTrapHandler.cpp ****             } break;
- 302              		.loc 1 60 17 is_stmt 1
-  60:src/supervisorTrapHandler.cpp ****             } break;
- 303              		.loc 1 60 47 is_stmt 0
- 304              	#NO_APP
- 305 00ec 1B050500 		sext.w	a0,a0
- 306 00f0 97000000 		call	_ZN3Sem15createSemaphoreEj@plt
- 306      E7800000 
- 307              	.LVL22:
-  60:src/supervisorTrapHandler.cpp ****             } break;
- 308              		.loc 1 60 25
- 309 00f8 23B0A400 		sd	a0,0(s1)
- 310              	.LBE39:
-  61:src/supervisorTrapHandler.cpp **** 
- 311              		.loc 1 61 15 is_stmt 1
- 312 00fc 6FF0DFF3 		j	.L1
- 313              	.LVL23:
- 314              	.L9:
-GAS LISTING /tmp/cc5gwuU0.s 			page 12
-
-
-  63:src/supervisorTrapHandler.cpp ****                 Sem* handle;
- 315              		.loc 1 63 13
-  63:src/supervisorTrapHandler.cpp ****                 Sem* handle;
- 316              		.loc 1 63 31
- 317              	.LBB40:
-  64:src/supervisorTrapHandler.cpp **** 
- 318              		.loc 1 64 17
+ 381              		.loc 3 15 45 is_stmt 0
+ 382 0144 13071000 		li	a4,1
+ 383 0148 2388E702 		sb	a4,48(a5)
+ 384              	.LVL23:
+ 385              	.LBE56:
+ 386              	.LBE55:
+  55:src/supervisorTrapHandler.cpp ****             } break;
+ 387              		.loc 1 55 17 is_stmt 1
+  55:src/supervisorTrapHandler.cpp ****             } break;
+ 388              		.loc 1 55 27 is_stmt 0
+ 389 014c 97000000 		call	_ZN3PCB5yieldEv@plt
+ 389      E7800000 
+ 390              	.LVL24:
+  56:src/supervisorTrapHandler.cpp **** 
+ 391              		.loc 1 56 15 is_stmt 1
+ 392 0154 6FF01FF8 		j	.L3
+ 393              	.L10:
+  58:src/supervisorTrapHandler.cpp ****                 sem_t* handle;
+ 394              		.loc 1 58 13
+  58:src/supervisorTrapHandler.cpp ****                 sem_t* handle;
+ 395              		.loc 1 58 30
+ 396              	.LBB57:
+  59:src/supervisorTrapHandler.cpp ****                 uint32 init;
+ 397              		.loc 1 59 17
+  60:src/supervisorTrapHandler.cpp **** 
+ 398              		.loc 1 60 17
+  62:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a2" : "=r" (init));
+ 399              		.loc 1 62 17
+  62:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a2" : "=r" (init));
+ 400              		.loc 1 62 62 is_stmt 0
+ 401              	#APP
+ 402              	# 62 "src/supervisorTrapHandler.cpp" 1
+ 403              		mv s1, a1
+ 404              	# 0 "" 2
+ 405              	.LVL25:
+  63:src/supervisorTrapHandler.cpp **** 
+ 406              		.loc 1 63 17 is_stmt 1
+  63:src/supervisorTrapHandler.cpp **** 
+ 407              		.loc 1 63 60 is_stmt 0
+ 408              	# 63 "src/supervisorTrapHandler.cpp" 1
+ 409              		mv a0, a2
+ 410              	# 0 "" 2
+ 411              	.LVL26:
+  65:src/supervisorTrapHandler.cpp ****             } break;
+ 412              		.loc 1 65 17 is_stmt 1
+  65:src/supervisorTrapHandler.cpp ****             } break;
+ 413              		.loc 1 65 47 is_stmt 0
+ 414              	#NO_APP
+ 415 0160 1B050500 		sext.w	a0,a0
+ 416 0164 97000000 		call	_ZN3Sem15createSemaphoreEj@plt
+ 416      E7800000 
+ 417              	.LVL27:
+  65:src/supervisorTrapHandler.cpp ****             } break;
+ 418              		.loc 1 65 25
+ 419 016c 23B0A400 		sd	a0,0(s1)
+ 420              	.LBE57:
   66:src/supervisorTrapHandler.cpp **** 
- 319              		.loc 1 66 17
-  66:src/supervisorTrapHandler.cpp **** 
- 320              		.loc 1 66 63 is_stmt 0
- 321              	#APP
- 322              	# 66 "src/supervisorTrapHandler.cpp" 1
- 323              		mv a0, x11
- 324              	# 0 "" 2
- 325              	.LVL24:
-  68:src/supervisorTrapHandler.cpp ****             } break;
- 326              		.loc 1 68 17 is_stmt 1
-  68:src/supervisorTrapHandler.cpp ****             } break;
- 327              		.loc 1 68 37 is_stmt 0
- 328              	#NO_APP
- 329 0104 97000000 		call	_ZN3Sem15deleteSemaphoreEPS_@plt
- 329      E7800000 
- 330              	.LVL25:
- 331              	.LBE40:
+GAS LISTING /tmp/cch8ARcO.s 			page 16
+
+
+ 421              		.loc 1 66 15 is_stmt 1
+ 422 0170 6FF05FF6 		j	.L3
+ 423              	.LVL28:
+ 424              	.L9:
+  68:src/supervisorTrapHandler.cpp ****                 sem_t handle;
+ 425              		.loc 1 68 13
+  68:src/supervisorTrapHandler.cpp ****                 sem_t handle;
+ 426              		.loc 1 68 31
+ 427              	.LBB58:
   69:src/supervisorTrapHandler.cpp **** 
- 332              		.loc 1 69 15 is_stmt 1
- 333 010c 6FF0DFF2 		j	.L1
- 334              	.L8:
-  71:src/supervisorTrapHandler.cpp ****                 Sem* handle; int ret = -1;
- 335              		.loc 1 71 13
-  71:src/supervisorTrapHandler.cpp ****                 Sem* handle; int ret = -1;
- 336              		.loc 1 71 30
- 337              	.LBB41:
-  72:src/supervisorTrapHandler.cpp **** 
- 338              		.loc 1 72 17
-  72:src/supervisorTrapHandler.cpp **** 
- 339              		.loc 1 72 30
- 340              	.LVL26:
+ 428              		.loc 1 69 17
+  71:src/supervisorTrapHandler.cpp **** 
+ 429              		.loc 1 71 17
+  71:src/supervisorTrapHandler.cpp **** 
+ 430              		.loc 1 71 62 is_stmt 0
+ 431              	#APP
+ 432              	# 71 "src/supervisorTrapHandler.cpp" 1
+ 433              		mv a0, a1
+ 434              	# 0 "" 2
+ 435              	.LVL29:
+  73:src/supervisorTrapHandler.cpp ****             } break;
+ 436              		.loc 1 73 17 is_stmt 1
+  73:src/supervisorTrapHandler.cpp ****             } break;
+ 437              		.loc 1 73 37 is_stmt 0
+ 438              	#NO_APP
+ 439 0178 97000000 		call	_ZN3Sem15deleteSemaphoreEPS_@plt
+ 439      E7800000 
+ 440              	.LVL30:
+ 441              	.LBE58:
   74:src/supervisorTrapHandler.cpp **** 
- 341              		.loc 1 74 17
-  74:src/supervisorTrapHandler.cpp **** 
- 342              		.loc 1 74 63 is_stmt 0
- 343              	#APP
- 344              	# 74 "src/supervisorTrapHandler.cpp" 1
- 345              		mv a0, x11
- 346              	# 0 "" 2
- 347              	.LVL27:
-  76:src/supervisorTrapHandler.cpp ****                     handle->wait();
- 348              		.loc 1 76 17 is_stmt 1
- 349              	#NO_APP
- 350              	.LBB42:
- 351              	.LBB43:
- 352              		.file 4 "src/../h/sem.h"
+ 442              		.loc 1 74 15 is_stmt 1
+ 443 0180 6FF05FF5 		j	.L3
+ 444              	.L8:
+  76:src/supervisorTrapHandler.cpp ****                 sem_t handle; int ret = -1;
+ 445              		.loc 1 76 13
+  76:src/supervisorTrapHandler.cpp ****                 sem_t handle; int ret = -1;
+ 446              		.loc 1 76 30
+ 447              	.LBB59:
+  77:src/supervisorTrapHandler.cpp **** 
+ 448              		.loc 1 77 17
+  77:src/supervisorTrapHandler.cpp **** 
+ 449              		.loc 1 77 31
+ 450              	.LVL31:
+  79:src/supervisorTrapHandler.cpp **** 
+ 451              		.loc 1 79 17
+  79:src/supervisorTrapHandler.cpp **** 
+ 452              		.loc 1 79 62 is_stmt 0
+ 453              	#APP
+ 454              	# 79 "src/supervisorTrapHandler.cpp" 1
+ 455              		mv a0, a1
+ 456              	# 0 "" 2
+ 457              	.LVL32:
+  81:src/supervisorTrapHandler.cpp ****                     handle->wait();
+ 458              		.loc 1 81 17 is_stmt 1
+ 459              	#NO_APP
+ 460              	.LBB60:
+ 461              	.LBB61:
+GAS LISTING /tmp/cch8ARcO.s 			page 17
+
+
+ 462              		.file 4 "src/../h/sem.h"
    1:src/../h/sem.h **** #ifndef PROJEKAT_SEM_H
    2:src/../h/sem.h **** #define PROJEKAT_SEM_H
    3:src/../h/sem.h **** 
-GAS LISTING /tmp/cc5gwuU0.s 			page 13
-
-
-   4:src/../h/sem.h **** #include "../lib/hw.h"
-   5:src/../h/sem.h **** #include "pcb.h"
-   6:src/../h/sem.h **** #include "queue.h"
-   7:src/../h/sem.h **** #include "../h/syscall_c.h"
-   8:src/../h/sem.h **** #include "../h/list.h"
-   9:src/../h/sem.h **** 
-  10:src/../h/sem.h **** class Sem {
-  11:src/../h/sem.h **** private:
-  12:src/../h/sem.h ****     int val;
-  13:src/../h/sem.h ****     bool active;
-  14:src/../h/sem.h ****     List<PCB> blocked;
-  15:src/../h/sem.h **** 
-  16:src/../h/sem.h ****     Sem(uint32 init = 1) : val(init), active(true) {}
-  17:src/../h/sem.h **** 
-  18:src/../h/sem.h **** protected:
-  19:src/../h/sem.h ****     void block();
-  20:src/../h/sem.h **** 
-  21:src/../h/sem.h ****     void unblock();
-  22:src/../h/sem.h **** 
-  23:src/../h/sem.h ****     void setActive(bool val) { active = val; }
-  24:src/../h/sem.h **** 
-  25:src/../h/sem.h **** public:
-  26:src/../h/sem.h ****     void wait() { if(--val < 0) block(); }
-  27:src/../h/sem.h **** 
-  28:src/../h/sem.h ****     void signal() { if(++val <= 0) unblock(); }
-  29:src/../h/sem.h **** 
-  30:src/../h/sem.h ****     static Sem* createSemaphore(uint32 init);
-  31:src/../h/sem.h **** 
-  32:src/../h/sem.h ****     static void deleteSemaphore(sem_t handle);
-  33:src/../h/sem.h **** 
-  34:src/../h/sem.h ****     bool isActive() { return active; }
- 353              		.loc 4 34 23
- 354              		.loc 4 34 30 is_stmt 0
- 355 0114 83474500 		lbu	a5,4(a0)
- 356              	.LVL28:
- 357              	.LBE43:
- 358              	.LBE42:
-  76:src/supervisorTrapHandler.cpp ****                     handle->wait();
- 359              		.loc 1 76 17
- 360 0118 63880702 		beqz	a5,.L20
-  77:src/supervisorTrapHandler.cpp ****                     ret = 0;
- 361              		.loc 1 77 21 is_stmt 1
- 362              	.LVL29:
- 363              	.LBB44:
- 364              	.LBB45:
+   4:src/../h/sem.h **** #include "pcb.h"
+   5:src/../h/sem.h **** #include "queue.h"
+   6:src/../h/sem.h **** #include "syscall_c.h"
+   7:src/../h/sem.h **** #include "list.h"
+   8:src/../h/sem.h **** 
+   9:src/../h/sem.h **** class Sem {
+  10:src/../h/sem.h **** private:
+  11:src/../h/sem.h ****     int val;
+  12:src/../h/sem.h ****     bool active;
+  13:src/../h/sem.h ****     List<PCB> blocked;
+  14:src/../h/sem.h **** 
+  15:src/../h/sem.h ****     Sem(uint32 init = 1) : val(init), active(true) {}
+  16:src/../h/sem.h **** 
+  17:src/../h/sem.h **** protected:
+  18:src/../h/sem.h ****     void block();
+  19:src/../h/sem.h **** 
+  20:src/../h/sem.h ****     void unblock();
+  21:src/../h/sem.h **** 
+  22:src/../h/sem.h ****     void setActive(bool val) { active = val; }
+  23:src/../h/sem.h **** 
+  24:src/../h/sem.h **** public:
+  25:src/../h/sem.h ****     void wait() { if(--val < 0) block(); }
   26:src/../h/sem.h **** 
- 365              		.loc 4 26 19
-  26:src/../h/sem.h **** 
- 366              		.loc 4 26 24 is_stmt 0
- 367 011c 83270500 		lw	a5,0(a0)
-  26:src/../h/sem.h **** 
- 368              		.loc 4 26 22
- 369 0120 9B87F7FF 		addiw	a5,a5,-1
-  26:src/../h/sem.h **** 
- 370              		.loc 4 26 28
- 371 0124 2320F500 		sw	a5,0(a0)
-  26:src/../h/sem.h **** 
-GAS LISTING /tmp/cc5gwuU0.s 			page 14
-
-
- 372              		.loc 4 26 19
- 373 0128 13970702 		slli	a4,a5,32
- 374 012c 63460700 		bltz	a4,.L27
- 375              	.LBE45:
- 376              	.LBE44:
-  78:src/supervisorTrapHandler.cpp ****                 }
- 377              		.loc 1 78 25
- 378 0130 93070000 		li	a5,0
- 379 0134 6F008001 		j	.L18
- 380              	.L27:
- 381              	.LBB48:
- 382              	.LBB46:
-  26:src/../h/sem.h **** 
- 383              		.loc 4 26 33 is_stmt 1
-  26:src/../h/sem.h **** 
- 384              		.loc 4 26 38 is_stmt 0
- 385 0138 97000000 		call	_ZN3Sem5blockEv@plt
- 385      E7800000 
- 386              	.LVL30:
- 387              	.LBE46:
- 388              	.LBE48:
-  78:src/supervisorTrapHandler.cpp ****                 }
- 389              		.loc 1 78 25
- 390 0140 93070000 		li	a5,0
- 391              	.LBB49:
- 392              	.LBB47:
- 393 0144 6F008000 		j	.L18
- 394              	.LVL31:
- 395              	.L20:
- 396              	.LBE47:
- 397              	.LBE49:
-  72:src/supervisorTrapHandler.cpp **** 
- 398              		.loc 1 72 34
- 399 0148 9307F0FF 		li	a5,-1
- 400              	.LVL32:
- 401              	.L18:
-  81:src/supervisorTrapHandler.cpp ****             } break;
- 402              		.loc 1 81 17 is_stmt 1
-  81:src/supervisorTrapHandler.cpp ****             } break;
- 403              		.loc 1 81 61 is_stmt 0
- 404              	#APP
- 405              	# 81 "src/supervisorTrapHandler.cpp" 1
- 406              		mv x10, a5
- 407              	# 0 "" 2
- 408              	#NO_APP
- 409              	.LBE41:
-  82:src/supervisorTrapHandler.cpp **** 
- 410              		.loc 1 82 15 is_stmt 1
- 411 0150 6FF09FEE 		j	.L1
- 412              	.LVL33:
- 413              	.L7:
-  84:src/supervisorTrapHandler.cpp ****                 Sem* handle; int ret = -1;
- 414              		.loc 1 84 13
-  84:src/supervisorTrapHandler.cpp ****                 Sem* handle; int ret = -1;
- 415              		.loc 1 84 32
- 416              	.LBB50:
-  85:src/supervisorTrapHandler.cpp **** 
-GAS LISTING /tmp/cc5gwuU0.s 			page 15
-
-
- 417              		.loc 1 85 17
-  85:src/supervisorTrapHandler.cpp **** 
- 418              		.loc 1 85 30
-  87:src/supervisorTrapHandler.cpp **** 
- 419              		.loc 1 87 17
-  87:src/supervisorTrapHandler.cpp **** 
- 420              		.loc 1 87 63 is_stmt 0
- 421              	#APP
- 422              	# 87 "src/supervisorTrapHandler.cpp" 1
- 423              		mv a0, x11
- 424              	# 0 "" 2
- 425              	.LVL34:
-  89:src/supervisorTrapHandler.cpp ****                     handle->signal();
- 426              		.loc 1 89 17 is_stmt 1
- 427              	#NO_APP
- 428              	.LBB51:
- 429              	.LBB52:
- 430              		.loc 4 34 23
- 431              		.loc 4 34 30 is_stmt 0
- 432 0158 83474500 		lbu	a5,4(a0)
- 433              	.LVL35:
- 434              	.LBE52:
- 435              	.LBE51:
-  89:src/supervisorTrapHandler.cpp ****                     handle->signal();
- 436              		.loc 1 89 17
- 437 015c 63880702 		beqz	a5,.L22
-  90:src/supervisorTrapHandler.cpp ****                     ret = 0;
- 438              		.loc 1 90 21 is_stmt 1
- 439              	.LVL36:
- 440              	.LBB53:
- 441              	.LBB54:
+  27:src/../h/sem.h ****     void signal() { if(++val <= 0) unblock(); }
   28:src/../h/sem.h **** 
- 442              		.loc 4 28 21
-  28:src/../h/sem.h **** 
- 443              		.loc 4 28 26 is_stmt 0
- 444 0160 83270500 		lw	a5,0(a0)
-  28:src/../h/sem.h **** 
- 445              		.loc 4 28 24
- 446 0164 9B871700 		addiw	a5,a5,1
- 447 0168 1B870700 		sext.w	a4,a5
-  28:src/../h/sem.h **** 
- 448              		.loc 4 28 30
- 449 016c 2320F500 		sw	a5,0(a0)
-  28:src/../h/sem.h **** 
- 450              		.loc 4 28 21
- 451 0170 6356E000 		blez	a4,.L28
- 452              	.LBE54:
- 453              	.LBE53:
-  91:src/supervisorTrapHandler.cpp ****                 }
- 454              		.loc 1 91 25
- 455 0174 93070000 		li	a5,0
- 456 0178 6F008001 		j	.L19
- 457              	.L28:
- 458              	.LBB57:
- 459              	.LBB55:
-  28:src/../h/sem.h **** 
- 460              		.loc 4 28 36 is_stmt 1
-GAS LISTING /tmp/cc5gwuU0.s 			page 16
+  29:src/../h/sem.h ****     static Sem* createSemaphore(uint32 init);
+  30:src/../h/sem.h **** 
+  31:src/../h/sem.h ****     static void deleteSemaphore(sem_t handle);
+  32:src/../h/sem.h **** 
+  33:src/../h/sem.h ****     bool isActive() { return active; }
+ 463              		.loc 4 33 23
+ 464              		.loc 4 33 30 is_stmt 0
+ 465 0188 83474500 		lbu	a5,4(a0)
+ 466              	.LVL33:
+ 467              	.LBE61:
+ 468              	.LBE60:
+  81:src/supervisorTrapHandler.cpp ****                     handle->wait();
+ 469              		.loc 1 81 17
+ 470 018c 63880702 		beqz	a5,.L24
+  82:src/supervisorTrapHandler.cpp ****                     ret = 0;
+ 471              		.loc 1 82 21 is_stmt 1
+ 472              	.LVL34:
+ 473              	.LBB62:
+ 474              	.LBB63:
+  25:src/../h/sem.h **** 
+ 475              		.loc 4 25 19
+  25:src/../h/sem.h **** 
+ 476              		.loc 4 25 24 is_stmt 0
+ 477 0190 83270500 		lw	a5,0(a0)
+  25:src/../h/sem.h **** 
+ 478              		.loc 4 25 22
+ 479 0194 9B87F7FF 		addiw	a5,a5,-1
+  25:src/../h/sem.h **** 
+GAS LISTING /tmp/cch8ARcO.s 			page 18
 
 
-  28:src/../h/sem.h **** 
- 461              		.loc 4 28 43 is_stmt 0
- 462 017c 97000000 		call	_ZN3Sem7unblockEv@plt
- 462      E7800000 
- 463              	.LVL37:
- 464              	.LBE55:
- 465              	.LBE57:
-  91:src/supervisorTrapHandler.cpp ****                 }
- 466              		.loc 1 91 25
- 467 0184 93070000 		li	a5,0
- 468              	.LBB58:
- 469              	.LBB56:
- 470 0188 6F008000 		j	.L19
- 471              	.LVL38:
- 472              	.L22:
- 473              	.LBE56:
- 474              	.LBE58:
-  85:src/supervisorTrapHandler.cpp **** 
- 475              		.loc 1 85 34
- 476 018c 9307F0FF 		li	a5,-1
- 477              	.LVL39:
- 478              	.L19:
-  94:src/supervisorTrapHandler.cpp ****             }
- 479              		.loc 1 94 17 is_stmt 1
-  94:src/supervisorTrapHandler.cpp ****             }
- 480              		.loc 1 94 61 is_stmt 0
- 481              	#APP
- 482              	# 94 "src/supervisorTrapHandler.cpp" 1
- 483              		mv x10, a5
- 484              	# 0 "" 2
- 485              	.LVL40:
- 486              	#NO_APP
- 487              	.L6:
- 488              	.LBE50:
-  97:src/supervisorTrapHandler.cpp ****                 char c = __getc();
- 489              		.loc 1 97 13 is_stmt 1
-  97:src/supervisorTrapHandler.cpp ****                 char c = __getc();
- 490              		.loc 1 97 30
- 491              	.LBB59:
-  98:src/supervisorTrapHandler.cpp **** 
- 492              		.loc 1 98 17
-  98:src/supervisorTrapHandler.cpp **** 
- 493              		.loc 1 98 32 is_stmt 0
- 494 0194 97000000 		call	__getc@plt
- 494      E7800000 
- 495              	.LVL41:
- 100:src/supervisorTrapHandler.cpp ****             } break;
- 496              		.loc 1 100 17 is_stmt 1
- 100:src/supervisorTrapHandler.cpp ****             } break;
- 497              		.loc 1 100 59 is_stmt 0
- 498              	#APP
- 499              	# 100 "src/supervisorTrapHandler.cpp" 1
- 500              		mv x10, a0
- 501              	# 0 "" 2
- 502              	#NO_APP
- 503              	.LBE59:
- 101:src/supervisorTrapHandler.cpp **** 
-GAS LISTING /tmp/cc5gwuU0.s 			page 17
-
-
- 504              		.loc 1 101 15 is_stmt 1
- 505 01a0 6FF09FE9 		j	.L1
- 506              	.LVL42:
- 507              	.L4:
- 103:src/supervisorTrapHandler.cpp ****                 char c;
- 508              		.loc 1 103 13
- 103:src/supervisorTrapHandler.cpp ****                 char c;
- 509              		.loc 1 103 30
- 510              	.LBB60:
- 104:src/supervisorTrapHandler.cpp **** 
- 511              		.loc 1 104 17
- 106:src/supervisorTrapHandler.cpp **** 
- 512              		.loc 1 106 17
- 106:src/supervisorTrapHandler.cpp **** 
- 513              		.loc 1 106 58 is_stmt 0
+ 480              		.loc 4 25 28
+ 481 0198 2320F500 		sw	a5,0(a0)
+  25:src/../h/sem.h **** 
+ 482              		.loc 4 25 19
+ 483 019c 13970702 		slli	a4,a5,32
+ 484 01a0 63460700 		bltz	a4,.L32
+ 485              	.LBE63:
+ 486              	.LBE62:
+  83:src/supervisorTrapHandler.cpp ****                 }
+ 487              		.loc 1 83 25
+ 488 01a4 93070000 		li	a5,0
+ 489 01a8 6F008001 		j	.L18
+ 490              	.L32:
+ 491              	.LBB66:
+ 492              	.LBB64:
+  25:src/../h/sem.h **** 
+ 493              		.loc 4 25 33 is_stmt 1
+  25:src/../h/sem.h **** 
+ 494              		.loc 4 25 38 is_stmt 0
+ 495 01ac 97000000 		call	_ZN3Sem5blockEv@plt
+ 495      E7800000 
+ 496              	.LVL35:
+ 497              	.LBE64:
+ 498              	.LBE66:
+  83:src/supervisorTrapHandler.cpp ****                 }
+ 499              		.loc 1 83 25
+ 500 01b4 93070000 		li	a5,0
+ 501              	.LBB67:
+ 502              	.LBB65:
+ 503 01b8 6F008000 		j	.L18
+ 504              	.LVL36:
+ 505              	.L24:
+ 506              	.LBE65:
+ 507              	.LBE67:
+  77:src/supervisorTrapHandler.cpp **** 
+ 508              		.loc 1 77 35
+ 509 01bc 9307F0FF 		li	a5,-1
+ 510              	.LVL37:
+ 511              	.L18:
+  86:src/supervisorTrapHandler.cpp ****             } break;
+ 512              		.loc 1 86 17 is_stmt 1
+  86:src/supervisorTrapHandler.cpp ****             } break;
+ 513              		.loc 1 86 60 is_stmt 0
  514              	#APP
- 515              	# 106 "src/supervisorTrapHandler.cpp" 1
- 516              		mv a0, x11
+ 515              	# 86 "src/supervisorTrapHandler.cpp" 1
+ 516              		mv a0, a5
  517              	# 0 "" 2
- 518              	.LVL43:
- 108:src/supervisorTrapHandler.cpp ****             } break;
- 519              		.loc 1 108 17 is_stmt 1
- 108:src/supervisorTrapHandler.cpp ****             } break;
- 520              		.loc 1 108 23 is_stmt 0
- 521              	#NO_APP
- 522 01a8 1375F50F 		andi	a0,a0,0xff
- 523 01ac 97000000 		call	__putc@plt
- 523      E7800000 
- 524              	.LVL44:
- 525              	.LBE60:
+ 518              	#NO_APP
+ 519              	.LBE59:
+  87:src/supervisorTrapHandler.cpp **** 
+ 520              		.loc 1 87 15 is_stmt 1
+ 521 01c4 6FF01FF1 		j	.L3
+ 522              	.LVL38:
+ 523              	.L7:
+  89:src/supervisorTrapHandler.cpp ****                 sem_t handle; int ret = -1;
+ 524              		.loc 1 89 13
+  89:src/supervisorTrapHandler.cpp ****                 sem_t handle; int ret = -1;
+GAS LISTING /tmp/cch8ARcO.s 			page 19
+
+
+ 525              		.loc 1 89 32
+ 526              	.LBB68:
+  90:src/supervisorTrapHandler.cpp **** 
+ 527              		.loc 1 90 17
+  90:src/supervisorTrapHandler.cpp **** 
+ 528              		.loc 1 90 31
+  92:src/supervisorTrapHandler.cpp **** 
+ 529              		.loc 1 92 17
+  92:src/supervisorTrapHandler.cpp **** 
+ 530              		.loc 1 92 62 is_stmt 0
+ 531              	#APP
+ 532              	# 92 "src/supervisorTrapHandler.cpp" 1
+ 533              		mv a0, a1
+ 534              	# 0 "" 2
+ 535              	.LVL39:
+  94:src/supervisorTrapHandler.cpp ****                     handle->signal();
+ 536              		.loc 1 94 17 is_stmt 1
+ 537              	#NO_APP
+ 538              	.LBB69:
+ 539              	.LBB70:
+ 540              		.loc 4 33 23
+ 541              		.loc 4 33 30 is_stmt 0
+ 542 01cc 83474500 		lbu	a5,4(a0)
+ 543              	.LVL40:
+ 544              	.LBE70:
+ 545              	.LBE69:
+  94:src/supervisorTrapHandler.cpp ****                     handle->signal();
+ 546              		.loc 1 94 17
+ 547 01d0 63880702 		beqz	a5,.L26
+  95:src/supervisorTrapHandler.cpp ****                     ret = 0;
+ 548              		.loc 1 95 21 is_stmt 1
+ 549              	.LVL41:
+ 550              	.LBB71:
+ 551              	.LBB72:
+  27:src/../h/sem.h **** 
+ 552              		.loc 4 27 21
+  27:src/../h/sem.h **** 
+ 553              		.loc 4 27 26 is_stmt 0
+ 554 01d4 83270500 		lw	a5,0(a0)
+  27:src/../h/sem.h **** 
+ 555              		.loc 4 27 24
+ 556 01d8 9B871700 		addiw	a5,a5,1
+ 557 01dc 1B870700 		sext.w	a4,a5
+  27:src/../h/sem.h **** 
+ 558              		.loc 4 27 30
+ 559 01e0 2320F500 		sw	a5,0(a0)
+  27:src/../h/sem.h **** 
+ 560              		.loc 4 27 21
+ 561 01e4 6356E000 		blez	a4,.L33
+ 562              	.LBE72:
+ 563              	.LBE71:
+  96:src/supervisorTrapHandler.cpp ****                 }
+ 564              		.loc 1 96 25
+ 565 01e8 93070000 		li	a5,0
+ 566 01ec 6F008001 		j	.L19
+ 567              	.L33:
+ 568              	.LBB75:
+GAS LISTING /tmp/cch8ARcO.s 			page 20
+
+
+ 569              	.LBB73:
+  27:src/../h/sem.h **** 
+ 570              		.loc 4 27 36 is_stmt 1
+  27:src/../h/sem.h **** 
+ 571              		.loc 4 27 43 is_stmt 0
+ 572 01f0 97000000 		call	_ZN3Sem7unblockEv@plt
+ 572      E7800000 
+ 573              	.LVL42:
+ 574              	.LBE73:
+ 575              	.LBE75:
+  96:src/supervisorTrapHandler.cpp ****                 }
+ 576              		.loc 1 96 25
+ 577 01f8 93070000 		li	a5,0
+ 578              	.LBB76:
+ 579              	.LBB74:
+ 580 01fc 6F008000 		j	.L19
+ 581              	.LVL43:
+ 582              	.L26:
+ 583              	.LBE74:
+ 584              	.LBE76:
+  90:src/supervisorTrapHandler.cpp **** 
+ 585              		.loc 1 90 35
+ 586 0200 9307F0FF 		li	a5,-1
+ 587              	.LVL44:
+ 588              	.L19:
+  99:src/supervisorTrapHandler.cpp ****             } break;
+ 589              		.loc 1 99 17 is_stmt 1
+  99:src/supervisorTrapHandler.cpp ****             } break;
+ 590              		.loc 1 99 60 is_stmt 0
+ 591              	#APP
+ 592              	# 99 "src/supervisorTrapHandler.cpp" 1
+ 593              		mv a0, a5
+ 594              	# 0 "" 2
+ 595              	#NO_APP
+ 596              	.LBE68:
+ 100:src/supervisorTrapHandler.cpp **** 
+ 597              		.loc 1 100 15 is_stmt 1
+ 598 0208 6FF0DFEC 		j	.L3
+ 599              	.LVL45:
+ 600              	.L6:
+ 102:src/supervisorTrapHandler.cpp ****                 char c = __getc();
+ 601              		.loc 1 102 13
+ 102:src/supervisorTrapHandler.cpp ****                 char c = __getc();
+ 602              		.loc 1 102 30
+ 603              	.LBB77:
+ 103:src/supervisorTrapHandler.cpp **** 
+ 604              		.loc 1 103 17
+ 103:src/supervisorTrapHandler.cpp **** 
+ 605              		.loc 1 103 32 is_stmt 0
+ 606 020c 97000000 		call	__getc@plt
+ 606      E7800000 
+ 607              	.LVL46:
+ 105:src/supervisorTrapHandler.cpp ****             } break;
+ 608              		.loc 1 105 17 is_stmt 1
+ 105:src/supervisorTrapHandler.cpp ****             } break;
+ 609              		.loc 1 105 58 is_stmt 0
+ 610              	#APP
+GAS LISTING /tmp/cch8ARcO.s 			page 21
+
+
+ 611              	# 105 "src/supervisorTrapHandler.cpp" 1
+ 612              		mv a0, a0
+ 613              	# 0 "" 2
+ 614              	#NO_APP
+ 615              	.LBE77:
+ 106:src/supervisorTrapHandler.cpp **** 
+ 616              		.loc 1 106 15 is_stmt 1
+ 617 0218 6FF0DFEB 		j	.L3
+ 618              	.LVL47:
+ 619              	.L4:
+ 108:src/supervisorTrapHandler.cpp ****                 char c;
+ 620              		.loc 1 108 13
+ 108:src/supervisorTrapHandler.cpp ****                 char c;
+ 621              		.loc 1 108 30
+ 622              	.LBB78:
  109:src/supervisorTrapHandler.cpp **** 
- 526              		.loc 1 109 15 is_stmt 1
- 527 01b4 6FF05FE8 		j	.L1
- 528              	.L12:
- 111:src/supervisorTrapHandler.cpp ****                 PCB** handle;
- 529              		.loc 1 111 13
- 111:src/supervisorTrapHandler.cpp ****                 PCB** handle;
- 530              		.loc 1 111 31
- 531              	.LBB61:
- 112:src/supervisorTrapHandler.cpp ****                 void (*start_routine)(void *);
- 532              		.loc 1 112 17
- 113:src/supervisorTrapHandler.cpp ****                 void *arg;
- 533              		.loc 1 113 17
- 114:src/supervisorTrapHandler.cpp ****                 uint64 *stack;
- 534              		.loc 1 114 17
- 115:src/supervisorTrapHandler.cpp ****                 //int ret = -1;
- 535              		.loc 1 115 17
- 118:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x12" : "=r" (start_routine));
- 536              		.loc 1 118 17
- 118:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x12" : "=r" (start_routine));
- 537              		.loc 1 118 63 is_stmt 0
- 538              	#APP
- 539              	# 118 "src/supervisorTrapHandler.cpp" 1
- 540              		mv s1, x11
- 541              	# 0 "" 2
- 542              	.LVL45:
- 119:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x13" : "=r" (arg));
-GAS LISTING /tmp/cc5gwuU0.s 			page 18
+ 623              		.loc 1 109 17
+ 111:src/supervisorTrapHandler.cpp **** 
+ 624              		.loc 1 111 17
+ 111:src/supervisorTrapHandler.cpp **** 
+ 625              		.loc 1 111 57 is_stmt 0
+ 626              	#APP
+ 627              	# 111 "src/supervisorTrapHandler.cpp" 1
+ 628              		mv a0, a1
+ 629              	# 0 "" 2
+ 630              	.LVL48:
+ 113:src/supervisorTrapHandler.cpp ****             } break;
+ 631              		.loc 1 113 17 is_stmt 1
+ 113:src/supervisorTrapHandler.cpp ****             } break;
+ 632              		.loc 1 113 23 is_stmt 0
+ 633              	#NO_APP
+ 634 0220 1375F50F 		andi	a0,a0,0xff
+ 635 0224 97000000 		call	__putc@plt
+ 635      E7800000 
+ 636              	.LVL49:
+ 637              	.LBE78:
+ 114:src/supervisorTrapHandler.cpp **** 
+ 638              		.loc 1 114 15 is_stmt 1
+ 639 022c 6FF09FEA 		j	.L3
+ 640              	.L12:
+ 116:src/supervisorTrapHandler.cpp ****                 thread_t* handle;
+ 641              		.loc 1 116 13
+ 116:src/supervisorTrapHandler.cpp ****                 thread_t* handle;
+ 642              		.loc 1 116 31
+ 643              	.LBB79:
+ 117:src/supervisorTrapHandler.cpp ****                 void (*start_routine)(void *);
+ 644              		.loc 1 117 17
+ 118:src/supervisorTrapHandler.cpp ****                 void *arg;
+ 645              		.loc 1 118 17
+ 119:src/supervisorTrapHandler.cpp ****                 uint64 *stack;
+ 646              		.loc 1 119 17
+ 120:src/supervisorTrapHandler.cpp **** 
+ 647              		.loc 1 120 17
+ 122:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a2" : "=r" (start_routine));
+ 648              		.loc 1 122 17
+ 122:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a2" : "=r" (start_routine));
+ 649              		.loc 1 122 62 is_stmt 0
+GAS LISTING /tmp/cch8ARcO.s 			page 22
 
 
- 543              		.loc 1 119 17 is_stmt 1
- 119:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x13" : "=r" (arg));
- 544              		.loc 1 119 70 is_stmt 0
- 545              	# 119 "src/supervisorTrapHandler.cpp" 1
- 546              		mv a0, x12
- 547              	# 0 "" 2
- 548              	.LVL46:
- 120:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x17" : "=r" (stack));
- 549              		.loc 1 120 17 is_stmt 1
- 120:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x17" : "=r" (stack));
- 550              		.loc 1 120 60 is_stmt 0
- 551              	# 120 "src/supervisorTrapHandler.cpp" 1
- 552              		mv a2, x13
- 553              	# 0 "" 2
- 554              	.LVL47:
- 121:src/supervisorTrapHandler.cpp **** 
- 555              		.loc 1 121 17 is_stmt 1
- 121:src/supervisorTrapHandler.cpp **** 
- 556              		.loc 1 121 62 is_stmt 0
- 557              	# 121 "src/supervisorTrapHandler.cpp" 1
- 558              		mv a1, x17
- 559              	# 0 "" 2
- 560              	.LVL48:
- 123:src/supervisorTrapHandler.cpp ****             } break;
- 561              		.loc 1 123 17 is_stmt 1
- 123:src/supervisorTrapHandler.cpp ****             } break;
- 562              		.loc 1 123 45 is_stmt 0
- 563              	#NO_APP
- 564 01c8 93060000 		li	a3,0
- 565 01cc 97000000 		call	_ZN3PCB13createProcessEPFvPvEPmS0_b@plt
- 565      E7800000 
- 566              	.LVL49:
- 123:src/supervisorTrapHandler.cpp ****             } break;
- 567              		.loc 1 123 25
- 568 01d4 23B0A400 		sd	a0,0(s1)
- 569              	.LBE61:
- 124:src/supervisorTrapHandler.cpp **** 
- 570              		.loc 1 124 15 is_stmt 1
- 571 01d8 6FF01FE6 		j	.L1
- 572              	.LVL50:
- 573              	.L11:
- 126:src/supervisorTrapHandler.cpp ****                 thread_t handle;
- 574              		.loc 1 126 13
- 126:src/supervisorTrapHandler.cpp ****                 thread_t handle;
- 575              		.loc 1 126 35
- 576              	.LBB62:
- 127:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, x11" : "=r" (handle));
- 577              		.loc 1 127 17
- 128:src/supervisorTrapHandler.cpp ****                 Scheduler::put(handle); /* mozda treba proveriti da li je body null*/
- 578              		.loc 1 128 17
- 128:src/supervisorTrapHandler.cpp ****                 Scheduler::put(handle); /* mozda treba proveriti da li je body null*/
- 579              		.loc 1 128 63 is_stmt 0
- 580              	#APP
- 581              	# 128 "src/supervisorTrapHandler.cpp" 1
- 582              		mv a0, x11
- 583              	# 0 "" 2
- 584              	.LVL51:
-GAS LISTING /tmp/cc5gwuU0.s 			page 19
+ 650              	#APP
+ 651              	# 122 "src/supervisorTrapHandler.cpp" 1
+ 652              		mv s1, a1
+ 653              	# 0 "" 2
+ 654              	.LVL50:
+ 123:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a3" : "=r" (arg));
+ 655              		.loc 1 123 17 is_stmt 1
+ 123:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a3" : "=r" (arg));
+ 656              		.loc 1 123 69 is_stmt 0
+ 657              	# 123 "src/supervisorTrapHandler.cpp" 1
+ 658              		mv a0, a2
+ 659              	# 0 "" 2
+ 660              	.LVL51:
+ 124:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a7" : "=r" (stack));
+ 661              		.loc 1 124 17 is_stmt 1
+ 124:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a7" : "=r" (stack));
+ 662              		.loc 1 124 59 is_stmt 0
+ 663              	# 124 "src/supervisorTrapHandler.cpp" 1
+ 664              		mv a2, a3
+ 665              	# 0 "" 2
+ 666              	.LVL52:
+ 125:src/supervisorTrapHandler.cpp **** 
+ 667              		.loc 1 125 17 is_stmt 1
+ 125:src/supervisorTrapHandler.cpp **** 
+ 668              		.loc 1 125 61 is_stmt 0
+ 669              	# 125 "src/supervisorTrapHandler.cpp" 1
+ 670              		mv a1, a7
+ 671              	# 0 "" 2
+ 672              	.LVL53:
+ 127:src/supervisorTrapHandler.cpp ****             } break;
+ 673              		.loc 1 127 17 is_stmt 1
+ 127:src/supervisorTrapHandler.cpp ****             } break;
+ 674              		.loc 1 127 45 is_stmt 0
+ 675              	#NO_APP
+ 676 0240 93060000 		li	a3,0
+ 677 0244 97000000 		call	_ZN3PCB13createProcessEPFvPvEPmS0_b@plt
+ 677      E7800000 
+ 678              	.LVL54:
+ 127:src/supervisorTrapHandler.cpp ****             } break;
+ 679              		.loc 1 127 25
+ 680 024c 23B0A400 		sd	a0,0(s1)
+ 681              	.LBE79:
+ 128:src/supervisorTrapHandler.cpp **** 
+ 682              		.loc 1 128 15 is_stmt 1
+ 683 0250 6FF05FE8 		j	.L3
+ 684              	.LVL55:
+ 685              	.L11:
+ 130:src/supervisorTrapHandler.cpp ****                 thread_t handle;
+ 686              		.loc 1 130 13
+ 130:src/supervisorTrapHandler.cpp ****                 thread_t handle;
+ 687              		.loc 1 130 35
+ 688              	.LBB80:
+ 131:src/supervisorTrapHandler.cpp ****                 __asm__ volatile("mv %0, a1" : "=r" (handle));
+ 689              		.loc 1 131 17
+ 132:src/supervisorTrapHandler.cpp **** 
+ 690              		.loc 1 132 17
+ 132:src/supervisorTrapHandler.cpp **** 
+GAS LISTING /tmp/cch8ARcO.s 			page 23
 
 
- 129:src/supervisorTrapHandler.cpp ****             } break;
- 585              		.loc 1 129 17 is_stmt 1
- 129:src/supervisorTrapHandler.cpp ****             } break;
- 586              		.loc 1 129 31 is_stmt 0
- 587              	#NO_APP
- 588 01e0 97000000 		call	_ZN9Scheduler3putEP3PCB@plt
- 588      E7800000 
- 589              	.LVL52:
- 590              	.LBE62:
- 130:src/supervisorTrapHandler.cpp **** 
- 591              		.loc 1 130 15 is_stmt 1
- 592 01e8 6FF01FE5 		j	.L1
- 593              	.LVL53:
- 594              	.L26:
- 595              	.LBE33:
- 596              	.LBE32:
- 138:src/supervisorTrapHandler.cpp ****     }
- 597              		.loc 1 138 9
- 138:src/supervisorTrapHandler.cpp ****     }
- 598              		.loc 1 138 24 is_stmt 0
- 599 01ec 97000000 		call	console_handler@plt
- 599      E7800000 
- 600              	.LVL54:
- 601              	.LBE63:
- 602              		.loc 1 140 1
- 603 01f4 6FF05FE4 		j	.L1
- 604              		.cfi_endproc
- 605              	.LFE48:
- 607              	.Letext0:
- 608              		.file 5 "src/../h/../lib/hw.h"
- 609              		.file 6 "src/../h/memoryAllocator.h"
- 610              		.file 7 "src/../h/scheduler.h"
- 611              		.file 8 "src/../h/list.h"
- 612              		.file 9 "src/../h/syscall_c.h"
- 613              		.file 10 "src/../lib/console.h"
-GAS LISTING /tmp/cc5gwuU0.s 			page 20
+ 691              		.loc 1 132 62 is_stmt 0
+ 692              	#APP
+ 693              	# 132 "src/supervisorTrapHandler.cpp" 1
+ 694              		mv a0, a1
+ 695              	# 0 "" 2
+ 696              	.LVL56:
+ 134:src/supervisorTrapHandler.cpp ****             } break;
+ 697              		.loc 1 134 17 is_stmt 1
+ 134:src/supervisorTrapHandler.cpp ****             } break;
+ 698              		.loc 1 134 31 is_stmt 0
+ 699              	#NO_APP
+ 700 0258 97000000 		call	_ZN9Scheduler3putEP3PCB@plt
+ 700      E7800000 
+ 701              	.LVL57:
+ 702              	.LBE80:
+ 135:src/supervisorTrapHandler.cpp **** 
+ 703              		.loc 1 135 15 is_stmt 1
+ 704 0260 6FF05FE7 		j	.L3
+ 705              	.L30:
+ 706              	.LBE83:
+ 707              	.LBE84:
+ 145:src/supervisorTrapHandler.cpp ****     }
+ 708              		.loc 1 145 9
+ 145:src/supervisorTrapHandler.cpp ****     }
+ 709              		.loc 1 145 24 is_stmt 0
+ 710 0264 97000000 		call	console_handler@plt
+ 710      E7800000 
+ 711              	.LVL58:
+ 712 026c 6FF01FE7 		j	.L1
+ 713              	.L31:
+ 152:src/supervisorTrapHandler.cpp ****             PCB::timeSliceCnt = 0;
+ 714              		.loc 1 152 13 is_stmt 1
+ 152:src/supervisorTrapHandler.cpp ****             PCB::timeSliceCnt = 0;
+ 715              		.loc 1 152 23 is_stmt 0
+ 716 0270 97000000 		call	_ZN3PCB5yieldEv@plt
+ 716      E7800000 
+ 717              	.LVL59:
+ 153:src/supervisorTrapHandler.cpp ****             Riscv::w_sepc(sepc);
+ 718              		.loc 1 153 13 is_stmt 1
+ 153:src/supervisorTrapHandler.cpp ****             Riscv::w_sepc(sepc);
+ 719              		.loc 1 153 31 is_stmt 0
+ 720 0278 97070000 		la	a5,_ZN3PCB12timeSliceCntE
+ 720      83B70700 
+ 721 0280 23B00700 		sd	zero,0(a5)
+ 154:src/supervisorTrapHandler.cpp ****             Riscv::w_sstatus(sstatus);
+ 722              		.loc 1 154 13 is_stmt 1
+ 723              	.LVL60:
+ 724              	.LBB85:
+ 725              	.LBB86:
+ 106:src/../h/riscv.h **** }
+ 726              		.loc 2 106 5
+ 106:src/../h/riscv.h **** }
+ 727              		.loc 2 106 65 is_stmt 0
+ 728              	#APP
+ 729              	# 106 "src/../h/riscv.h" 1
+ 730              		csrw sepc, s2
+ 731              	# 0 "" 2
+GAS LISTING /tmp/cch8ARcO.s 			page 24
+
+
+ 732              	.LVL61:
+ 733              	#NO_APP
+ 734              	.LBE86:
+ 735              	.LBE85:
+ 155:src/supervisorTrapHandler.cpp ****         }
+ 736              		.loc 1 155 13 is_stmt 1
+ 737              	.LBB87:
+ 738              	.LBB88:
+ 170:src/../h/riscv.h **** }
+ 171:src/../h/riscv.h **** 
+ 172:src/../h/riscv.h **** inline void Riscv::w_sstatus(uint64 sstatus)
+ 173:src/../h/riscv.h **** {
+ 174:src/../h/riscv.h ****     __asm__ volatile ("csrw sstatus, %[sstatus]" : : [sstatus] "r"(sstatus));
+ 739              		.loc 2 174 5
+ 740              		.loc 2 174 77 is_stmt 0
+ 741              	#APP
+ 742              	# 174 "src/../h/riscv.h" 1
+ 175              	}
+ 743              		csrw sstatus, s3
+ 744              	# 0 "" 2
+ 745              		.loc 2 175 1
+ 746              	#NO_APP
+ 747 028c 6FF09FE0 		j	.L23
+ 748              	.LVL62:
+ 749              	.L22:
+ 750              	.LBE88:
+ 751              	.LBE87:
+ 163:src/supervisorTrapHandler.cpp ****         printString("SEPC: ");
+ 752              		.loc 1 163 9 is_stmt 1
+ 163:src/supervisorTrapHandler.cpp ****         printString("SEPC: ");
+ 753              		.loc 1 163 15 is_stmt 0
+ 754 0290 1305A000 		li	a0,10
+ 755 0294 97000000 		call	__putc@plt
+ 755      E7800000 
+ 756              	.LVL63:
+ 164:src/supervisorTrapHandler.cpp ****         printInt(sepc);
+ 757              		.loc 1 164 9 is_stmt 1
+ 164:src/supervisorTrapHandler.cpp ****         printInt(sepc);
+ 758              		.loc 1 164 20 is_stmt 0
+ 759 029c 17050000 		lla	a0,.LC0
+ 759      13050500 
+ 760 02a4 97000000 		call	_Z11printStringPKc@plt
+ 760      E7800000 
+ 761              	.LVL64:
+ 165:src/supervisorTrapHandler.cpp ****         __putc('\n');
+ 762              		.loc 1 165 9 is_stmt 1
+ 165:src/supervisorTrapHandler.cpp ****         __putc('\n');
+ 763              		.loc 1 165 17 is_stmt 0
+ 764 02ac 13060000 		li	a2,0
+ 765 02b0 9305A000 		li	a1,10
+ 766 02b4 1B050900 		sext.w	a0,s2
+ 767 02b8 97000000 		call	_Z8printIntiii@plt
+ 767      E7800000 
+ 768              	.LVL65:
+ 166:src/supervisorTrapHandler.cpp ****         printString("SCAUSE: ");
+ 769              		.loc 1 166 9 is_stmt 1
+ 166:src/supervisorTrapHandler.cpp ****         printString("SCAUSE: ");
+GAS LISTING /tmp/cch8ARcO.s 			page 25
+
+
+ 770              		.loc 1 166 15 is_stmt 0
+ 771 02c0 1305A000 		li	a0,10
+ 772 02c4 97000000 		call	__putc@plt
+ 772      E7800000 
+ 773              	.LVL66:
+ 167:src/supervisorTrapHandler.cpp ****         printInt(scause);
+ 774              		.loc 1 167 9 is_stmt 1
+ 167:src/supervisorTrapHandler.cpp ****         printInt(scause);
+ 775              		.loc 1 167 20 is_stmt 0
+ 776 02cc 17050000 		lla	a0,.LC1
+ 776      13050500 
+ 777 02d4 97000000 		call	_Z11printStringPKc@plt
+ 777      E7800000 
+ 778              	.LVL67:
+ 168:src/supervisorTrapHandler.cpp ****     }
+ 779              		.loc 1 168 9 is_stmt 1
+ 168:src/supervisorTrapHandler.cpp ****     }
+ 780              		.loc 1 168 17 is_stmt 0
+ 781 02dc 13060000 		li	a2,0
+ 782 02e0 9305A000 		li	a1,10
+ 783 02e4 1B850400 		sext.w	a0,s1
+ 784 02e8 97000000 		call	_Z8printIntiii@plt
+ 784      E7800000 
+ 785              	.LVL68:
+ 786              	.LBE89:
+ 787              		.loc 1 170 1
+ 788 02f0 6FF0DFDE 		j	.L1
+ 789              		.cfi_endproc
+ 790              	.LFE54:
+ 792              	.Letext0:
+ 793              		.file 5 "src/../h/../lib/hw.h"
+ 794              		.file 6 "src/../h/memoryAllocator.h"
+ 795              		.file 7 "src/../h/scheduler.h"
+ 796              		.file 8 "src/../h/list.h"
+ 797              		.file 9 "src/../h/syscall_c.h"
+ 798              		.file 10 "src/../lib/console.h"
+ 799              		.file 11 "src/../test/printing.hpp"
+GAS LISTING /tmp/cch8ARcO.s 			page 26
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 supervisorTrapHandler.cpp
-     /tmp/cc5gwuU0.s:9      .text:0000000000000000 handleSupervisorTrap
-     /tmp/cc5gwuU0.s:13     .text:0000000000000000 .L0 
-     /tmp/cc5gwuU0.s:14     .text:0000000000000000 .L0 
-     /tmp/cc5gwuU0.s:15     .text:0000000000000004 .L0 
-     /tmp/cc5gwuU0.s:19     .text:0000000000000010 .L0 
-     /tmp/cc5gwuU0.s:20     .text:0000000000000010 .L0 
-     /tmp/cc5gwuU0.s:21     .text:0000000000000010 .L0 
-     /tmp/cc5gwuU0.s:23     .text:0000000000000014 .L0 
-     /tmp/cc5gwuU0.s:28     .text:0000000000000014 .L0 
-     /tmp/cc5gwuU0.s:29     .text:0000000000000014 .L0 
-     /tmp/cc5gwuU0.s:30     .text:0000000000000014 .L0 
-    src/../h/riscv.h:88     .text:0000000000000014 .L0 
-     /tmp/cc5gwuU0.s:38     .text:000000000000001c .L0 
-     /tmp/cc5gwuU0.s:39     .text:000000000000001c .L0 
-     /tmp/cc5gwuU0.s:45     .text:0000000000000020 .L0 
-     /tmp/cc5gwuU0.s:48     .text:0000000000000028 .L0 
-     /tmp/cc5gwuU0.s:56     .text:0000000000000038 .L0 
-     /tmp/cc5gwuU0.s:57     .text:000000000000003c .L0 
-     /tmp/cc5gwuU0.s:58     .text:000000000000003c .L0 
-     /tmp/cc5gwuU0.s:60     .text:0000000000000040 .L0 
-     /tmp/cc5gwuU0.s:61     .text:0000000000000040 .L0 
-     /tmp/cc5gwuU0.s:63     .text:0000000000000044 .L0 
-     /tmp/cc5gwuU0.s:65     .text:0000000000000048 .L0 
-     /tmp/cc5gwuU0.s:69     .text:000000000000004c .L0 
-     /tmp/cc5gwuU0.s:73     .text:000000000000004c .L0 
-     /tmp/cc5gwuU0.s:74     .text:000000000000004c .L0 
-src/supervisorTrapHandler.cpp:13     .text:000000000000004c .L0 
-     /tmp/cc5gwuU0.s:82     .text:0000000000000050 .L0 
-     /tmp/cc5gwuU0.s:167    .text:0000000000000074 .L0 
-     /tmp/cc5gwuU0.s:169    .text:0000000000000074 .L0 
-     /tmp/cc5gwuU0.s:170    .text:0000000000000074 .L0 
-     /tmp/cc5gwuU0.s:171    .text:0000000000000074 .L0 
-src/supervisorTrapHandler.cpp:17     .text:0000000000000074 .L0 
-     /tmp/cc5gwuU0.s:178    .text:0000000000000078 .L0 
-     /tmp/cc5gwuU0.s:180    .text:0000000000000078 .L0 
-     /tmp/cc5gwuU0.s:184    .text:0000000000000080 .L0 
-     /tmp/cc5gwuU0.s:187    .text:0000000000000084 .L0 
-     /tmp/cc5gwuU0.s:189    .text:0000000000000084 .L0 
-     /tmp/cc5gwuU0.s:190    .text:0000000000000084 .L0 
-     /tmp/cc5gwuU0.s:191    .text:0000000000000084 .L0 
-src/supervisorTrapHandler.cpp:24     .text:0000000000000084 .L0 
-     /tmp/cc5gwuU0.s:198    .text:0000000000000088 .L0 
-     /tmp/cc5gwuU0.s:200    .text:0000000000000088 .L0 
-     /tmp/cc5gwuU0.s:204    .text:0000000000000090 .L0 
-     /tmp/cc5gwuU0.s:207    .text:0000000000000094 .L0 
-     /tmp/cc5gwuU0.s:209    .text:0000000000000094 .L0 
-     /tmp/cc5gwuU0.s:210    .text:0000000000000094 .L0 
-     /tmp/cc5gwuU0.s:211    .text:0000000000000094 .L0 
-     /tmp/cc5gwuU0.s:212    .text:0000000000000094 .L0 
-     /tmp/cc5gwuU0.s:213    .text:0000000000000094 .L0 
-     /tmp/cc5gwuU0.s:214    .text:0000000000000094 .L0 
-src/supervisorTrapHandler.cpp:35     .text:0000000000000094 .L0 
-     /tmp/cc5gwuU0.s:221    .text:0000000000000098 .L0 
-src/supervisorTrapHandler.cpp:36     .text:0000000000000098 .L0 
-     /tmp/cc5gwuU0.s:227    .text:000000000000009c .L0 
-GAS LISTING /tmp/cc5gwuU0.s 			page 21
+     /tmp/cch8ARcO.s:17     .text:0000000000000000 handleSupervisorTrap
+     /tmp/cch8ARcO.s:21     .text:0000000000000000 .L0 
+     /tmp/cch8ARcO.s:22     .text:0000000000000000 .L0 
+     /tmp/cch8ARcO.s:23     .text:0000000000000004 .L0 
+     /tmp/cch8ARcO.s:29     .text:0000000000000018 .L0 
+     /tmp/cch8ARcO.s:30     .text:0000000000000018 .L0 
+     /tmp/cch8ARcO.s:31     .text:0000000000000018 .L0 
+     /tmp/cch8ARcO.s:32     .text:0000000000000018 .L0 
+     /tmp/cch8ARcO.s:33     .text:0000000000000018 .L0 
+     /tmp/cch8ARcO.s:35     .text:000000000000001c .L0 
+     /tmp/cch8ARcO.s:40     .text:000000000000001c .L0 
+     /tmp/cch8ARcO.s:41     .text:000000000000001c .L0 
+     /tmp/cch8ARcO.s:42     .text:000000000000001c .L0 
+    src/../h/riscv.h:88     .text:000000000000001c .L0 
+     /tmp/cch8ARcO.s:50     .text:0000000000000024 .L0 
+     /tmp/cch8ARcO.s:51     .text:0000000000000024 .L0 
+     /tmp/cch8ARcO.s:58     .text:0000000000000028 .L0 
+     /tmp/cch8ARcO.s:59     .text:0000000000000028 .L0 
+     /tmp/cch8ARcO.s:60     .text:0000000000000028 .L0 
+    src/../h/riscv.h:100    .text:0000000000000028 .L0 
+     /tmp/cch8ARcO.s:68     .text:0000000000000030 .L0 
+     /tmp/cch8ARcO.s:69     .text:0000000000000030 .L0 
+     /tmp/cch8ARcO.s:76     .text:0000000000000034 .L0 
+     /tmp/cch8ARcO.s:77     .text:0000000000000034 .L0 
+     /tmp/cch8ARcO.s:78     .text:0000000000000034 .L0 
+    src/../h/riscv.h:168    .text:0000000000000034 .L0 
+     /tmp/cch8ARcO.s:86     .text:000000000000003c .L0 
+     /tmp/cch8ARcO.s:87     .text:000000000000003c .L0 
+     /tmp/cch8ARcO.s:93     .text:0000000000000040 .L0 
+     /tmp/cch8ARcO.s:94     .text:0000000000000040 .L0 
+     /tmp/cch8ARcO.s:96     .text:0000000000000044 .L0 
+     /tmp/cch8ARcO.s:99     .text:000000000000004c .L0 
+     /tmp/cch8ARcO.s:104    .text:000000000000005c .L0 
+     /tmp/cch8ARcO.s:109    .text:000000000000006c .L0 
+     /tmp/cch8ARcO.s:110    .text:000000000000006c .L0 
+     /tmp/cch8ARcO.s:115    .text:0000000000000080 .L0 
+     /tmp/cch8ARcO.s:116    .text:0000000000000080 .L0 
+     /tmp/cch8ARcO.s:120    .text:0000000000000090 .L0 
+     /tmp/cch8ARcO.s:126    .text:0000000000000094 .L0 
+     /tmp/cch8ARcO.s:127    .text:0000000000000094 .L0 
+     /tmp/cch8ARcO.s:128    .text:0000000000000094 .L0 
+     /tmp/cch8ARcO.s:135    .text:000000000000009c .L0 
+     /tmp/cch8ARcO.s:142    .text:00000000000000a0 .L0 
+     /tmp/cch8ARcO.s:143    .text:00000000000000a0 .L0 
+src/supervisorTrapHandler.cpp:18     .text:00000000000000a0 .L0 
+     /tmp/cch8ARcO.s:151    .text:00000000000000a4 .L0 
+     /tmp/cch8ARcO.s:235    .text:00000000000000c8 .L0 
+     /tmp/cch8ARcO.s:237    .text:00000000000000c8 .L0 
+     /tmp/cch8ARcO.s:238    .text:00000000000000c8 .L0 
+     /tmp/cch8ARcO.s:239    .text:00000000000000c8 .L0 
+src/supervisorTrapHandler.cpp:23     .text:00000000000000c8 .L0 
+     /tmp/cch8ARcO.s:246    .text:00000000000000cc .L0 
+     /tmp/cch8ARcO.s:248    .text:00000000000000cc .L0 
+     /tmp/cch8ARcO.s:254    .text:00000000000000d4 .L0 
+     /tmp/cch8ARcO.s:255    .text:00000000000000d4 .L0 
+GAS LISTING /tmp/cch8ARcO.s 			page 27
 
 
-src/supervisorTrapHandler.cpp:37     .text:000000000000009c .L0 
-     /tmp/cc5gwuU0.s:233    .text:00000000000000a0 .L0 
-src/supervisorTrapHandler.cpp:38     .text:00000000000000a0 .L0 
-     /tmp/cc5gwuU0.s:239    .text:00000000000000a4 .L0 
-     /tmp/cc5gwuU0.s:241    .text:00000000000000a4 .L0 
-     /tmp/cc5gwuU0.s:245    .text:00000000000000b0 .L0 
-     /tmp/cc5gwuU0.s:248    .text:00000000000000b4 .L0 
-     /tmp/cc5gwuU0.s:252    .text:00000000000000b8 .L0 
-     /tmp/cc5gwuU0.s:253    .text:00000000000000b8 .L0 
-     /tmp/cc5gwuU0.s:254    .text:00000000000000b8 .L0 
-     /tmp/cc5gwuU0.s:255    .text:00000000000000b8 .L0 
-     /tmp/cc5gwuU0.s:258    .text:00000000000000c0 .L0 
-     /tmp/cc5gwuU0.s:261    .text:00000000000000c4 .L0 
-     /tmp/cc5gwuU0.s:262    .text:00000000000000c4 .L0 
-     /tmp/cc5gwuU0.s:263    .text:00000000000000c4 .L0 
-     /tmp/cc5gwuU0.s:264    .text:00000000000000c4 .L0 
-     /tmp/cc5gwuU0.s:271    .text:00000000000000d0 .L0 
-     /tmp/cc5gwuU0.s:272    .text:00000000000000d0 .L0 
-     /tmp/cc5gwuU0.s:278    .text:00000000000000d8 .L0 
-     /tmp/cc5gwuU0.s:279    .text:00000000000000d8 .L0 
-     /tmp/cc5gwuU0.s:282    .text:00000000000000e0 .L0 
-     /tmp/cc5gwuU0.s:285    .text:00000000000000e4 .L0 
-     /tmp/cc5gwuU0.s:287    .text:00000000000000e4 .L0 
-     /tmp/cc5gwuU0.s:288    .text:00000000000000e4 .L0 
-     /tmp/cc5gwuU0.s:289    .text:00000000000000e4 .L0 
-     /tmp/cc5gwuU0.s:290    .text:00000000000000e4 .L0 
-src/supervisorTrapHandler.cpp:57     .text:00000000000000e4 .L0 
-     /tmp/cc5gwuU0.s:297    .text:00000000000000e8 .L0 
-src/supervisorTrapHandler.cpp:58     .text:00000000000000e8 .L0 
-     /tmp/cc5gwuU0.s:303    .text:00000000000000ec .L0 
-     /tmp/cc5gwuU0.s:305    .text:00000000000000ec .L0 
-     /tmp/cc5gwuU0.s:309    .text:00000000000000f8 .L0 
-     /tmp/cc5gwuU0.s:312    .text:00000000000000fc .L0 
-     /tmp/cc5gwuU0.s:316    .text:0000000000000100 .L0 
-     /tmp/cc5gwuU0.s:318    .text:0000000000000100 .L0 
-     /tmp/cc5gwuU0.s:319    .text:0000000000000100 .L0 
-     /tmp/cc5gwuU0.s:320    .text:0000000000000100 .L0 
-src/supervisorTrapHandler.cpp:66     .text:0000000000000100 .L0 
-     /tmp/cc5gwuU0.s:327    .text:0000000000000104 .L0 
-     /tmp/cc5gwuU0.s:329    .text:0000000000000104 .L0 
-     /tmp/cc5gwuU0.s:333    .text:000000000000010c .L0 
-     /tmp/cc5gwuU0.s:336    .text:0000000000000110 .L0 
-     /tmp/cc5gwuU0.s:338    .text:0000000000000110 .L0 
-     /tmp/cc5gwuU0.s:339    .text:0000000000000110 .L0 
-     /tmp/cc5gwuU0.s:341    .text:0000000000000110 .L0 
-     /tmp/cc5gwuU0.s:342    .text:0000000000000110 .L0 
-src/supervisorTrapHandler.cpp:74     .text:0000000000000110 .L0 
-     /tmp/cc5gwuU0.s:353    .text:0000000000000114 .L0 
-     /tmp/cc5gwuU0.s:354    .text:0000000000000114 .L0 
-     /tmp/cc5gwuU0.s:355    .text:0000000000000114 .L0 
-     /tmp/cc5gwuU0.s:360    .text:0000000000000118 .L0 
-     /tmp/cc5gwuU0.s:365    .text:000000000000011c .L0 
-     /tmp/cc5gwuU0.s:366    .text:000000000000011c .L0 
-     /tmp/cc5gwuU0.s:367    .text:000000000000011c .L0 
-     /tmp/cc5gwuU0.s:369    .text:0000000000000120 .L0 
-     /tmp/cc5gwuU0.s:371    .text:0000000000000124 .L0 
-     /tmp/cc5gwuU0.s:373    .text:0000000000000128 .L0 
-GAS LISTING /tmp/cc5gwuU0.s 			page 22
+     /tmp/cch8ARcO.s:256    .text:00000000000000d4 .L0 
+     /tmp/cch8ARcO.s:261    .text:00000000000000d8 .L0 
+    src/../h/riscv.h:106    .text:00000000000000d8 .L0 
+     /tmp/cch8ARcO.s:274    .text:00000000000000dc .L0 
+     /tmp/cch8ARcO.s:275    .text:00000000000000e0 .L0 
+     /tmp/cch8ARcO.s:276    .text:00000000000000e0 .L0 
+     /tmp/cch8ARcO.s:278    .text:00000000000000e4 .L0 
+     /tmp/cch8ARcO.s:279    .text:00000000000000e4 .L0 
+     /tmp/cch8ARcO.s:281    .text:00000000000000e8 .L0 
+     /tmp/cch8ARcO.s:283    .text:00000000000000ec .L0 
+     /tmp/cch8ARcO.s:285    .text:00000000000000f0 .L0 
+     /tmp/cch8ARcO.s:288    .text:00000000000000f4 .L0 
+     /tmp/cch8ARcO.s:292    .text:00000000000000f8 .L0 
+     /tmp/cch8ARcO.s:297    .text:00000000000000f8 .L0 
+     /tmp/cch8ARcO.s:299    .text:00000000000000f8 .L0 
+     /tmp/cch8ARcO.s:300    .text:00000000000000f8 .L0 
+     /tmp/cch8ARcO.s:301    .text:00000000000000f8 .L0 
+src/supervisorTrapHandler.cpp:30     .text:00000000000000f8 .L0 
+     /tmp/cch8ARcO.s:308    .text:00000000000000fc .L0 
+     /tmp/cch8ARcO.s:310    .text:00000000000000fc .L0 
+     /tmp/cch8ARcO.s:314    .text:0000000000000104 .L0 
+     /tmp/cch8ARcO.s:317    .text:0000000000000108 .L0 
+     /tmp/cch8ARcO.s:319    .text:0000000000000108 .L0 
+     /tmp/cch8ARcO.s:320    .text:0000000000000108 .L0 
+     /tmp/cch8ARcO.s:321    .text:0000000000000108 .L0 
+     /tmp/cch8ARcO.s:322    .text:0000000000000108 .L0 
+     /tmp/cch8ARcO.s:323    .text:0000000000000108 .L0 
+     /tmp/cch8ARcO.s:324    .text:0000000000000108 .L0 
+src/supervisorTrapHandler.cpp:41     .text:0000000000000108 .L0 
+     /tmp/cch8ARcO.s:331    .text:000000000000010c .L0 
+src/supervisorTrapHandler.cpp:42     .text:000000000000010c .L0 
+     /tmp/cch8ARcO.s:337    .text:0000000000000110 .L0 
+src/supervisorTrapHandler.cpp:43     .text:0000000000000110 .L0 
+     /tmp/cch8ARcO.s:343    .text:0000000000000114 .L0 
+src/supervisorTrapHandler.cpp:44     .text:0000000000000114 .L0 
+     /tmp/cch8ARcO.s:349    .text:0000000000000118 .L0 
+     /tmp/cch8ARcO.s:351    .text:0000000000000118 .L0 
+     /tmp/cch8ARcO.s:355    .text:0000000000000124 .L0 
+     /tmp/cch8ARcO.s:358    .text:0000000000000128 .L0 
+     /tmp/cch8ARcO.s:362    .text:000000000000012c .L0 
+     /tmp/cch8ARcO.s:363    .text:000000000000012c .L0 
+     /tmp/cch8ARcO.s:364    .text:000000000000012c .L0 
+     /tmp/cch8ARcO.s:365    .text:000000000000012c .L0 
+     /tmp/cch8ARcO.s:368    .text:0000000000000134 .L0 
+     /tmp/cch8ARcO.s:371    .text:0000000000000138 .L0 
+     /tmp/cch8ARcO.s:372    .text:0000000000000138 .L0 
+     /tmp/cch8ARcO.s:373    .text:0000000000000138 .L0 
+     /tmp/cch8ARcO.s:374    .text:0000000000000138 .L0 
+     /tmp/cch8ARcO.s:381    .text:0000000000000144 .L0 
+     /tmp/cch8ARcO.s:382    .text:0000000000000144 .L0 
+     /tmp/cch8ARcO.s:388    .text:000000000000014c .L0 
+     /tmp/cch8ARcO.s:389    .text:000000000000014c .L0 
+     /tmp/cch8ARcO.s:392    .text:0000000000000154 .L0 
+     /tmp/cch8ARcO.s:395    .text:0000000000000158 .L0 
+     /tmp/cch8ARcO.s:397    .text:0000000000000158 .L0 
+     /tmp/cch8ARcO.s:398    .text:0000000000000158 .L0 
+     /tmp/cch8ARcO.s:399    .text:0000000000000158 .L0 
+GAS LISTING /tmp/cch8ARcO.s 			page 28
 
 
-     /tmp/cc5gwuU0.s:378    .text:0000000000000130 .L0 
-     /tmp/cc5gwuU0.s:384    .text:0000000000000138 .L0 
-     /tmp/cc5gwuU0.s:385    .text:0000000000000138 .L0 
-     /tmp/cc5gwuU0.s:390    .text:0000000000000140 .L0 
-     /tmp/cc5gwuU0.s:399    .text:0000000000000148 .L0 
-     /tmp/cc5gwuU0.s:403    .text:000000000000014c .L0 
-src/supervisorTrapHandler.cpp:81     .text:000000000000014c .L0 
-     /tmp/cc5gwuU0.s:411    .text:0000000000000150 .L0 
-     /tmp/cc5gwuU0.s:415    .text:0000000000000154 .L0 
-     /tmp/cc5gwuU0.s:417    .text:0000000000000154 .L0 
-     /tmp/cc5gwuU0.s:418    .text:0000000000000154 .L0 
-     /tmp/cc5gwuU0.s:419    .text:0000000000000154 .L0 
-     /tmp/cc5gwuU0.s:420    .text:0000000000000154 .L0 
-src/supervisorTrapHandler.cpp:87     .text:0000000000000154 .L0 
-     /tmp/cc5gwuU0.s:430    .text:0000000000000158 .L0 
-     /tmp/cc5gwuU0.s:431    .text:0000000000000158 .L0 
-     /tmp/cc5gwuU0.s:432    .text:0000000000000158 .L0 
-     /tmp/cc5gwuU0.s:437    .text:000000000000015c .L0 
-     /tmp/cc5gwuU0.s:442    .text:0000000000000160 .L0 
-     /tmp/cc5gwuU0.s:443    .text:0000000000000160 .L0 
-     /tmp/cc5gwuU0.s:444    .text:0000000000000160 .L0 
-     /tmp/cc5gwuU0.s:446    .text:0000000000000164 .L0 
-     /tmp/cc5gwuU0.s:449    .text:000000000000016c .L0 
-     /tmp/cc5gwuU0.s:451    .text:0000000000000170 .L0 
-     /tmp/cc5gwuU0.s:455    .text:0000000000000174 .L0 
-     /tmp/cc5gwuU0.s:461    .text:000000000000017c .L0 
-     /tmp/cc5gwuU0.s:462    .text:000000000000017c .L0 
-     /tmp/cc5gwuU0.s:467    .text:0000000000000184 .L0 
-     /tmp/cc5gwuU0.s:476    .text:000000000000018c .L0 
-     /tmp/cc5gwuU0.s:480    .text:0000000000000190 .L0 
-src/supervisorTrapHandler.cpp:94     .text:0000000000000190 .L0 
-     /tmp/cc5gwuU0.s:490    .text:0000000000000194 .L0 
-     /tmp/cc5gwuU0.s:492    .text:0000000000000194 .L0 
-     /tmp/cc5gwuU0.s:493    .text:0000000000000194 .L0 
-     /tmp/cc5gwuU0.s:494    .text:0000000000000194 .L0 
-     /tmp/cc5gwuU0.s:497    .text:000000000000019c .L0 
-src/supervisorTrapHandler.cpp:100    .text:000000000000019c .L0 
-     /tmp/cc5gwuU0.s:505    .text:00000000000001a0 .L0 
-     /tmp/cc5gwuU0.s:509    .text:00000000000001a4 .L0 
-     /tmp/cc5gwuU0.s:511    .text:00000000000001a4 .L0 
-     /tmp/cc5gwuU0.s:512    .text:00000000000001a4 .L0 
-     /tmp/cc5gwuU0.s:513    .text:00000000000001a4 .L0 
-src/supervisorTrapHandler.cpp:106    .text:00000000000001a4 .L0 
-     /tmp/cc5gwuU0.s:520    .text:00000000000001a8 .L0 
-     /tmp/cc5gwuU0.s:522    .text:00000000000001a8 .L0 
-     /tmp/cc5gwuU0.s:527    .text:00000000000001b4 .L0 
-     /tmp/cc5gwuU0.s:530    .text:00000000000001b8 .L0 
-     /tmp/cc5gwuU0.s:532    .text:00000000000001b8 .L0 
-     /tmp/cc5gwuU0.s:533    .text:00000000000001b8 .L0 
-     /tmp/cc5gwuU0.s:534    .text:00000000000001b8 .L0 
-     /tmp/cc5gwuU0.s:535    .text:00000000000001b8 .L0 
-     /tmp/cc5gwuU0.s:536    .text:00000000000001b8 .L0 
-     /tmp/cc5gwuU0.s:537    .text:00000000000001b8 .L0 
-src/supervisorTrapHandler.cpp:118    .text:00000000000001b8 .L0 
-     /tmp/cc5gwuU0.s:544    .text:00000000000001bc .L0 
-src/supervisorTrapHandler.cpp:119    .text:00000000000001bc .L0 
-     /tmp/cc5gwuU0.s:550    .text:00000000000001c0 .L0 
-GAS LISTING /tmp/cc5gwuU0.s 			page 23
+     /tmp/cch8ARcO.s:400    .text:0000000000000158 .L0 
+src/supervisorTrapHandler.cpp:62     .text:0000000000000158 .L0 
+     /tmp/cch8ARcO.s:407    .text:000000000000015c .L0 
+src/supervisorTrapHandler.cpp:63     .text:000000000000015c .L0 
+     /tmp/cch8ARcO.s:413    .text:0000000000000160 .L0 
+     /tmp/cch8ARcO.s:415    .text:0000000000000160 .L0 
+     /tmp/cch8ARcO.s:419    .text:000000000000016c .L0 
+     /tmp/cch8ARcO.s:422    .text:0000000000000170 .L0 
+     /tmp/cch8ARcO.s:426    .text:0000000000000174 .L0 
+     /tmp/cch8ARcO.s:428    .text:0000000000000174 .L0 
+     /tmp/cch8ARcO.s:429    .text:0000000000000174 .L0 
+     /tmp/cch8ARcO.s:430    .text:0000000000000174 .L0 
+src/supervisorTrapHandler.cpp:71     .text:0000000000000174 .L0 
+     /tmp/cch8ARcO.s:437    .text:0000000000000178 .L0 
+     /tmp/cch8ARcO.s:439    .text:0000000000000178 .L0 
+     /tmp/cch8ARcO.s:443    .text:0000000000000180 .L0 
+     /tmp/cch8ARcO.s:446    .text:0000000000000184 .L0 
+     /tmp/cch8ARcO.s:448    .text:0000000000000184 .L0 
+     /tmp/cch8ARcO.s:449    .text:0000000000000184 .L0 
+     /tmp/cch8ARcO.s:451    .text:0000000000000184 .L0 
+     /tmp/cch8ARcO.s:452    .text:0000000000000184 .L0 
+src/supervisorTrapHandler.cpp:79     .text:0000000000000184 .L0 
+     /tmp/cch8ARcO.s:463    .text:0000000000000188 .L0 
+     /tmp/cch8ARcO.s:464    .text:0000000000000188 .L0 
+     /tmp/cch8ARcO.s:465    .text:0000000000000188 .L0 
+     /tmp/cch8ARcO.s:470    .text:000000000000018c .L0 
+     /tmp/cch8ARcO.s:475    .text:0000000000000190 .L0 
+     /tmp/cch8ARcO.s:476    .text:0000000000000190 .L0 
+     /tmp/cch8ARcO.s:477    .text:0000000000000190 .L0 
+     /tmp/cch8ARcO.s:479    .text:0000000000000194 .L0 
+     /tmp/cch8ARcO.s:481    .text:0000000000000198 .L0 
+     /tmp/cch8ARcO.s:483    .text:000000000000019c .L0 
+     /tmp/cch8ARcO.s:488    .text:00000000000001a4 .L0 
+     /tmp/cch8ARcO.s:494    .text:00000000000001ac .L0 
+     /tmp/cch8ARcO.s:495    .text:00000000000001ac .L0 
+     /tmp/cch8ARcO.s:500    .text:00000000000001b4 .L0 
+     /tmp/cch8ARcO.s:509    .text:00000000000001bc .L0 
+     /tmp/cch8ARcO.s:513    .text:00000000000001c0 .L0 
+src/supervisorTrapHandler.cpp:86     .text:00000000000001c0 .L0 
+     /tmp/cch8ARcO.s:521    .text:00000000000001c4 .L0 
+     /tmp/cch8ARcO.s:525    .text:00000000000001c8 .L0 
+     /tmp/cch8ARcO.s:527    .text:00000000000001c8 .L0 
+     /tmp/cch8ARcO.s:528    .text:00000000000001c8 .L0 
+     /tmp/cch8ARcO.s:529    .text:00000000000001c8 .L0 
+     /tmp/cch8ARcO.s:530    .text:00000000000001c8 .L0 
+src/supervisorTrapHandler.cpp:92     .text:00000000000001c8 .L0 
+     /tmp/cch8ARcO.s:540    .text:00000000000001cc .L0 
+     /tmp/cch8ARcO.s:541    .text:00000000000001cc .L0 
+     /tmp/cch8ARcO.s:542    .text:00000000000001cc .L0 
+     /tmp/cch8ARcO.s:547    .text:00000000000001d0 .L0 
+     /tmp/cch8ARcO.s:552    .text:00000000000001d4 .L0 
+     /tmp/cch8ARcO.s:553    .text:00000000000001d4 .L0 
+     /tmp/cch8ARcO.s:554    .text:00000000000001d4 .L0 
+     /tmp/cch8ARcO.s:556    .text:00000000000001d8 .L0 
+     /tmp/cch8ARcO.s:559    .text:00000000000001e0 .L0 
+     /tmp/cch8ARcO.s:561    .text:00000000000001e4 .L0 
+     /tmp/cch8ARcO.s:565    .text:00000000000001e8 .L0 
+GAS LISTING /tmp/cch8ARcO.s 			page 29
 
 
-src/supervisorTrapHandler.cpp:120    .text:00000000000001c0 .L0 
-     /tmp/cc5gwuU0.s:556    .text:00000000000001c4 .L0 
-src/supervisorTrapHandler.cpp:121    .text:00000000000001c4 .L0 
-     /tmp/cc5gwuU0.s:562    .text:00000000000001c8 .L0 
-     /tmp/cc5gwuU0.s:564    .text:00000000000001c8 .L0 
-     /tmp/cc5gwuU0.s:568    .text:00000000000001d4 .L0 
-     /tmp/cc5gwuU0.s:571    .text:00000000000001d8 .L0 
-     /tmp/cc5gwuU0.s:575    .text:00000000000001dc .L0 
-     /tmp/cc5gwuU0.s:577    .text:00000000000001dc .L0 
-     /tmp/cc5gwuU0.s:578    .text:00000000000001dc .L0 
-     /tmp/cc5gwuU0.s:579    .text:00000000000001dc .L0 
-src/supervisorTrapHandler.cpp:128    .text:00000000000001dc .L0 
-     /tmp/cc5gwuU0.s:586    .text:00000000000001e0 .L0 
-     /tmp/cc5gwuU0.s:588    .text:00000000000001e0 .L0 
-     /tmp/cc5gwuU0.s:592    .text:00000000000001e8 .L0 
-     /tmp/cc5gwuU0.s:598    .text:00000000000001ec .L0 
-     /tmp/cc5gwuU0.s:599    .text:00000000000001ec .L0 
-     /tmp/cc5gwuU0.s:603    .text:00000000000001f4 .L0 
-     /tmp/cc5gwuU0.s:604    .text:00000000000001f8 .L0 
-     /tmp/cc5gwuU0.s:614    .text:00000000000001f8 .L0 
-     /tmp/cc5gwuU0.s:95     .rodata:0000000000000000 .L5
-     /tmp/cc5gwuU0.s:87     .text:000000000000005c .L0 
-     /tmp/cc5gwuU0.s:264    .text:00000000000000c4 .L0 
-     /tmp/cc5gwuU0.s:68     .text:000000000000004c .L25
-     /tmp/cc5gwuU0.s:594    .text:00000000000001ec .L26
-     /tmp/cc5gwuU0.s:53     .text:0000000000000038 .L1
-     /tmp/cc5gwuU0.s:395    .text:0000000000000148 .L20
-     /tmp/cc5gwuU0.s:380    .text:0000000000000138 .L27
-     /tmp/cc5gwuU0.s:401    .text:000000000000014c .L18
-     /tmp/cc5gwuU0.s:472    .text:000000000000018c .L22
-     /tmp/cc5gwuU0.s:457    .text:000000000000017c .L28
-     /tmp/cc5gwuU0.s:478    .text:0000000000000190 .L19
-     /tmp/cc5gwuU0.s:164    .text:0000000000000074 .L17
-     /tmp/cc5gwuU0.s:185    .text:0000000000000084 .L16
-     /tmp/cc5gwuU0.s:205    .text:0000000000000094 .L15
-     /tmp/cc5gwuU0.s:259    .text:00000000000000c4 .L14
-     /tmp/cc5gwuU0.s:250    .text:00000000000000b8 .L13
-     /tmp/cc5gwuU0.s:528    .text:00000000000001b8 .L12
-     /tmp/cc5gwuU0.s:573    .text:00000000000001dc .L11
-     /tmp/cc5gwuU0.s:283    .text:00000000000000e4 .L10
-     /tmp/cc5gwuU0.s:314    .text:0000000000000100 .L9
-     /tmp/cc5gwuU0.s:334    .text:0000000000000110 .L8
-     /tmp/cc5gwuU0.s:413    .text:0000000000000154 .L7
-     /tmp/cc5gwuU0.s:487    .text:0000000000000194 .L6
-     /tmp/cc5gwuU0.s:507    .text:00000000000001a4 .L4
-     /tmp/cc5gwuU0.s:2222   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
-     /tmp/cc5gwuU0.s:3759   .debug_str:00000000000007e5 .LASF166
-     /tmp/cc5gwuU0.s:3589   .debug_str:000000000000034d .LASF167
-     /tmp/cc5gwuU0.s:3635   .debug_str:0000000000000481 .LASF168
-     /tmp/cc5gwuU0.s:5      .text:0000000000000000 .Ltext0
-     /tmp/cc5gwuU0.s:607    .text:00000000000001f8 .Letext0
-     /tmp/cc5gwuU0.s:3475   .debug_line:0000000000000000 .Ldebug_line0
-     /tmp/cc5gwuU0.s:3593   .debug_str:0000000000000371 .LASF0
-     /tmp/cc5gwuU0.s:3621   .debug_str:0000000000000435 .LASF1
-     /tmp/cc5gwuU0.s:3703   .debug_str:0000000000000681 .LASF2
-     /tmp/cc5gwuU0.s:3571   .debug_str:00000000000002d5 .LASF3
-     /tmp/cc5gwuU0.s:3709   .debug_str:00000000000006b1 .LASF4
-GAS LISTING /tmp/cc5gwuU0.s 			page 24
+     /tmp/cch8ARcO.s:571    .text:00000000000001f0 .L0 
+     /tmp/cch8ARcO.s:572    .text:00000000000001f0 .L0 
+     /tmp/cch8ARcO.s:577    .text:00000000000001f8 .L0 
+     /tmp/cch8ARcO.s:586    .text:0000000000000200 .L0 
+     /tmp/cch8ARcO.s:590    .text:0000000000000204 .L0 
+src/supervisorTrapHandler.cpp:99     .text:0000000000000204 .L0 
+     /tmp/cch8ARcO.s:598    .text:0000000000000208 .L0 
+     /tmp/cch8ARcO.s:602    .text:000000000000020c .L0 
+     /tmp/cch8ARcO.s:604    .text:000000000000020c .L0 
+     /tmp/cch8ARcO.s:605    .text:000000000000020c .L0 
+     /tmp/cch8ARcO.s:606    .text:000000000000020c .L0 
+     /tmp/cch8ARcO.s:609    .text:0000000000000214 .L0 
+src/supervisorTrapHandler.cpp:105    .text:0000000000000214 .L0 
+     /tmp/cch8ARcO.s:617    .text:0000000000000218 .L0 
+     /tmp/cch8ARcO.s:621    .text:000000000000021c .L0 
+     /tmp/cch8ARcO.s:623    .text:000000000000021c .L0 
+     /tmp/cch8ARcO.s:624    .text:000000000000021c .L0 
+     /tmp/cch8ARcO.s:625    .text:000000000000021c .L0 
+src/supervisorTrapHandler.cpp:111    .text:000000000000021c .L0 
+     /tmp/cch8ARcO.s:632    .text:0000000000000220 .L0 
+     /tmp/cch8ARcO.s:634    .text:0000000000000220 .L0 
+     /tmp/cch8ARcO.s:639    .text:000000000000022c .L0 
+     /tmp/cch8ARcO.s:642    .text:0000000000000230 .L0 
+     /tmp/cch8ARcO.s:644    .text:0000000000000230 .L0 
+     /tmp/cch8ARcO.s:645    .text:0000000000000230 .L0 
+     /tmp/cch8ARcO.s:646    .text:0000000000000230 .L0 
+     /tmp/cch8ARcO.s:647    .text:0000000000000230 .L0 
+     /tmp/cch8ARcO.s:648    .text:0000000000000230 .L0 
+     /tmp/cch8ARcO.s:649    .text:0000000000000230 .L0 
+src/supervisorTrapHandler.cpp:122    .text:0000000000000230 .L0 
+     /tmp/cch8ARcO.s:656    .text:0000000000000234 .L0 
+src/supervisorTrapHandler.cpp:123    .text:0000000000000234 .L0 
+     /tmp/cch8ARcO.s:662    .text:0000000000000238 .L0 
+src/supervisorTrapHandler.cpp:124    .text:0000000000000238 .L0 
+     /tmp/cch8ARcO.s:668    .text:000000000000023c .L0 
+src/supervisorTrapHandler.cpp:125    .text:000000000000023c .L0 
+     /tmp/cch8ARcO.s:674    .text:0000000000000240 .L0 
+     /tmp/cch8ARcO.s:676    .text:0000000000000240 .L0 
+     /tmp/cch8ARcO.s:680    .text:000000000000024c .L0 
+     /tmp/cch8ARcO.s:683    .text:0000000000000250 .L0 
+     /tmp/cch8ARcO.s:687    .text:0000000000000254 .L0 
+     /tmp/cch8ARcO.s:689    .text:0000000000000254 .L0 
+     /tmp/cch8ARcO.s:690    .text:0000000000000254 .L0 
+     /tmp/cch8ARcO.s:691    .text:0000000000000254 .L0 
+src/supervisorTrapHandler.cpp:132    .text:0000000000000254 .L0 
+     /tmp/cch8ARcO.s:698    .text:0000000000000258 .L0 
+     /tmp/cch8ARcO.s:700    .text:0000000000000258 .L0 
+     /tmp/cch8ARcO.s:704    .text:0000000000000260 .L0 
+     /tmp/cch8ARcO.s:709    .text:0000000000000264 .L0 
+     /tmp/cch8ARcO.s:710    .text:0000000000000264 .L0 
+     /tmp/cch8ARcO.s:715    .text:0000000000000270 .L0 
+     /tmp/cch8ARcO.s:716    .text:0000000000000270 .L0 
+     /tmp/cch8ARcO.s:719    .text:0000000000000278 .L0 
+     /tmp/cch8ARcO.s:720    .text:0000000000000278 .L0 
+     /tmp/cch8ARcO.s:726    .text:0000000000000284 .L0 
+     /tmp/cch8ARcO.s:727    .text:0000000000000284 .L0 
+    src/../h/riscv.h:106    .text:0000000000000284 .L0 
+GAS LISTING /tmp/cch8ARcO.s 			page 30
 
 
-     /tmp/cc5gwuU0.s:3603   .debug_str:00000000000003bf .LASF5
-     /tmp/cc5gwuU0.s:3483   .debug_str:000000000000001d .LASF6
-     /tmp/cc5gwuU0.s:3679   .debug_str:00000000000005c0 .LASF7
-     /tmp/cc5gwuU0.s:3611   .debug_str:00000000000003f3 .LASF8
-     /tmp/cc5gwuU0.s:3569   .debug_str:00000000000002c5 .LASF9
-     /tmp/cc5gwuU0.s:3575   .debug_str:00000000000002ec .LASF10
-     /tmp/cc5gwuU0.s:3515   .debug_str:000000000000011b .LASF11
-     /tmp/cc5gwuU0.s:3559   .debug_str:0000000000000286 .LASF12
-     /tmp/cc5gwuU0.s:3527   .debug_str:0000000000000174 .LASF13
-     /tmp/cc5gwuU0.s:3513   .debug_str:000000000000010b .LASF14
-     /tmp/cc5gwuU0.s:3739   .debug_str:0000000000000777 .LASF15
-     /tmp/cc5gwuU0.s:3551   .debug_str:000000000000022d .LASF16
-     /tmp/cc5gwuU0.s:3729   .debug_str:000000000000072a .LASF17
-     /tmp/cc5gwuU0.s:3567   .debug_str:00000000000002b9 .LASF21
-     /tmp/cc5gwuU0.s:3619   .debug_str:0000000000000430 .LASF18
-     /tmp/cc5gwuU0.s:3517   .debug_str:000000000000012a .LASF19
-     /tmp/cc5gwuU0.s:3493   .debug_str:000000000000007b .LASF20
-     /tmp/cc5gwuU0.s:3657   .debug_str:0000000000000532 .LASF22
-     /tmp/cc5gwuU0.s:3675   .debug_str:00000000000005a4 .LASF27
-     /tmp/cc5gwuU0.s:3477   .debug_str:0000000000000000 .LASF23
-     /tmp/cc5gwuU0.s:3751   .debug_str:00000000000007bd .LASF24
-     /tmp/cc5gwuU0.s:3723   .debug_str:0000000000000701 .LASF78
-     /tmp/cc5gwuU0.s:3533   .debug_str:00000000000001b8 .LASF80
-     /tmp/cc5gwuU0.s:3601   .debug_str:00000000000003b5 .LASF30
-     /tmp/cc5gwuU0.s:3771   .debug_str:00000000000008fd .LASF76
-     /tmp/cc5gwuU0.s:3693   .debug_str:0000000000000637 .LASF25
-     /tmp/cc5gwuU0.s:3645   .debug_str:00000000000004d0 .LASF34
-     /tmp/cc5gwuU0.s:3487   .debug_str:000000000000002f .LASF36
-     /tmp/cc5gwuU0.s:3745   .debug_str:0000000000000795 .LASF66
-     /tmp/cc5gwuU0.s:3647   .debug_str:00000000000004da .LASF68
-     /tmp/cc5gwuU0.s:3637   .debug_str:000000000000049b .LASF26
-     /tmp/cc5gwuU0.s:3609   .debug_str:00000000000003e9 .LASF28
-     /tmp/cc5gwuU0.s:3749   .debug_str:00000000000007a9 .LASF29
-     /tmp/cc5gwuU0.s:3819   .debug_str:0000000000000a72 .LASF169
-     /tmp/cc5gwuU0.s:3489   .debug_str:0000000000000050 .LASF170
-     /tmp/cc5gwuU0.s:3511   .debug_str:0000000000000101 .LASF31
-     /tmp/cc5gwuU0.s:3781   .debug_str:0000000000000964 .LASF171
-     /tmp/cc5gwuU0.s:3733   .debug_str:0000000000000747 .LASF32
-     /tmp/cc5gwuU0.s:3661   .debug_str:0000000000000546 .LASF33
-     /tmp/cc5gwuU0.s:3651   .debug_str:0000000000000516 .LASF35
-     /tmp/cc5gwuU0.s:3809   .debug_str:0000000000000a2e .LASF37
-     /tmp/cc5gwuU0.s:3503   .debug_str:00000000000000c8 .LASF39
-     /tmp/cc5gwuU0.s:3705   .debug_str:000000000000068f .LASF172
-     /tmp/cc5gwuU0.s:3531   .debug_str:00000000000001a1 .LASF173
-     /tmp/cc5gwuU0.s:3695   .debug_str:0000000000000643 .LASF38
-     /tmp/cc5gwuU0.s:3683   .debug_str:00000000000005e8 .LASF40
-     /tmp/cc5gwuU0.s:3615   .debug_str:0000000000000419 .LASF41
-     /tmp/cc5gwuU0.s:3769   .debug_str:00000000000008e0 .LASF42
-     /tmp/cc5gwuU0.s:3631   .debug_str:0000000000000472 .LASF43
-     /tmp/cc5gwuU0.s:3697   .debug_str:000000000000064a .LASF44
-     /tmp/cc5gwuU0.s:3677   .debug_str:00000000000005b4 .LASF45
-     /tmp/cc5gwuU0.s:3791   .debug_str:00000000000009a7 .LASF46
-     /tmp/cc5gwuU0.s:3833   .debug_str:0000000000000ad4 .LASF47
-     /tmp/cc5gwuU0.s:3649   .debug_str:00000000000004fb .LASF48
-     /tmp/cc5gwuU0.s:3721   .debug_str:00000000000006f6 .LASF49
-     /tmp/cc5gwuU0.s:3521   .debug_str:0000000000000139 .LASF50
-     /tmp/cc5gwuU0.s:3691   .debug_str:000000000000062e .LASF51
-GAS LISTING /tmp/cc5gwuU0.s 			page 25
+     /tmp/cch8ARcO.s:739    .text:0000000000000288 .L0 
+     /tmp/cch8ARcO.s:740    .text:0000000000000288 .L0 
+    src/../h/riscv.h:174    .text:0000000000000288 .L0 
+     /tmp/cch8ARcO.s:747    .text:000000000000028c .L0 
+     /tmp/cch8ARcO.s:753    .text:0000000000000290 .L0 
+     /tmp/cch8ARcO.s:754    .text:0000000000000290 .L0 
+     /tmp/cch8ARcO.s:758    .text:000000000000029c .L0 
+     /tmp/cch8ARcO.s:759    .text:000000000000029c .L0 
+     /tmp/cch8ARcO.s:763    .text:00000000000002ac .L0 
+     /tmp/cch8ARcO.s:764    .text:00000000000002ac .L0 
+     /tmp/cch8ARcO.s:770    .text:00000000000002c0 .L0 
+     /tmp/cch8ARcO.s:771    .text:00000000000002c0 .L0 
+     /tmp/cch8ARcO.s:775    .text:00000000000002cc .L0 
+     /tmp/cch8ARcO.s:776    .text:00000000000002cc .L0 
+     /tmp/cch8ARcO.s:780    .text:00000000000002dc .L0 
+     /tmp/cch8ARcO.s:781    .text:00000000000002dc .L0 
+     /tmp/cch8ARcO.s:788    .text:00000000000002f0 .L0 
+     /tmp/cch8ARcO.s:789    .text:00000000000002f4 .L0 
+     /tmp/cch8ARcO.s:800    .text:00000000000002f4 .L0 
+     /tmp/cch8ARcO.s:110    .text:000000000000006c .L0 
+     /tmp/cch8ARcO.s:116    .text:0000000000000080 .L0 
+     /tmp/cch8ARcO.s:163    .rodata:0000000000000000 .L5
+     /tmp/cch8ARcO.s:155    .text:00000000000000b0 .L0 
+     /tmp/cch8ARcO.s:374    .text:0000000000000138 .L0 
+     /tmp/cch8ARcO.s:720    .text:0000000000000278 .L0 
+     /tmp/cch8ARcO.s:8      .rodata.str1.8:0000000000000000 .LC0
+     /tmp/cch8ARcO.s:759    .text:000000000000029c .L0 
+     /tmp/cch8ARcO.s:11     .rodata.str1.8:0000000000000008 .LC1
+     /tmp/cch8ARcO.s:776    .text:00000000000002cc .L0 
+     /tmp/cch8ARcO.s:137    .text:00000000000000a0 .L29
+     /tmp/cch8ARcO.s:705    .text:0000000000000264 .L30
+     /tmp/cch8ARcO.s:749    .text:0000000000000290 .L22
+     /tmp/cch8ARcO.s:713    .text:0000000000000270 .L31
+     /tmp/cch8ARcO.s:268    .text:00000000000000dc .L1
+     /tmp/cch8ARcO.s:252    .text:00000000000000d4 .L3
+     /tmp/cch8ARcO.s:505    .text:00000000000001bc .L24
+     /tmp/cch8ARcO.s:490    .text:00000000000001ac .L32
+     /tmp/cch8ARcO.s:511    .text:00000000000001c0 .L18
+     /tmp/cch8ARcO.s:582    .text:0000000000000200 .L26
+     /tmp/cch8ARcO.s:567    .text:00000000000001f0 .L33
+     /tmp/cch8ARcO.s:588    .text:0000000000000204 .L19
+     /tmp/cch8ARcO.s:121    .text:0000000000000094 .L23
+     /tmp/cch8ARcO.s:232    .text:00000000000000c8 .L17
+     /tmp/cch8ARcO.s:291    .text:00000000000000f8 .L16
+     /tmp/cch8ARcO.s:315    .text:0000000000000108 .L15
+     /tmp/cch8ARcO.s:369    .text:0000000000000138 .L14
+     /tmp/cch8ARcO.s:360    .text:000000000000012c .L13
+     /tmp/cch8ARcO.s:640    .text:0000000000000230 .L12
+     /tmp/cch8ARcO.s:685    .text:0000000000000254 .L11
+     /tmp/cch8ARcO.s:393    .text:0000000000000158 .L10
+     /tmp/cch8ARcO.s:424    .text:0000000000000174 .L9
+     /tmp/cch8ARcO.s:444    .text:0000000000000184 .L8
+     /tmp/cch8ARcO.s:523    .text:00000000000001c8 .L7
+     /tmp/cch8ARcO.s:600    .text:000000000000020c .L6
+     /tmp/cch8ARcO.s:619    .text:000000000000021c .L4
+     /tmp/cch8ARcO.s:2720   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/cch8ARcO.s:4470   .debug_str:0000000000000867 .LASF179
+GAS LISTING /tmp/cch8ARcO.s 			page 31
 
 
-     /tmp/cc5gwuU0.s:3737   .debug_str:000000000000075d .LASF52
-     /tmp/cc5gwuU0.s:3523   .debug_str:0000000000000156 .LASF53
-     /tmp/cc5gwuU0.s:3799   .debug_str:00000000000009ed .LASF54
-     /tmp/cc5gwuU0.s:3821   .debug_str:0000000000000a86 .LASF55
-     /tmp/cc5gwuU0.s:3747   .debug_str:000000000000079e .LASF56
-     /tmp/cc5gwuU0.s:3803   .debug_str:0000000000000a02 .LASF57
-     /tmp/cc5gwuU0.s:3505   .debug_str:00000000000000df .LASF58
-     /tmp/cc5gwuU0.s:3577   .debug_str:00000000000002fa .LASF59
-     /tmp/cc5gwuU0.s:3807   .debug_str:0000000000000a24 .LASF60
-     /tmp/cc5gwuU0.s:3665   .debug_str:0000000000000552 .LASF61
-     /tmp/cc5gwuU0.s:3639   .debug_str:00000000000004a0 .LASF62
-     /tmp/cc5gwuU0.s:3817   .debug_str:0000000000000a5c .LASF63
-     /tmp/cc5gwuU0.s:3497   .debug_str:00000000000000a8 .LASF64
-     /tmp/cc5gwuU0.s:3599   .debug_str:0000000000000391 .LASF65
-     /tmp/cc5gwuU0.s:3671   .debug_str:0000000000000584 .LASF174
-     /tmp/cc5gwuU0.s:3623   .debug_str:0000000000000448 .LASF115
-     /tmp/cc5gwuU0.s:3625   .debug_str:000000000000044e .LASF117
-     /tmp/cc5gwuU0.s:3763   .debug_str:00000000000008bb .LASF67
-     /tmp/cc5gwuU0.s:3553   .debug_str:0000000000000243 .LASF69
-     /tmp/cc5gwuU0.s:3757   .debug_str:00000000000007dd .LASF175
-     /tmp/cc5gwuU0.s:3725   .debug_str:000000000000070a .LASF176
-     /tmp/cc5gwuU0.s:3479   .debug_str:0000000000000010 .LASF70
-     /tmp/cc5gwuU0.s:3539   .debug_str:00000000000001ea .LASF71
-     /tmp/cc5gwuU0.s:3775   .debug_str:000000000000093e .LASF72
-     /tmp/cc5gwuU0.s:3727   .debug_str:0000000000000721 .LASF73
-     /tmp/cc5gwuU0.s:3667   .debug_str:0000000000000567 .LASF74
-     /tmp/cc5gwuU0.s:3815   .debug_str:0000000000000a4e .LASF75
-     /tmp/cc5gwuU0.s:3495   .debug_str:0000000000000080 .LASF77
-     /tmp/cc5gwuU0.s:3541   .debug_str:00000000000001f0 .LASF79
-     /tmp/cc5gwuU0.s:3491   .debug_str:0000000000000068 .LASF81
-     /tmp/cc5gwuU0.s:3607   .debug_str:00000000000003dd .LASF82
-     /tmp/cc5gwuU0.s:3561   .debug_str:0000000000000295 .LASF83
-     /tmp/cc5gwuU0.s:3499   .debug_str:00000000000000b6 .LASF84
-     /tmp/cc5gwuU0.s:3535   .debug_str:00000000000001d8 .LASF85
-     /tmp/cc5gwuU0.s:3643   .debug_str:00000000000004c1 .LASF86
-     /tmp/cc5gwuU0.s:3627   .debug_str:000000000000045e .LASF87
-     /tmp/cc5gwuU0.s:3831   .debug_str:0000000000000ac4 .LASF88
-     /tmp/cc5gwuU0.s:3805   .debug_str:0000000000000a19 .LASF89
-     /tmp/cc5gwuU0.s:3605   .debug_str:00000000000003d1 .LASF90
-     /tmp/cc5gwuU0.s:3743   .debug_str:000000000000078a .LASF91
-     /tmp/cc5gwuU0.s:3719   .debug_str:00000000000006e9 .LASF92
-     /tmp/cc5gwuU0.s:3755   .debug_str:00000000000007d2 .LASF93
-     /tmp/cc5gwuU0.s:3789   .debug_str:000000000000099c .LASF94
-     /tmp/cc5gwuU0.s:3825   .debug_str:0000000000000aaa .LASF95
-     /tmp/cc5gwuU0.s:3813   .debug_str:0000000000000a48 .LASF96
-     /tmp/cc5gwuU0.s:3543   .debug_str:00000000000001f9 .LASF97
-     /tmp/cc5gwuU0.s:3507   .debug_str:00000000000000eb .LASF177
-     /tmp/cc5gwuU0.s:3591   .debug_str:000000000000036b .LASF98
-     /tmp/cc5gwuU0.s:3557   .debug_str:0000000000000276 .LASF99
-     /tmp/cc5gwuU0.s:3481   .debug_str:0000000000000015 .LASF100
-     /tmp/cc5gwuU0.s:3761   .debug_str:00000000000008a9 .LASF101
-     /tmp/cc5gwuU0.s:3509   .debug_str:00000000000000f7 .LASF102
-     /tmp/cc5gwuU0.s:3549   .debug_str:0000000000000219 .LASF103
-     /tmp/cc5gwuU0.s:3765   .debug_str:00000000000008c7 .LASF104
-     /tmp/cc5gwuU0.s:3653   .debug_str:000000000000051b .LASF105
-     /tmp/cc5gwuU0.s:3741   .debug_str:0000000000000783 .LASF106
-     /tmp/cc5gwuU0.s:3735   .debug_str:000000000000074c .LASF107
-GAS LISTING /tmp/cc5gwuU0.s 			page 26
+     /tmp/cch8ARcO.s:4288   .debug_str:0000000000000379 .LASF180
+     /tmp/cch8ARcO.s:4340   .debug_str:00000000000004da .LASF181
+     /tmp/cch8ARcO.s:5      .text:0000000000000000 .Ltext0
+     /tmp/cch8ARcO.s:792    .text:00000000000002f4 .Letext0
+     /tmp/cch8ARcO.s:4166   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/cch8ARcO.s:4292   .debug_str:000000000000039d .LASF0
+     /tmp/cch8ARcO.s:4324   .debug_str:0000000000000482 .LASF1
+     /tmp/cch8ARcO.s:4412   .debug_str:00000000000006f6 .LASF2
+     /tmp/cch8ARcO.s:4270   .debug_str:0000000000000301 .LASF3
+     /tmp/cch8ARcO.s:4420   .debug_str:0000000000000733 .LASF4
+     /tmp/cch8ARcO.s:4304   .debug_str:0000000000000401 .LASF5
+     /tmp/cch8ARcO.s:4174   .debug_str:000000000000001d .LASF6
+     /tmp/cch8ARcO.s:4384   .debug_str:0000000000000619 .LASF7
+     /tmp/cch8ARcO.s:4312   .debug_str:0000000000000435 .LASF8
+     /tmp/cch8ARcO.s:4268   .debug_str:00000000000002f1 .LASF9
+     /tmp/cch8ARcO.s:4274   .debug_str:0000000000000318 .LASF10
+     /tmp/cch8ARcO.s:4210   .debug_str:000000000000013c .LASF11
+     /tmp/cch8ARcO.s:4258   .debug_str:00000000000002b2 .LASF12
+     /tmp/cch8ARcO.s:4222   .debug_str:0000000000000188 .LASF13
+     /tmp/cch8ARcO.s:4208   .debug_str:000000000000012c .LASF14
+     /tmp/cch8ARcO.s:4450   .debug_str:00000000000007f9 .LASF15
+     /tmp/cch8ARcO.s:4248   .debug_str:000000000000024a .LASF16
+     /tmp/cch8ARcO.s:4440   .debug_str:00000000000007ac .LASF17
+     /tmp/cch8ARcO.s:4266   .debug_str:00000000000002e5 .LASF21
+     /tmp/cch8ARcO.s:4322   .debug_str:000000000000047d .LASF18
+     /tmp/cch8ARcO.s:4212   .debug_str:000000000000014b .LASF19
+     /tmp/cch8ARcO.s:4186   .debug_str:0000000000000094 .LASF20
+     /tmp/cch8ARcO.s:4362   .debug_str:000000000000058b .LASF22
+     /tmp/cch8ARcO.s:4380   .debug_str:00000000000005fd .LASF26
+     /tmp/cch8ARcO.s:4168   .debug_str:0000000000000000 .LASF23
+     /tmp/cch8ARcO.s:4462   .debug_str:000000000000083f .LASF24
+     /tmp/cch8ARcO.s:4434   .debug_str:0000000000000783 .LASF182
+     /tmp/cch8ARcO.s:4228   .debug_str:00000000000001cc .LASF183
+     /tmp/cch8ARcO.s:4300   .debug_str:00000000000003e1 .LASF33
+     /tmp/cch8ARcO.s:4486   .debug_str:000000000000098e .LASF158
+     /tmp/cch8ARcO.s:4402   .debug_str:00000000000006ac .LASF25
+     /tmp/cch8ARcO.s:4184   .debug_str:000000000000007b .LASF28
+     /tmp/cch8ARcO.s:4350   .debug_str:0000000000000529 .LASF37
+     /tmp/cch8ARcO.s:4178   .debug_str:000000000000002f .LASF39
+     /tmp/cch8ARcO.s:4456   .debug_str:0000000000000817 .LASF27
+     /tmp/cch8ARcO.s:4352   .debug_str:0000000000000533 .LASF29
+     /tmp/cch8ARcO.s:4342   .debug_str:00000000000004f4 .LASF30
+     /tmp/cch8ARcO.s:4310   .debug_str:000000000000042b .LASF31
+     /tmp/cch8ARcO.s:4460   .debug_str:000000000000082b .LASF32
+     /tmp/cch8ARcO.s:4540   .debug_str:0000000000000b1d .LASF184
+     /tmp/cch8ARcO.s:4180   .debug_str:0000000000000050 .LASF185
+     /tmp/cch8ARcO.s:4206   .debug_str:0000000000000122 .LASF34
+     /tmp/cch8ARcO.s:4496   .debug_str:00000000000009f5 .LASF186
+     /tmp/cch8ARcO.s:4444   .debug_str:00000000000007c9 .LASF35
+     /tmp/cch8ARcO.s:4366   .debug_str:000000000000059f .LASF36
+     /tmp/cch8ARcO.s:4356   .debug_str:000000000000056f .LASF38
+     /tmp/cch8ARcO.s:4528   .debug_str:0000000000000acd .LASF40
+     /tmp/cch8ARcO.s:4196   .debug_str:00000000000000e1 .LASF42
+     /tmp/cch8ARcO.s:4414   .debug_str:0000000000000704 .LASF187
+     /tmp/cch8ARcO.s:4226   .debug_str:00000000000001b5 .LASF188
+     /tmp/cch8ARcO.s:4404   .debug_str:00000000000006b8 .LASF41
+     /tmp/cch8ARcO.s:4392   .debug_str:000000000000065d .LASF43
+GAS LISTING /tmp/cch8ARcO.s 			page 32
 
 
-     /tmp/cc5gwuU0.s:3699   .debug_str:0000000000000666 .LASF108
-     /tmp/cc5gwuU0.s:3673   .debug_str:0000000000000589 .LASF109
-     /tmp/cc5gwuU0.s:3801   .debug_str:00000000000009f2 .LASF110
-     /tmp/cc5gwuU0.s:3529   .debug_str:0000000000000184 .LASF111
-     /tmp/cc5gwuU0.s:3717   .debug_str:00000000000006e0 .LASF112
-     /tmp/cc5gwuU0.s:3773   .debug_str:000000000000092b .LASF113
-     /tmp/cc5gwuU0.s:3795   .debug_str:00000000000009dd .LASF114
-     /tmp/cc5gwuU0.s:3581   .debug_str:0000000000000323 .LASF116
-     /tmp/cc5gwuU0.s:3793   .debug_str:00000000000009c5 .LASF118
-     /tmp/cc5gwuU0.s:3715   .debug_str:00000000000006d2 .LASF119
-     /tmp/cc5gwuU0.s:3555   .debug_str:000000000000025b .LASF120
-     /tmp/cc5gwuU0.s:3595   .debug_str:000000000000037e .LASF121
-     /tmp/cc5gwuU0.s:3787   .debug_str:0000000000000982 .LASF122
-     /tmp/cc5gwuU0.s:3779   .debug_str:000000000000095b .LASF123
-     /tmp/cc5gwuU0.s:3777   .debug_str:0000000000000946 .LASF127
-     /tmp/cc5gwuU0.s:3827   .debug_str:0000000000000ab3 .LASF124
-     /tmp/cc5gwuU0.s:3669   .debug_str:000000000000056f .LASF125
-     /tmp/cc5gwuU0.s:3685   .debug_str:0000000000000600 .LASF126
-     /tmp/cc5gwuU0.s:3687   .debug_str:0000000000000607 .LASF128
-     /tmp/cc5gwuU0.s:3663   .debug_str:000000000000054b .LASF129
-     /tmp/cc5gwuU0.s:3613   .debug_str:0000000000000406 .LASF130
-     /tmp/cc5gwuU0.s:3655   .debug_str:000000000000052a .LASF131
-     /tmp/cc5gwuU0.s:3767   .debug_str:00000000000008cc .LASF132
-     /tmp/cc5gwuU0.s:3659   .debug_str:000000000000053e .LASF133
-     /tmp/cc5gwuU0.s:3563   .debug_str:00000000000002a0 .LASF134
-     /tmp/cc5gwuU0.s:3629   .debug_str:000000000000046a .LASF135
-     /tmp/cc5gwuU0.s:3689   .debug_str:000000000000061a .LASF136
-     /tmp/cc5gwuU0.s:3829   .debug_str:0000000000000abc .LASF137
-     /tmp/cc5gwuU0.s:3783   .debug_str:0000000000000969 .LASF138
-     /tmp/cc5gwuU0.s:3537   .debug_str:00000000000001e3 .LASF139
-     /tmp/cc5gwuU0.s:3711   .debug_str:00000000000006b8 .LASF140
-     /tmp/cc5gwuU0.s:3713   .debug_str:00000000000006cb .LASF141
-     /tmp/cc5gwuU0.s:3547   .debug_str:0000000000000206 .LASF142
-     /tmp/cc5gwuU0.s:3545   .debug_str:0000000000000200 .LASF143
-     /tmp/cc5gwuU0.s:3587   .debug_str:000000000000033b .LASF144
-     /tmp/cc5gwuU0.s:3597   .debug_str:000000000000038b .LASF145
-     /tmp/cc5gwuU0.s:3579   .debug_str:0000000000000311 .LASF146
-     /tmp/cc5gwuU0.s:3485   .debug_str:0000000000000024 .LASF147
-     /tmp/cc5gwuU0.s:3707   .debug_str:0000000000000699 .LASF148
-     /tmp/cc5gwuU0.s:3701   .debug_str:0000000000000676 .LASF149
-     /tmp/cc5gwuU0.s:3823   .debug_str:0000000000000a92 .LASF150
-     /tmp/cc5gwuU0.s:3797   .debug_str:00000000000009e3 .LASF151
-     /tmp/cc5gwuU0.s:3525   .debug_str:000000000000015e .LASF152
-     /tmp/cc5gwuU0.s:3519   .debug_str:000000000000012f .LASF153
-     /tmp/cc5gwuU0.s:3641   .debug_str:00000000000004ab .LASF154
-     /tmp/cc5gwuU0.s:3681   .debug_str:00000000000005d3 .LASF155
-     /tmp/cc5gwuU0.s:10     .text:0000000000000000 .LFB48
-     /tmp/cc5gwuU0.s:605    .text:00000000000001f8 .LFE48
-     /tmp/cc5gwuU0.s:3731   .debug_str:0000000000000740 .LASF156
-     /tmp/cc5gwuU0.s:3219   .debug_loc:0000000000000000 .LLST0
-     /tmp/cc5gwuU0.s:71     .text:000000000000004c .LBB32
-     /tmp/cc5gwuU0.s:596    .text:00000000000001ec .LBE32
-     /tmp/cc5gwuU0.s:3785   .debug_str:000000000000097d .LASF157
-     /tmp/cc5gwuU0.s:3234   .debug_loc:0000000000000049 .LLST1
-     /tmp/cc5gwuU0.s:168    .text:0000000000000074 .LBB34
-     /tmp/cc5gwuU0.s:182    .text:0000000000000080 .LBE34
-     /tmp/cc5gwuU0.s:3241   .debug_loc:000000000000006c .LLST2
-GAS LISTING /tmp/cc5gwuU0.s 			page 27
+     /tmp/cch8ARcO.s:4318   .debug_str:0000000000000466 .LASF44
+     /tmp/cch8ARcO.s:4482   .debug_str:0000000000000967 .LASF45
+     /tmp/cch8ARcO.s:4336   .debug_str:00000000000004cb .LASF46
+     /tmp/cch8ARcO.s:4406   .debug_str:00000000000006bf .LASF47
+     /tmp/cch8ARcO.s:4382   .debug_str:000000000000060d .LASF48
+     /tmp/cch8ARcO.s:4508   .debug_str:0000000000000a3d .LASF49
+     /tmp/cch8ARcO.s:4554   .debug_str:0000000000000b7f .LASF50
+     /tmp/cch8ARcO.s:4354   .debug_str:0000000000000554 .LASF51
+     /tmp/cch8ARcO.s:4432   .debug_str:0000000000000778 .LASF52
+     /tmp/cch8ARcO.s:4216   .debug_str:000000000000015a .LASF53
+     /tmp/cch8ARcO.s:4400   .debug_str:00000000000006a3 .LASF54
+     /tmp/cch8ARcO.s:4448   .debug_str:00000000000007df .LASF55
+     /tmp/cch8ARcO.s:4218   .debug_str:0000000000000177 .LASF56
+     /tmp/cch8ARcO.s:4516   .debug_str:0000000000000a83 .LASF57
+     /tmp/cch8ARcO.s:4542   .debug_str:0000000000000b31 .LASF58
+     /tmp/cch8ARcO.s:4458   .debug_str:0000000000000820 .LASF59
+     /tmp/cch8ARcO.s:4522   .debug_str:0000000000000aa1 .LASF60
+     /tmp/cch8ARcO.s:4200   .debug_str:0000000000000100 .LASF61
+     /tmp/cch8ARcO.s:4276   .debug_str:0000000000000326 .LASF62
+     /tmp/cch8ARcO.s:4526   .debug_str:0000000000000ac3 .LASF63
+     /tmp/cch8ARcO.s:4370   .debug_str:00000000000005ab .LASF64
+     /tmp/cch8ARcO.s:4344   .debug_str:00000000000004f9 .LASF65
+     /tmp/cch8ARcO.s:4538   .debug_str:0000000000000b07 .LASF66
+     /tmp/cch8ARcO.s:4190   .debug_str:00000000000000c1 .LASF67
+     /tmp/cch8ARcO.s:4298   .debug_str:00000000000003bd .LASF68
+     /tmp/cch8ARcO.s:4376   .debug_str:00000000000005dd .LASF189
+     /tmp/cch8ARcO.s:4326   .debug_str:0000000000000495 .LASF74
+     /tmp/cch8ARcO.s:4328   .debug_str:000000000000049b .LASF76
+     /tmp/cch8ARcO.s:4476   .debug_str:0000000000000942 .LASF69
+     /tmp/cch8ARcO.s:4250   .debug_str:0000000000000260 .LASF70
+     /tmp/cch8ARcO.s:4468   .debug_str:000000000000085f .LASF71
+     /tmp/cch8ARcO.s:4418   .debug_str:0000000000000726 .LASF72
+     /tmp/cch8ARcO.s:4484   .debug_str:0000000000000984 .LASF73
+     /tmp/cch8ARcO.s:4236   .debug_str:0000000000000204 .LASF75
+     /tmp/cch8ARcO.s:4182   .debug_str:0000000000000068 .LASF77
+     /tmp/cch8ARcO.s:4436   .debug_str:000000000000078c .LASF190
+     /tmp/cch8ARcO.s:4332   .debug_str:00000000000004b7 .LASF99
+     /tmp/cch8ARcO.s:4170   .debug_str:0000000000000010 .LASF78
+     /tmp/cch8ARcO.s:4234   .debug_str:00000000000001fe .LASF79
+     /tmp/cch8ARcO.s:4490   .debug_str:00000000000009cf .LASF80
+     /tmp/cch8ARcO.s:4438   .debug_str:00000000000007a3 .LASF81
+     /tmp/cch8ARcO.s:4372   .debug_str:00000000000005c0 .LASF82
+     /tmp/cch8ARcO.s:4536   .debug_str:0000000000000af9 .LASF191
+     /tmp/cch8ARcO.s:4188   .debug_str:0000000000000099 .LASF192
+     /tmp/cch8ARcO.s:4308   .debug_str:000000000000041f .LASF83
+     /tmp/cch8ARcO.s:4260   .debug_str:00000000000002c1 .LASF84
+     /tmp/cch8ARcO.s:4192   .debug_str:00000000000000cf .LASF85
+     /tmp/cch8ARcO.s:4230   .debug_str:00000000000001ec .LASF86
+     /tmp/cch8ARcO.s:4348   .debug_str:000000000000051a .LASF87
+     /tmp/cch8ARcO.s:4330   .debug_str:00000000000004ab .LASF88
+     /tmp/cch8ARcO.s:4552   .debug_str:0000000000000b6f .LASF89
+     /tmp/cch8ARcO.s:4524   .debug_str:0000000000000ab8 .LASF90
+     /tmp/cch8ARcO.s:4306   .debug_str:0000000000000413 .LASF91
+     /tmp/cch8ARcO.s:4454   .debug_str:000000000000080c .LASF92
+     /tmp/cch8ARcO.s:4430   .debug_str:000000000000076b .LASF93
+     /tmp/cch8ARcO.s:4466   .debug_str:0000000000000854 .LASF94
+     /tmp/cch8ARcO.s:4504   .debug_str:0000000000000a2d .LASF95
+GAS LISTING /tmp/cch8ARcO.s 			page 33
 
 
-     /tmp/cc5gwuU0.s:181    .text:0000000000000080 .LVL7
-     /tmp/cc5gwuU0.s:188    .text:0000000000000084 .LBB35
-     /tmp/cc5gwuU0.s:202    .text:0000000000000090 .LBE35
-     /tmp/cc5gwuU0.s:3248   .debug_loc:000000000000008f .LLST3
-     /tmp/cc5gwuU0.s:201    .text:0000000000000090 .LVL9
-     /tmp/cc5gwuU0.s:208    .text:0000000000000094 .LBB36
-     /tmp/cc5gwuU0.s:246    .text:00000000000000b4 .LBE36
-     /tmp/cc5gwuU0.s:3811   .debug_str:0000000000000a41 .LASF158
-     /tmp/cc5gwuU0.s:3255   .debug_loc:00000000000000b2 .LLST4
-     /tmp/cc5gwuU0.s:3617   .debug_str:0000000000000422 .LASF159
-     /tmp/cc5gwuU0.s:3262   .debug_loc:00000000000000d5 .LLST5
-     /tmp/cc5gwuU0.s:3269   .debug_loc:00000000000000f8 .LLST6
-     /tmp/cc5gwuU0.s:3276   .debug_loc:000000000000011b .LLST7
-     /tmp/cc5gwuU0.s:243    .text:00000000000000b0 .LVL14
-     /tmp/cc5gwuU0.s:286    .text:00000000000000e4 .LBB39
-     /tmp/cc5gwuU0.s:310    .text:00000000000000fc .LBE39
-     /tmp/cc5gwuU0.s:3283   .debug_loc:000000000000013e .LLST10
-     /tmp/cc5gwuU0.s:3501   .debug_str:00000000000000c3 .LASF160
-     /tmp/cc5gwuU0.s:3290   .debug_loc:0000000000000161 .LLST11
-     /tmp/cc5gwuU0.s:307    .text:00000000000000f8 .LVL22
-     /tmp/cc5gwuU0.s:317    .text:0000000000000100 .LBB40
-     /tmp/cc5gwuU0.s:331    .text:000000000000010c .LBE40
-     /tmp/cc5gwuU0.s:3297   .debug_loc:0000000000000184 .LLST12
-     /tmp/cc5gwuU0.s:330    .text:000000000000010c .LVL25
-     /tmp/cc5gwuU0.s:337    .text:0000000000000110 .LBB41
-     /tmp/cc5gwuU0.s:409    .text:0000000000000150 .LBE41
-     /tmp/cc5gwuU0.s:3304   .debug_loc:00000000000001a7 .LLST13
-     /tmp/cc5gwuU0.s:3315   .debug_loc:00000000000001dd .LLST14
-     /tmp/cc5gwuU0.s:350    .text:0000000000000114 .LBB42
-     /tmp/cc5gwuU0.s:358    .text:0000000000000118 .LBE42
-     /tmp/cc5gwuU0.s:3328   .debug_loc:0000000000000215 .LLST15
-     /tmp/cc5gwuU0.s:363    .text:000000000000011c .LBB44
-     /tmp/cc5gwuU0.s:3457   .debug_ranges:0000000000000000 .Ldebug_ranges0
-     /tmp/cc5gwuU0.s:3335   .debug_loc:0000000000000238 .LLST16
-     /tmp/cc5gwuU0.s:386    .text:0000000000000140 .LVL30
-     /tmp/cc5gwuU0.s:416    .text:0000000000000154 .LBB50
-     /tmp/cc5gwuU0.s:488    .text:0000000000000194 .LBE50
-     /tmp/cc5gwuU0.s:3342   .debug_loc:000000000000025b .LLST17
-     /tmp/cc5gwuU0.s:3353   .debug_loc:0000000000000291 .LLST18
-     /tmp/cc5gwuU0.s:428    .text:0000000000000158 .LBB51
-     /tmp/cc5gwuU0.s:435    .text:000000000000015c .LBE51
-     /tmp/cc5gwuU0.s:3366   .debug_loc:00000000000002c9 .LLST19
-     /tmp/cc5gwuU0.s:440    .text:0000000000000160 .LBB53
-     /tmp/cc5gwuU0.s:3373   .debug_loc:00000000000002ec .LLST20
-     /tmp/cc5gwuU0.s:463    .text:0000000000000184 .LVL37
-     /tmp/cc5gwuU0.s:491    .text:0000000000000194 .LBB59
-     /tmp/cc5gwuU0.s:503    .text:00000000000001a0 .LBE59
-     /tmp/cc5gwuU0.s:3380   .debug_loc:000000000000030f .LLST21
-     /tmp/cc5gwuU0.s:495    .text:000000000000019c .LVL41
-     /tmp/cc5gwuU0.s:510    .text:00000000000001a4 .LBB60
-     /tmp/cc5gwuU0.s:525    .text:00000000000001b4 .LBE60
-     /tmp/cc5gwuU0.s:3387   .debug_loc:0000000000000332 .LLST22
-     /tmp/cc5gwuU0.s:524    .text:00000000000001b4 .LVL44
-     /tmp/cc5gwuU0.s:531    .text:00000000000001b8 .LBB61
-     /tmp/cc5gwuU0.s:569    .text:00000000000001d8 .LBE61
-     /tmp/cc5gwuU0.s:3394   .debug_loc:0000000000000355 .LLST23
-     /tmp/cc5gwuU0.s:3401   .debug_loc:0000000000000378 .LLST24
-GAS LISTING /tmp/cc5gwuU0.s 			page 28
+     /tmp/cch8ARcO.s:4546   .debug_str:0000000000000b55 .LASF96
+     /tmp/cch8ARcO.s:4532   .debug_str:0000000000000ae7 .LASF97
+     /tmp/cch8ARcO.s:4238   .debug_str:000000000000020d .LASF98
+     /tmp/cch8ARcO.s:4202   .debug_str:000000000000010c .LASF100
+     /tmp/cch8ARcO.s:4290   .debug_str:0000000000000397 .LASF101
+     /tmp/cch8ARcO.s:4256   .debug_str:00000000000002a2 .LASF102
+     /tmp/cch8ARcO.s:4172   .debug_str:0000000000000015 .LASF103
+     /tmp/cch8ARcO.s:4472   .debug_str:000000000000092b .LASF104
+     /tmp/cch8ARcO.s:4204   .debug_str:0000000000000118 .LASF105
+     /tmp/cch8ARcO.s:4246   .debug_str:0000000000000236 .LASF106
+     /tmp/cch8ARcO.s:4478   .debug_str:000000000000094e .LASF107
+     /tmp/cch8ARcO.s:4358   .debug_str:0000000000000574 .LASF108
+     /tmp/cch8ARcO.s:4452   .debug_str:0000000000000805 .LASF109
+     /tmp/cch8ARcO.s:4446   .debug_str:00000000000007ce .LASF110
+     /tmp/cch8ARcO.s:4408   .debug_str:00000000000006db .LASF111
+     /tmp/cch8ARcO.s:4378   .debug_str:00000000000005e2 .LASF112
+     /tmp/cch8ARcO.s:4518   .debug_str:0000000000000a88 .LASF113
+     /tmp/cch8ARcO.s:4224   .debug_str:0000000000000198 .LASF114
+     /tmp/cch8ARcO.s:4428   .debug_str:0000000000000762 .LASF115
+     /tmp/cch8ARcO.s:4488   .debug_str:00000000000009bc .LASF116
+     /tmp/cch8ARcO.s:4512   .debug_str:0000000000000a73 .LASF117
+     /tmp/cch8ARcO.s:4316   .debug_str:000000000000045b .LASF193
+     /tmp/cch8ARcO.s:4220   .debug_str:000000000000017f .LASF118
+     /tmp/cch8ARcO.s:4242   .debug_str:000000000000021a .LASF119
+     /tmp/cch8ARcO.s:4520   .debug_str:0000000000000a98 .LASF120
+     /tmp/cch8ARcO.s:4280   .debug_str:000000000000034f .LASF121
+     /tmp/cch8ARcO.s:4510   .debug_str:0000000000000a5b .LASF122
+     /tmp/cch8ARcO.s:4426   .debug_str:0000000000000754 .LASF123
+     /tmp/cch8ARcO.s:4252   .debug_str:0000000000000278 .LASF124
+     /tmp/cch8ARcO.s:4294   .debug_str:00000000000003aa .LASF125
+     /tmp/cch8ARcO.s:4502   .debug_str:0000000000000a13 .LASF126
+     /tmp/cch8ARcO.s:4494   .debug_str:00000000000009ec .LASF127
+     /tmp/cch8ARcO.s:4492   .debug_str:00000000000009d7 .LASF131
+     /tmp/cch8ARcO.s:4548   .debug_str:0000000000000b5e .LASF128
+     /tmp/cch8ARcO.s:4374   .debug_str:00000000000005c8 .LASF129
+     /tmp/cch8ARcO.s:4394   .debug_str:0000000000000675 .LASF130
+     /tmp/cch8ARcO.s:4396   .debug_str:000000000000067c .LASF132
+     /tmp/cch8ARcO.s:4368   .debug_str:00000000000005a4 .LASF133
+     /tmp/cch8ARcO.s:4314   .debug_str:0000000000000448 .LASF134
+     /tmp/cch8ARcO.s:4360   .debug_str:0000000000000583 .LASF135
+     /tmp/cch8ARcO.s:4480   .debug_str:0000000000000953 .LASF136
+     /tmp/cch8ARcO.s:4364   .debug_str:0000000000000597 .LASF137
+     /tmp/cch8ARcO.s:4262   .debug_str:00000000000002cc .LASF138
+     /tmp/cch8ARcO.s:4334   .debug_str:00000000000004c3 .LASF139
+     /tmp/cch8ARcO.s:4398   .debug_str:000000000000068f .LASF140
+     /tmp/cch8ARcO.s:4550   .debug_str:0000000000000b67 .LASF141
+     /tmp/cch8ARcO.s:4498   .debug_str:00000000000009fa .LASF142
+     /tmp/cch8ARcO.s:4232   .debug_str:00000000000001f7 .LASF143
+     /tmp/cch8ARcO.s:4422   .debug_str:000000000000073a .LASF144
+     /tmp/cch8ARcO.s:4424   .debug_str:000000000000074d .LASF145
+     /tmp/cch8ARcO.s:4244   .debug_str:0000000000000223 .LASF146
+     /tmp/cch8ARcO.s:4240   .debug_str:0000000000000214 .LASF147
+     /tmp/cch8ARcO.s:4286   .debug_str:0000000000000367 .LASF148
+     /tmp/cch8ARcO.s:4296   .debug_str:00000000000003b7 .LASF149
+     /tmp/cch8ARcO.s:4278   .debug_str:000000000000033d .LASF150
+     /tmp/cch8ARcO.s:4176   .debug_str:0000000000000024 .LASF151
+     /tmp/cch8ARcO.s:4416   .debug_str:000000000000070e .LASF152
+GAS LISTING /tmp/cch8ARcO.s 			page 34
 
 
-     /tmp/cc5gwuU0.s:3408   .debug_loc:000000000000039b .LLST25
-     /tmp/cc5gwuU0.s:3415   .debug_loc:00000000000003be .LLST26
-     /tmp/cc5gwuU0.s:566    .text:00000000000001d4 .LVL49
-     /tmp/cc5gwuU0.s:576    .text:00000000000001dc .LBB62
-     /tmp/cc5gwuU0.s:590    .text:00000000000001e8 .LBE62
-     /tmp/cc5gwuU0.s:3422   .debug_loc:00000000000003e1 .LLST27
-     /tmp/cc5gwuU0.s:589    .text:00000000000001e8 .LVL52
-     /tmp/cc5gwuU0.s:267    .text:00000000000000d0 .LBB37
-     /tmp/cc5gwuU0.s:276    .text:00000000000000d8 .LBE37
-     /tmp/cc5gwuU0.s:3429   .debug_loc:0000000000000404 .LLST8
-     /tmp/cc5gwuU0.s:3437   .debug_loc:0000000000000428 .LLST9
-     /tmp/cc5gwuU0.s:256    .text:00000000000000c0 .LVL16
-     /tmp/cc5gwuU0.s:280    .text:00000000000000e0 .LVL19
-     /tmp/cc5gwuU0.s:25     .text:0000000000000014 .LBB29
-     /tmp/cc5gwuU0.s:42     .text:0000000000000020 .LBE29
-     /tmp/cc5gwuU0.s:600    .text:00000000000001f4 .LVL54
-     /tmp/cc5gwuU0.s:3753   .debug_str:00000000000007cd .LASF161
-     /tmp/cc5gwuU0.s:3565   .debug_str:00000000000002b4 .LASF162
-     /tmp/cc5gwuU0.s:3583   .debug_str:000000000000032e .LASF178
-     /tmp/cc5gwuU0.s:3585   .debug_str:0000000000000334 .LASF163
-     /tmp/cc5gwuU0.s:3633   .debug_str:000000000000047a .LASF164
-     /tmp/cc5gwuU0.s:3573   .debug_str:00000000000002dc .LASF165
-     /tmp/cc5gwuU0.s:40     .text:0000000000000020 .LVL0
-     /tmp/cc5gwuU0.s:52     .text:0000000000000038 .LVL1
-     /tmp/cc5gwuU0.s:67     .text:000000000000004c .LVL2
-     /tmp/cc5gwuU0.s:83     .text:0000000000000054 .LVL4
-     /tmp/cc5gwuU0.s:593    .text:00000000000001ec .LVL53
-     /tmp/cc5gwuU0.s:79     .text:0000000000000050 .LVL3
-     /tmp/cc5gwuU0.s:86     .text:000000000000005c .LVL5
-     /tmp/cc5gwuU0.s:176    .text:0000000000000078 .LVL6
-     /tmp/cc5gwuU0.s:196    .text:0000000000000088 .LVL8
-     /tmp/cc5gwuU0.s:219    .text:0000000000000098 .LVL10
-     /tmp/cc5gwuU0.s:249    .text:00000000000000b8 .LVL15
-     /tmp/cc5gwuU0.s:225    .text:000000000000009c .LVL11
-     /tmp/cc5gwuU0.s:231    .text:00000000000000a0 .LVL12
-     /tmp/cc5gwuU0.s:237    .text:00000000000000a4 .LVL13
-     /tmp/cc5gwuU0.s:295    .text:00000000000000e8 .LVL20
-     /tmp/cc5gwuU0.s:313    .text:0000000000000100 .LVL23
-     /tmp/cc5gwuU0.s:301    .text:00000000000000ec .LVL21
-     /tmp/cc5gwuU0.s:325    .text:0000000000000104 .LVL24
-     /tmp/cc5gwuU0.s:347    .text:0000000000000114 .LVL27
-     /tmp/cc5gwuU0.s:394    .text:0000000000000148 .LVL31
-     /tmp/cc5gwuU0.s:400    .text:000000000000014c .LVL32
-     /tmp/cc5gwuU0.s:340    .text:0000000000000110 .LVL26
-     /tmp/cc5gwuU0.s:412    .text:0000000000000154 .LVL33
-     /tmp/cc5gwuU0.s:356    .text:0000000000000118 .LVL28
-     /tmp/cc5gwuU0.s:362    .text:000000000000011c .LVL29
-     /tmp/cc5gwuU0.s:425    .text:0000000000000158 .LVL34
-     /tmp/cc5gwuU0.s:471    .text:000000000000018c .LVL38
-     /tmp/cc5gwuU0.s:477    .text:0000000000000190 .LVL39
-     /tmp/cc5gwuU0.s:485    .text:0000000000000194 .LVL40
-     /tmp/cc5gwuU0.s:433    .text:000000000000015c .LVL35
-     /tmp/cc5gwuU0.s:439    .text:0000000000000160 .LVL36
-     /tmp/cc5gwuU0.s:506    .text:00000000000001a4 .LVL42
-     /tmp/cc5gwuU0.s:518    .text:00000000000001a8 .LVL43
-     /tmp/cc5gwuU0.s:542    .text:00000000000001bc .LVL45
-     /tmp/cc5gwuU0.s:572    .text:00000000000001dc .LVL50
-GAS LISTING /tmp/cc5gwuU0.s 			page 29
+     /tmp/cch8ARcO.s:4410   .debug_str:00000000000006eb .LASF153
+     /tmp/cch8ARcO.s:4544   .debug_str:0000000000000b3d .LASF154
+     /tmp/cch8ARcO.s:4514   .debug_str:0000000000000a79 .LASF155
+     /tmp/cch8ARcO.s:4302   .debug_str:00000000000003eb .LASF156
+     /tmp/cch8ARcO.s:4214   .debug_str:0000000000000150 .LASF157
+     /tmp/cch8ARcO.s:4346   .debug_str:0000000000000504 .LASF159
+     /tmp/cch8ARcO.s:4390   .debug_str:0000000000000648 .LASF160
+     /tmp/cch8ARcO.s:18     .text:0000000000000000 .LFB54
+     /tmp/cch8ARcO.s:790    .text:00000000000002f4 .LFE54
+     /tmp/cch8ARcO.s:4442   .debug_str:00000000000007c2 .LASF161
+     /tmp/cch8ARcO.s:3839   .debug_loc:0000000000000000 .LLST0
+     /tmp/cch8ARcO.s:4474   .debug_str:000000000000093d .LASF162
+     /tmp/cch8ARcO.s:3862   .debug_loc:000000000000006f .LLST1
+     /tmp/cch8ARcO.s:4198   .debug_str:00000000000000f8 .LASF163
+     /tmp/cch8ARcO.s:3879   .debug_loc:00000000000000ba .LLST2
+     /tmp/cch8ARcO.s:4142   .debug_ranges:0000000000000000 .Ldebug_ranges0
+     /tmp/cch8ARcO.s:4500   .debug_str:0000000000000a0e .LASF164
+     /tmp/cch8ARcO.s:3890   .debug_loc:00000000000000f0 .LLST4
+     /tmp/cch8ARcO.s:236    .text:00000000000000c8 .LBB52
+     /tmp/cch8ARcO.s:250    .text:00000000000000d4 .LBE52
+     /tmp/cch8ARcO.s:3897   .debug_loc:0000000000000113 .LLST5
+     /tmp/cch8ARcO.s:249    .text:00000000000000d4 .LVL8
+     /tmp/cch8ARcO.s:298    .text:00000000000000f8 .LBB53
+     /tmp/cch8ARcO.s:312    .text:0000000000000104 .LBE53
+     /tmp/cch8ARcO.s:3904   .debug_loc:0000000000000136 .LLST6
+     /tmp/cch8ARcO.s:311    .text:0000000000000104 .LVL14
+     /tmp/cch8ARcO.s:318    .text:0000000000000108 .LBB54
+     /tmp/cch8ARcO.s:356    .text:0000000000000128 .LBE54
+     /tmp/cch8ARcO.s:4530   .debug_str:0000000000000ae0 .LASF165
+     /tmp/cch8ARcO.s:3911   .debug_loc:0000000000000159 .LLST7
+     /tmp/cch8ARcO.s:4320   .debug_str:000000000000046f .LASF166
+     /tmp/cch8ARcO.s:3918   .debug_loc:000000000000017c .LLST8
+     /tmp/cch8ARcO.s:3925   .debug_loc:000000000000019f .LLST9
+     /tmp/cch8ARcO.s:3932   .debug_loc:00000000000001c2 .LLST10
+     /tmp/cch8ARcO.s:353    .text:0000000000000124 .LVL19
+     /tmp/cch8ARcO.s:396    .text:0000000000000158 .LBB57
+     /tmp/cch8ARcO.s:420    .text:0000000000000170 .LBE57
+     /tmp/cch8ARcO.s:3939   .debug_loc:00000000000001e5 .LLST13
+     /tmp/cch8ARcO.s:4194   .debug_str:00000000000000dc .LASF167
+     /tmp/cch8ARcO.s:3946   .debug_loc:0000000000000208 .LLST14
+     /tmp/cch8ARcO.s:417    .text:000000000000016c .LVL27
+     /tmp/cch8ARcO.s:427    .text:0000000000000174 .LBB58
+     /tmp/cch8ARcO.s:441    .text:0000000000000180 .LBE58
+     /tmp/cch8ARcO.s:3953   .debug_loc:000000000000022b .LLST15
+     /tmp/cch8ARcO.s:440    .text:0000000000000180 .LVL30
+     /tmp/cch8ARcO.s:447    .text:0000000000000184 .LBB59
+     /tmp/cch8ARcO.s:519    .text:00000000000001c4 .LBE59
+     /tmp/cch8ARcO.s:3960   .debug_loc:000000000000024e .LLST16
+     /tmp/cch8ARcO.s:3971   .debug_loc:0000000000000284 .LLST17
+     /tmp/cch8ARcO.s:460    .text:0000000000000188 .LBB60
+     /tmp/cch8ARcO.s:468    .text:000000000000018c .LBE60
+     /tmp/cch8ARcO.s:3984   .debug_loc:00000000000002bc .LLST18
+     /tmp/cch8ARcO.s:473    .text:0000000000000190 .LBB62
+     /tmp/cch8ARcO.s:3991   .debug_loc:00000000000002df .LLST19
+     /tmp/cch8ARcO.s:496    .text:00000000000001b4 .LVL35
+     /tmp/cch8ARcO.s:526    .text:00000000000001c8 .LBB68
+     /tmp/cch8ARcO.s:596    .text:0000000000000208 .LBE68
+GAS LISTING /tmp/cch8ARcO.s 			page 35
 
 
-     /tmp/cc5gwuU0.s:548    .text:00000000000001c0 .LVL46
-     /tmp/cc5gwuU0.s:554    .text:00000000000001c4 .LVL47
-     /tmp/cc5gwuU0.s:560    .text:00000000000001c8 .LVL48
-     /tmp/cc5gwuU0.s:584    .text:00000000000001e0 .LVL51
-     /tmp/cc5gwuU0.s:266    .text:00000000000000d0 .LVL17
-     /tmp/cc5gwuU0.s:274    .text:00000000000000d8 .LVL18
-     /tmp/cc5gwuU0.s:615    .debug_info:0000000000000000 .Ldebug_info0
-     /tmp/cc5gwuU0.s:376    .text:0000000000000130 .LBE44
-     /tmp/cc5gwuU0.s:381    .text:0000000000000138 .LBB48
-     /tmp/cc5gwuU0.s:388    .text:0000000000000140 .LBE48
-     /tmp/cc5gwuU0.s:391    .text:0000000000000144 .LBB49
-     /tmp/cc5gwuU0.s:397    .text:0000000000000148 .LBE49
-     /tmp/cc5gwuU0.s:453    .text:0000000000000174 .LBE53
-     /tmp/cc5gwuU0.s:458    .text:000000000000017c .LBB57
-     /tmp/cc5gwuU0.s:465    .text:0000000000000184 .LBE57
-     /tmp/cc5gwuU0.s:468    .text:0000000000000188 .LBB58
-     /tmp/cc5gwuU0.s:474    .text:000000000000018c .LBE58
+     /tmp/cch8ARcO.s:3998   .debug_loc:0000000000000302 .LLST20
+     /tmp/cch8ARcO.s:4009   .debug_loc:0000000000000338 .LLST21
+     /tmp/cch8ARcO.s:538    .text:00000000000001cc .LBB69
+     /tmp/cch8ARcO.s:545    .text:00000000000001d0 .LBE69
+     /tmp/cch8ARcO.s:4022   .debug_loc:0000000000000370 .LLST22
+     /tmp/cch8ARcO.s:550    .text:00000000000001d4 .LBB71
+     /tmp/cch8ARcO.s:4029   .debug_loc:0000000000000393 .LLST23
+     /tmp/cch8ARcO.s:573    .text:00000000000001f8 .LVL42
+     /tmp/cch8ARcO.s:603    .text:000000000000020c .LBB77
+     /tmp/cch8ARcO.s:615    .text:0000000000000218 .LBE77
+     /tmp/cch8ARcO.s:4036   .debug_loc:00000000000003b6 .LLST24
+     /tmp/cch8ARcO.s:607    .text:0000000000000214 .LVL46
+     /tmp/cch8ARcO.s:622    .text:000000000000021c .LBB78
+     /tmp/cch8ARcO.s:637    .text:000000000000022c .LBE78
+     /tmp/cch8ARcO.s:4043   .debug_loc:00000000000003d9 .LLST25
+     /tmp/cch8ARcO.s:636    .text:000000000000022c .LVL49
+     /tmp/cch8ARcO.s:643    .text:0000000000000230 .LBB79
+     /tmp/cch8ARcO.s:681    .text:0000000000000250 .LBE79
+     /tmp/cch8ARcO.s:4050   .debug_loc:00000000000003fc .LLST26
+     /tmp/cch8ARcO.s:4057   .debug_loc:000000000000041f .LLST27
+     /tmp/cch8ARcO.s:4064   .debug_loc:0000000000000442 .LLST28
+     /tmp/cch8ARcO.s:4071   .debug_loc:0000000000000465 .LLST29
+     /tmp/cch8ARcO.s:678    .text:000000000000024c .LVL54
+     /tmp/cch8ARcO.s:688    .text:0000000000000254 .LBB80
+     /tmp/cch8ARcO.s:702    .text:0000000000000260 .LBE80
+     /tmp/cch8ARcO.s:4078   .debug_loc:0000000000000488 .LLST30
+     /tmp/cch8ARcO.s:701    .text:0000000000000260 .LVL57
+     /tmp/cch8ARcO.s:377    .text:0000000000000144 .LBB55
+     /tmp/cch8ARcO.s:386    .text:000000000000014c .LBE55
+     /tmp/cch8ARcO.s:4085   .debug_loc:00000000000004ab .LLST11
+     /tmp/cch8ARcO.s:4093   .debug_loc:00000000000004cf .LLST12
+     /tmp/cch8ARcO.s:258    .text:00000000000000d8 .LBB81
+     /tmp/cch8ARcO.s:270    .text:00000000000000dc .LBE81
+     /tmp/cch8ARcO.s:4100   .debug_loc:00000000000004f2 .LLST31
+     /tmp/cch8ARcO.s:366    .text:0000000000000134 .LVL21
+     /tmp/cch8ARcO.s:390    .text:0000000000000154 .LVL24
+     /tmp/cch8ARcO.s:37     .text:000000000000001c .LBB41
+     /tmp/cch8ARcO.s:54     .text:0000000000000028 .LBE41
+     /tmp/cch8ARcO.s:56     .text:0000000000000028 .LBB43
+     /tmp/cch8ARcO.s:72     .text:0000000000000034 .LBE43
+     /tmp/cch8ARcO.s:74     .text:0000000000000034 .LBB45
+     /tmp/cch8ARcO.s:90     .text:0000000000000040 .LBE45
+     /tmp/cch8ARcO.s:124    .text:0000000000000094 .LBB48
+     /tmp/cch8ARcO.s:139    .text:00000000000000a0 .LBE48
+     /tmp/cch8ARcO.s:4107   .debug_loc:0000000000000515 .LLST3
+     /tmp/cch8ARcO.s:724    .text:0000000000000284 .LBB85
+     /tmp/cch8ARcO.s:735    .text:0000000000000288 .LBE85
+     /tmp/cch8ARcO.s:4115   .debug_loc:0000000000000539 .LLST32
+     /tmp/cch8ARcO.s:737    .text:0000000000000288 .LBB87
+     /tmp/cch8ARcO.s:751    .text:0000000000000290 .LBE87
+     /tmp/cch8ARcO.s:4122   .debug_loc:000000000000055c .LLST33
+     /tmp/cch8ARcO.s:711    .text:000000000000026c .LVL58
+     /tmp/cch8ARcO.s:717    .text:0000000000000278 .LVL59
+     /tmp/cch8ARcO.s:756    .text:000000000000029c .LVL63
+     /tmp/cch8ARcO.s:761    .text:00000000000002ac .LVL64
+     /tmp/cch8ARcO.s:768    .text:00000000000002c0 .LVL65
+     /tmp/cch8ARcO.s:773    .text:00000000000002cc .LVL66
+GAS LISTING /tmp/cch8ARcO.s 			page 36
+
+
+     /tmp/cch8ARcO.s:778    .text:00000000000002dc .LVL67
+     /tmp/cch8ARcO.s:785    .text:00000000000002f0 .LVL68
+     /tmp/cch8ARcO.s:4464   .debug_str:000000000000084f .LASF168
+     /tmp/cch8ARcO.s:4506   .debug_str:0000000000000a38 .LASF169
+     /tmp/cch8ARcO.s:4264   .debug_str:00000000000002e0 .LASF170
+     /tmp/cch8ARcO.s:4282   .debug_str:000000000000035a .LASF171
+     /tmp/cch8ARcO.s:4284   .debug_str:0000000000000360 .LASF172
+     /tmp/cch8ARcO.s:4338   .debug_str:00000000000004d3 .LASF173
+     /tmp/cch8ARcO.s:4272   .debug_str:0000000000000308 .LASF174
+     /tmp/cch8ARcO.s:4388   .debug_str:0000000000000635 .LASF175
+     /tmp/cch8ARcO.s:4534   .debug_str:0000000000000aed .LASF176
+     /tmp/cch8ARcO.s:4254   .debug_str:0000000000000293 .LASF177
+     /tmp/cch8ARcO.s:4386   .debug_str:000000000000062c .LASF178
+     /tmp/cch8ARcO.s:52     .text:0000000000000028 .LVL0
+     /tmp/cch8ARcO.s:290    .text:00000000000000f8 .LVL12
+     /tmp/cch8ARcO.s:329    .text:000000000000010c .LVL15
+     /tmp/cch8ARcO.s:359    .text:000000000000012c .LVL20
+     /tmp/cch8ARcO.s:405    .text:000000000000015c .LVL25
+     /tmp/cch8ARcO.s:423    .text:0000000000000174 .LVL28
+     /tmp/cch8ARcO.s:654    .text:0000000000000234 .LVL50
+     /tmp/cch8ARcO.s:684    .text:0000000000000254 .LVL55
+     /tmp/cch8ARcO.s:70     .text:0000000000000034 .LVL1
+     /tmp/cch8ARcO.s:257    .text:00000000000000d8 .LVL9
+     /tmp/cch8ARcO.s:266    .text:00000000000000dc .LVL10
+     /tmp/cch8ARcO.s:88     .text:0000000000000040 .LVL2
+     /tmp/cch8ARcO.s:286    .text:00000000000000f0 .LVL11
+     /tmp/cch8ARcO.s:148    .text:00000000000000a4 .LVL5
+     /tmp/cch8ARcO.s:154    .text:00000000000000b0 .LVL6
+     /tmp/cch8ARcO.s:244    .text:00000000000000cc .LVL7
+     /tmp/cch8ARcO.s:306    .text:00000000000000fc .LVL13
+     /tmp/cch8ARcO.s:335    .text:0000000000000110 .LVL16
+     /tmp/cch8ARcO.s:341    .text:0000000000000114 .LVL17
+     /tmp/cch8ARcO.s:347    .text:0000000000000118 .LVL18
+     /tmp/cch8ARcO.s:411    .text:0000000000000160 .LVL26
+     /tmp/cch8ARcO.s:435    .text:0000000000000178 .LVL29
+     /tmp/cch8ARcO.s:457    .text:0000000000000188 .LVL32
+     /tmp/cch8ARcO.s:504    .text:00000000000001bc .LVL36
+     /tmp/cch8ARcO.s:510    .text:00000000000001c0 .LVL37
+     /tmp/cch8ARcO.s:450    .text:0000000000000184 .LVL31
+     /tmp/cch8ARcO.s:522    .text:00000000000001c8 .LVL38
+     /tmp/cch8ARcO.s:466    .text:000000000000018c .LVL33
+     /tmp/cch8ARcO.s:472    .text:0000000000000190 .LVL34
+     /tmp/cch8ARcO.s:535    .text:00000000000001cc .LVL39
+     /tmp/cch8ARcO.s:581    .text:0000000000000200 .LVL43
+     /tmp/cch8ARcO.s:587    .text:0000000000000204 .LVL44
+     /tmp/cch8ARcO.s:599    .text:000000000000020c .LVL45
+     /tmp/cch8ARcO.s:543    .text:00000000000001d0 .LVL40
+     /tmp/cch8ARcO.s:549    .text:00000000000001d4 .LVL41
+     /tmp/cch8ARcO.s:618    .text:000000000000021c .LVL47
+     /tmp/cch8ARcO.s:630    .text:0000000000000220 .LVL48
+     /tmp/cch8ARcO.s:660    .text:0000000000000238 .LVL51
+     /tmp/cch8ARcO.s:666    .text:000000000000023c .LVL52
+     /tmp/cch8ARcO.s:672    .text:0000000000000240 .LVL53
+     /tmp/cch8ARcO.s:696    .text:0000000000000258 .LVL56
+     /tmp/cch8ARcO.s:376    .text:0000000000000144 .LVL22
+     /tmp/cch8ARcO.s:384    .text:000000000000014c .LVL23
+     /tmp/cch8ARcO.s:123    .text:0000000000000094 .LVL3
+GAS LISTING /tmp/cch8ARcO.s 			page 37
+
+
+     /tmp/cch8ARcO.s:136    .text:00000000000000a0 .LVL4
+     /tmp/cch8ARcO.s:723    .text:0000000000000284 .LVL60
+     /tmp/cch8ARcO.s:732    .text:0000000000000288 .LVL61
+     /tmp/cch8ARcO.s:748    .text:0000000000000290 .LVL62
+     /tmp/cch8ARcO.s:801    .debug_info:0000000000000000 .Ldebug_info0
+     /tmp/cch8ARcO.s:140    .text:00000000000000a0 .LBB50
+     /tmp/cch8ARcO.s:271    .text:00000000000000dc .LBE50
+     /tmp/cch8ARcO.s:294    .text:00000000000000f8 .LBB84
+     /tmp/cch8ARcO.s:707    .text:0000000000000264 .LBE84
+     /tmp/cch8ARcO.s:486    .text:00000000000001a4 .LBE62
+     /tmp/cch8ARcO.s:491    .text:00000000000001ac .LBB66
+     /tmp/cch8ARcO.s:498    .text:00000000000001b4 .LBE66
+     /tmp/cch8ARcO.s:501    .text:00000000000001b8 .LBB67
+     /tmp/cch8ARcO.s:507    .text:00000000000001bc .LBE67
+     /tmp/cch8ARcO.s:563    .text:00000000000001e8 .LBE71
+     /tmp/cch8ARcO.s:568    .text:00000000000001f0 .LBB75
+     /tmp/cch8ARcO.s:575    .text:00000000000001f8 .LBE75
+     /tmp/cch8ARcO.s:578    .text:00000000000001fc .LBB76
+     /tmp/cch8ARcO.s:584    .text:0000000000000200 .LBE76
 
 UNDEFINED SYMBOLS
+_ZN3PCB12timeSliceCntE
+_ZN3PCB7runningE
 _ZN15MemoryAllocator9mem_allocEm
 _ZN15MemoryAllocator8mem_freeEPv
 _ZN3PCB13createProcessEPFvPvEPmS0_b
 _ZN3PCB5yieldEv
-_ZN3PCB7runningE
 _ZN3Sem15createSemaphoreEj
 _ZN3Sem15deleteSemaphoreEPS_
 _ZN3Sem5blockEv
@@ -1691,3 +2176,5 @@ __getc
 __putc
 _ZN9Scheduler3putEP3PCB
 console_handler
+_Z11printStringPKc
+_Z8printIntiii
