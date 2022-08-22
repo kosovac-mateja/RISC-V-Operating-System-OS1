@@ -10,7 +10,6 @@ extern "C" void handleSupervisorTrap() {
 
     uint64 scause = Riscv::r_scause();
     uint64 sepc = Riscv::r_sepc();
-
     uint64 sstatus = Riscv::r_sstatus();
 
     if(scause == 9 || scause == 8) {
@@ -47,7 +46,7 @@ extern "C" void handleSupervisorTrap() {
             }break;
 
             case TDISPATCH_CODE: { //thread_dispatch
-                PCB::yield(); //mozda treba dispatch
+                PCB::yield();
             }break;
 
             case TEXIT_CODE: { //thread_exit
@@ -66,6 +65,14 @@ extern "C" void handleSupervisorTrap() {
             } break;
 
             case SCLOSE_CODE: { //sem_close
+                sem_t handle;
+
+                __asm__ volatile("mv %0, a1" : "=r" (handle));
+
+                Sem::deactivateSemaphore(handle);
+            } break;
+
+            case SDELETE_CODE: { //sem_close
                 sem_t handle;
 
                 __asm__ volatile("mv %0, a1" : "=r" (handle));
@@ -127,18 +134,26 @@ extern "C" void handleSupervisorTrap() {
                 *handle = PCB::createProcess(start_routine, stack, arg, false);
             } break;
 
-            case TSCHEDULER_CODE: {
+            case TSCHEDULER_CODE: { //thred_scheduler
                 thread_t handle;
                 __asm__ volatile("mv %0, a1" : "=r" (handle));
 
-                Scheduler::put(handle); /* mozda treba proveriti da li je body null*/
+                Scheduler::put(handle);
+            } break;
+
+            case MUSER_CODE: { //to user mod
+                Riscv::mc_sstatus(Riscv::SSTATUS_SPP); //skok se desava iz korisnickog rezima
+            } break;
+
+            case MSUPERVISOR_CODE: { //to supervisor mod
+                Riscv::ms_sstatus(Riscv::SSTATUS_SPP); //skok se desava iz sistemskog rezima
             } break;
 
             default:
                 break;
         }
 
-        Riscv::w_sepc(sepc+4);
+        Riscv::w_sepc(sepc+4); //prelazak na narednu instrukciju
     }
 
     else if(scause == (1UL << 63 | 9)) { //spoljasnji hardverski prekid
@@ -156,7 +171,6 @@ extern "C" void handleSupervisorTrap() {
         }
 
         Riscv::mc_sip(Riscv::SIP_SSIE);
-        //__putc('t');
     }
 
     else {
@@ -166,5 +180,6 @@ extern "C" void handleSupervisorTrap() {
         __putc('\n');
         printString("SCAUSE: ");
         printInt(scause);
+        __putc('\n');
     }
 }

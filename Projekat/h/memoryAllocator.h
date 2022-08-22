@@ -4,18 +4,20 @@
 #include "../lib/hw.h"
 #include "../lib/mem.h"
 
-struct FreeSegment {
-    size_t size;
-    FreeSegment* next;
-    FreeSegment* prev;
-};
-
-struct UsedSegment {
-    size_t size;
-    UsedSegment* next;
-};
-
 class MemoryAllocator {
+public:
+    struct FreeSegment {
+        size_t size;
+        FreeSegment* next;
+        FreeSegment* prev;
+    };
+
+    struct UsedSegment {
+        size_t size;
+        UsedSegment* next;
+    };
+
+private:
     static FreeSegment* freeSegmentHead;
 
     static UsedSegment* usedSegmentHead;

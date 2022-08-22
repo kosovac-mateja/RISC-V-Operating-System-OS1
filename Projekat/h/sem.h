@@ -2,7 +2,6 @@
 #define PROJEKAT_SEM_H
 
 #include "pcb.h"
-#include "queue.h"
 #include "syscall_c.h"
 #include "list.h"
 
@@ -28,9 +27,20 @@ public:
 
     static Sem* createSemaphore(uint32 init);
 
+    static int deactivateSemaphore(sem_t handle);
+
     static void deleteSemaphore(sem_t handle);
 
     bool isActive() { return active; }
+
+private:
+    void *operator new(size_t size);
+
+    void *operator new[](size_t size);
+
+    void operator delete(void *p) noexcept;
+
+    void operator delete[](void *p) noexcept;
 };
 
 

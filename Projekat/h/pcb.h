@@ -1,9 +1,12 @@
 #ifndef PROJEKAT_PCB_H
 #define PROJEKAT_PCB_H
 
-#include "../lib/hw.h"
-#include "scheduler.h"
 #include "syscall_c.h"
+#include "scheduler.h"
+#include "../h/memoryAllocator.h"
+#include "../h/riscv.h"
+
+extern void userMain();
 
 class PCB
 {
@@ -48,8 +51,6 @@ private:
             { if (body != nullptr && put) { Scheduler::put(this); }
     }
 
-    PCB() {}
-
     struct Context {
         uint64 ra;
         uint64 sp;
@@ -63,6 +64,18 @@ private:
     bool blocked;
 
     static void contextSwitch(Context *oldContext, Context *runningContext);
+
+    void *operator new(size_t size);
+
+    void *operator new[](size_t size);
+
+    void operator delete(void *p) noexcept;
+
+    void operator delete[](void *p) noexcept;
 };
+
+void idle(void* arg);
+
+void userMainWrapper(void* arg);
 
 #endif

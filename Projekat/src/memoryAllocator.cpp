@@ -1,7 +1,7 @@
 #include "../h/memoryAllocator.h"
 
-FreeSegment* MemoryAllocator::freeSegmentHead;
-UsedSegment* MemoryAllocator::usedSegmentHead ;
+MemoryAllocator::FreeSegment* MemoryAllocator::freeSegmentHead;
+MemoryAllocator::UsedSegment* MemoryAllocator::usedSegmentHead ;
 bool MemoryAllocator::initialized = false;
 
 void *MemoryAllocator::mem_alloc(size_t size) {
@@ -101,6 +101,7 @@ int MemoryAllocator::mem_free(void *addr) {
 
     FreeSegment* newSeg = (FreeSegment*)((char*)addr - MEM_BLOCK_SIZE);
     newSeg->size = curr->size;
+
     //uvezivanje u listu slobodnih
     newSeg->prev = fcurr;
     if (fcurr) newSeg->next = fcurr->next;

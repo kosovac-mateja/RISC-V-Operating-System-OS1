@@ -1,23 +1,11 @@
 #include "../h/syscall_c.h"
 #include "../h/pcb.h"
-#include "../test/printing.hpp"
+#include "../h/riscv.h"
 
-extern void userMain();
 extern "C" void supervisorTrap();
 
-
-void idle(void* arg) {
-    while(true) {
-        thread_dispatch();
-    }
-}
-
-void userMainWrapper(void* arg) {
-    userMain();
-}
-
 void main() {
-    __asm__ volatile("csrw stvec, %0" : : "r" (&supervisorTrap));
+    Riscv::w_stvec((uint64)&supervisorTrap); //adresa prekidne rutine
 
     thread_t kernelThread, idleThread;
     thread_t userThread;

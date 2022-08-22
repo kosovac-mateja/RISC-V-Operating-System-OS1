@@ -1,9 +1,5 @@
 #include "../h/syscall_c.h"
 
-#include "../h/pcb.h"
-#include "../lib/console.h"
-
-
 void syscall() {
     __asm__ volatile("ecall");
 }
@@ -85,7 +81,16 @@ int sem_close(sem_t handle) {
 
     syscall();
 
-    return 0;
+    int ret;
+    __asm__ volatile("mv %0, a0" : "=r" (ret));
+    return ret;
+}
+
+void sem_delete(sem_t handle) {
+    __asm__ volatile("mv a1, %0" : : "r" (handle));
+    __asm__ volatile("mv a0, %0" : : "r" (SDELETE_CODE));
+
+    syscall();
 }
 
 int sem_wait(sem_t id) {
@@ -148,6 +153,18 @@ void thread_alloc(thread_t* handle, void(*start_routine)(void*), void* arg) {
 void thread_scheduler(thread_t handle) {
     __asm__ volatile("mv a1, %0" : : "r" (handle));
     __asm__ volatile("mv a0, %0" : : "r" (TSCHEDULER_CODE));
+
+    syscall();
+}
+
+void userMod() {
+    __asm__ volatile("mv a0, %0" : : "r" (MUSER_CODE));
+
+    syscall();
+}
+
+void supervisorMod() {
+    __asm__ volatile("mv a0, %0" : : "r" (MSUPERVISOR_CODE));
 
     syscall();
 }

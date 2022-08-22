@@ -24,10 +24,11 @@ void Thread::runWrapper(void *arg) {
 Semaphore::Semaphore(unsigned int init) {
     sem_open(&myHandle, init);
 }
-/*
+
 Semaphore::~Semaphore() {
     sem_close(myHandle);
-}*/
+    sem_delete(myHandle);
+}
 
 int Semaphore::wait() {
     return sem_wait(myHandle);

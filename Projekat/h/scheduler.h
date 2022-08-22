@@ -2,7 +2,6 @@
 #define PROJEKAT_SCHEDULER_H
 
 #include "list.h"
-#include "queue.h"
 
 class PCB;
 

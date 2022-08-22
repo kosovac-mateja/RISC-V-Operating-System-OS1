@@ -1,8 +1,5 @@
 #include "../h/sem.h"
 
-#include "../h/riscv.h"
-#include "../lib/console.h"
-
 void Sem::block() {
     blocked.addLast(PCB::running);
     PCB::running->setBlocked(true);
@@ -19,7 +16,9 @@ Sem *Sem::createSemaphore(uint32 init) {
     return new Sem(init);
 }
 
-void Sem::deleteSemaphore(sem_t handle) {
+int Sem::deactivateSemaphore(sem_t handle) {
+    if(!handle->isActive()) return -1;
+
     handle->setActive(false);
 
     uint64 queueSize = handle->blocked.getCnt();
@@ -29,4 +28,26 @@ void Sem::deleteSemaphore(sem_t handle) {
         th->setBlocked(false);
         Scheduler::put(th);
     }
+
+    return 0;
 }
+
+void Sem::deleteSemaphore(sem_t handle) {
+    delete handle;
+}
+
+void *Sem::operator new(size_t size)  {
+    size = size % MEM_BLOCK_SIZE == 0 ? size / MEM_BLOCK_SIZE : (size / MEM_BLOCK_SIZE + 1 ); //pretvaranje u blokove
+    return MemoryAllocator::mem_alloc(size);
+}
+
+void *Sem::operator new[](size_t size)  {
+    size = size % MEM_BLOCK_SIZE == 0 ? size / MEM_BLOCK_SIZE : (size / MEM_BLOCK_SIZE + 1 ); //pretvaranje u blokove
+    return MemoryAllocator::mem_alloc(size);
+}
+
+void Sem::operator delete(void *p) noexcept  { MemoryAllocator::mem_free(p); }
+
+void Sem::operator delete[](void *p) noexcept  { MemoryAllocator::mem_free(p); }
+
+

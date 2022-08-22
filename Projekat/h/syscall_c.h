@@ -16,9 +16,13 @@ static const uint64 SOPEN_CODE = 0x21;
 static const uint64 SCLOSE_CODE = 0x22;
 static const uint64 SWAIT_CODE = 0x23;
 static const uint64 SSIGNAL_CODE = 0x24;
+static const uint64 SDELETE_CODE = 0x25;
 
 static const uint64 CGETC_CODE = 0x41;
 static const uint64 CPUTC_CODE = 0x42;
+
+static const uint64 MUSER_CODE = 0x51;
+static const uint64 MSUPERVISOR_CODE = 0x52;
 
 class PCB;
 typedef PCB* thread_t;
@@ -48,6 +52,8 @@ int sem_wait(sem_t id);
 
 int sem_signal(sem_t id);
 
+void sem_delete(sem_t handle);
+
 char getc();
 
 void putc(char c);
@@ -58,5 +64,9 @@ void putc(char c);
 void thread_alloc(thread_t* handle, void(*start_routine)(void*), void* arg);
 //stavljanje niti u scheduler
 void thread_scheduler(thread_t handle);
+
+void userMod();
+
+void supervisorMod();
 
 #endif
